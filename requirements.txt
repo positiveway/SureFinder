@@ -1,0 +1,11 @@
+attrs==17.4.0
+coverage==4.4.2
+EasyProcess==0.2.3
+lxml==4.1.1
+pluggy==0.6.0
+py==1.5.2
+pytest==3.3.2
+pytest-cov==2.5.1
+PyVirtualDisplay==0.2.1
+selenium==3.8.1
+six==1.11.0

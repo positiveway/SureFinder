@@ -1,0 +1,8 @@
+language: python
+python:
+  - "3.6"
+# Do not move from the root dir. requirements.txt is here
+script:
+  - pytest --cov=surebet surebet/tests
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -t 98c1d7ba-04ce-4fd7-b487-9e8938227ef6
