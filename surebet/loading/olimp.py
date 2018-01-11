@@ -1,16 +1,16 @@
 import requests
 from lxml import html
 
-from surebet.loading import handle_status, log_loaded
+from surebet.loading import check_status, log_loaded
 
-site_name = "olimp"
+name = "olimp"
 
 xp_event_ids = '//tr[@data-kek="row"]/td/input[1]'
 
 
 def load_events():
     result = get_events_html(get_event_ids())
-    log_loaded(site_name)
+    log_loaded(name)
     return result
 
 
@@ -18,7 +18,7 @@ def get_event_ids():
     req_url = "https://olimp.com/betting"
 
     r = requests.post(req_url, headers={"cookie": "curr_lang=2;"})
-    handle_status(site_name, r.status_code)
+    check_status(name, r.status_code)
 
     site_doc = html.fromstring(r.text)
 
@@ -44,6 +44,6 @@ def get_events_html(event_ids):
     }
 
     r = requests.post(req_url, headers=headers, data=form_data)
-    handle_status(site_name, r.status_code)
+    check_status(name, r.status_code)
 
     return r.text

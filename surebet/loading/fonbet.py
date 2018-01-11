@@ -5,7 +5,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 from surebet.loading import log_loaded, LoadException
 
-site_name = "fonbet"
+name = "fonbet"
 
 url = 'https://www.fonbet.com/live/?locale=en'
 node = '#lineTable'
@@ -28,18 +28,18 @@ def load(browser):
     try:
         browser.find_element_by_css_selector(expand).click()
     except NoSuchElementException:
-        browser.get_screenshot_as_file("fonbet-error.png")
+        browser.get_screenshot_as_file("{}-error.png".format(name))
         raise LoadException("site is not responding")
 
     browser.find_element_by_css_selector(expand_all).click()
 
     WebDriverWait(browser, 10).until(ec.invisibility_of_element_located((By.CSS_SELECTOR, expand_all)))
-    print("fonbet: loaded")
+    print("{}: loaded".format(name))
 
 
 def load_events(browser):
     browser.execute_script(expand_remain)
 
     result = browser.find_element_by_css_selector(node).get_attribute("outerHTML")
-    log_loaded(site_name)
+    log_loaded(name)
     return result

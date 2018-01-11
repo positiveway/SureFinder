@@ -1,9 +1,9 @@
 import re
 import requests
 import json
-from surebet.loading import handle_status, log_loaded
+from surebet.loading import check_status, log_loaded
 
-site_name = "marat"
+name = "marat"
 
 url = "https://www.marathonbet.co.uk/en/live"
 live_elem = "#container_AVAILABLE > div"
@@ -16,7 +16,7 @@ details_url = "https://www.marathonbet.co.uk/en/livemarkets.htm?treeId={}"
 
 def load_events():
     r = requests.get(url)
-    handle_status(site_name, r.status_code)
+    check_status(name, r.status_code)
 
     site_html = r.text
     res = re.search(r"reactData = ({.*});", site_html)
@@ -36,7 +36,7 @@ def load_events():
             if event_details:
                 events.append(event_details)
 
-    log_loaded(site_name)
+    log_loaded(name)
     return {"events": events, "add_info": add_info, "sport_tree": sport_tree}
 
 
@@ -63,7 +63,7 @@ def get_event_details(event_id):
     r = requests.post(req_url, headers=headers)
     if r.status_code == 204:
         return None
-    handle_status(site_name, r.status_code)
+    check_status(name, r.status_code)
 
     return r.json()["ADDITIONAL_MARKETS"]
 
@@ -72,6 +72,6 @@ def get_add_info(sport_id):
     req_url = url + "/{}".format(sport_id)
 
     r = requests.get(req_url)
-    handle_status(site_name, r.status_code)
+    check_status(name, r.status_code)
 
     return r.text

@@ -13,7 +13,7 @@ class LoadException(Exception):
     pass
 
 
-def handle_status(site_name, status_code):
+def check_status(site_name, status_code):
     if status_code != 200:
         raise LoadException("{} is not responding".format(site_name))
 
