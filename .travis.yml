@@ -3,9 +3,9 @@ python:
   - "3.6"
 # Do not move from the root dir. requirements.txt is here
 before_install:
-  wget https://chromedriver.storage.googleapis.com/2.34/chromedriver_linux64.zip
-  unzip chromedriver_linux64.zip -d /usr/bin
-  apt-get install xvfb
+  - wget https://chromedriver.storage.googleapis.com/2.34/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip -d /usr/bin
+  - apt-get install xvfb
 script:
   - pytest --cov=surebet surebet/tests
 after_success:
