@@ -13,6 +13,15 @@ class LoadException(Exception):
     pass
 
 
+def handle_status(site_name, status_code):
+    if status_code != 200:
+        raise LoadException("{} is not responding".format(site_name))
+
+
+def log_loaded(site_name):
+    print("{}: loaded events".format(site_name))
+
+
 class Selenium:
     def __init__(self) -> None:
         self._display = Display(visible=0, size=(1920, 1080))
