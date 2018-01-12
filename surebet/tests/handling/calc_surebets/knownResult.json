@@ -1,0 +1,84 @@
+[
+	{
+		"profit": 0.85,
+		"reverse": false,
+		"w1": {
+			"factor": 4.9,
+			"name": "o1"
+		},
+		"w2": {
+			"factor": 1.27,
+			"name": "ox2"
+		}
+	},
+	{
+		"profit": 0.93,
+		"reverse": true,
+		"w1": {
+			"cond": 19.5,
+			"factor": 1.65,
+			"name": "total"
+		},
+		"w2": {
+			"cond": 19.5,
+			"factor": 2.6,
+			"name": "total"
+		}
+	},
+	{
+		"profit": 0.9,
+		"reverse": true,
+		"w1": {
+			"cond": 15.5,
+			"factor": 1.67,
+			"name": "ind_total1"
+		},
+		"w2": {
+			"cond": 15.5,
+			"factor": 2.55,
+			"name": "ind_total1"
+		}
+	},
+	{
+		"profit": 0.3,
+		"reverse": false,
+		"w1": {
+			"cond": 0.0,
+			"factor": 1.75,
+			"name": "hand"
+		},
+		"w2": {
+			"cond": 0.0,
+			"factor": 2.35,
+			"name": "hand"
+		}
+	},
+	{
+		"profit": 6.16,
+		"reverse": false,
+		"w1": {
+			"cond": -1.0,
+			"factor": 4.02,
+			"name": "hand"
+		},
+		"w2": {
+			"cond": -1.0,
+			"factor": 1.45,
+			"name": "hand"
+		}
+	},
+	{
+		"profit": 0.64,
+		"reverse": false,
+		"w1": {
+			"cond": 34.5,
+			"factor": 1.9,
+			"name": "hand"
+		},
+		"w2": {
+			"cond": 34.5,
+			"factor": 2.14,
+			"name": "hand"
+		}
+	}
+]

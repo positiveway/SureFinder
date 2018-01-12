@@ -4,8 +4,8 @@ from surebet.converting import format_spaces
 class CondBet:
     def __init__(self, cond, v1, v2) -> None:
         self.cond = cond
-        self.v1 = v1
-        self.v2 = v2
+        self.v1 = v1  # Over/Hand1
+        self.v2 = v2  # Under/Hand2
 
     def _not_empty(self):
         return self.v1 or self.v2
