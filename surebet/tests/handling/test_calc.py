@@ -5,7 +5,6 @@ from surebet import *
 from surebet.handling.calc_surebets import calc_surebets
 from surebet.tests.handling import *
 
-
 resource_dir = path.join(package_dir, "calc_surebets")
 
 
@@ -32,8 +31,8 @@ def test_sample():
 
     sample[0].sort(key=lambda o: o["sport"])
     sample[1].sort(key=lambda o: o["sport"])
-    for i in range(min(len(sample[0]), len(sample[1]))):
-        part1, part2 = sample[0][i], sample[1][i]
+    for bets_pair in range(len(sample[0])):
+        part1, part2 = sample[0][bets_pair], sample[1][bets_pair]
         wagers_bets = [part1["part_bets"], part2["part_bets"]]
         if part1["sport"] == "tennis" or part1["sport"] == "volley":
             calc_surebets(wagers_bets, with_draw=False)

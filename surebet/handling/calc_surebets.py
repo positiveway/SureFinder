@@ -43,9 +43,9 @@ def get_profit(factor1, factor2):
 def handle_cond_bets(wagers_bets):
     surebets = []
     for bet_name in ("total", "ind_total1", "ind_total2", "hand"):
-        corresp_cond_bets = {cond_bet.cond: cond_bet for cond_bet in getattr(wagers_bets[1], bet_name)}
+        cond_bets2 = {cond_bet.cond: cond_bet for cond_bet in getattr(wagers_bets[1], bet_name)}
         for cond_bet1 in getattr(wagers_bets[0], bet_name):
-            cond_bet2 = corresp_cond_bets[cond_bet1.cond]
+            cond_bet2 = cond_bets2[cond_bet1.cond]
             if cond_bet2:
                 if check_surebet(cond_bet1.v1, cond_bet2.v2):
                     w1 = CondWager(bet_name, cond_bet1.cond, cond_bet1.v1)
@@ -57,4 +57,3 @@ def handle_cond_bets(wagers_bets):
                     w2 = CondWager(bet_name, cond_bet2.cond, cond_bet2.v1)
                     surebets.append(Surebet(w1, w2, get_profit(cond_bet1.v2, cond_bet2.v1), reverse=True))
     return surebets
-
