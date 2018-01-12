@@ -43,7 +43,7 @@ def get_profit(factor1, factor2):
 def handle_cond_bets(wagers_bets):
     surebets = []
     for bet_name in ("total", "ind_total1", "ind_total2", "hand"):
-        corresp_cond_bets = dict((cond_bet.cond, cond_bet) for cond_bet in getattr(wagers_bets[1], bet_name))
+        corresp_cond_bets = {cond_bet.cond: cond_bet for cond_bet in getattr(wagers_bets[1], bet_name)}
         for cond_bet1 in getattr(wagers_bets[0], bet_name):
             cond_bet2 = corresp_cond_bets[cond_bet1.cond]
             if cond_bet2:
