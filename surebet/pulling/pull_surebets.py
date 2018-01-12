@@ -21,7 +21,7 @@ def pull(wagers_bets, with_draw=True):
         if check_surebet(factor1, factor2):
             w1 = Wager(bet_name, factor1)
             w2 = Wager(opposite_bets[bet_name], factor2)
-            surebets.append(Surebet(w1, w2))
+            surebets.append(Surebet(w1, w2, get_profit(factor1, factor2)))
 
     surebets.extend(handle_cond_bets(wagers_bets))
 
@@ -30,6 +30,10 @@ def pull(wagers_bets, with_draw=True):
 
 def check_surebet(factor1, factor2):
     return factor1 != 0.0 and factor2 != 0.0 and 1 / factor1 + 1 / factor2 < 1
+
+
+def get_profit(factor1, factor2):
+    return round((1 - (1 / factor1 + 1 / factor2)) * 100, 2)
 
 
 def handle_cond_bets(wagers_bets):
@@ -41,12 +45,12 @@ def handle_cond_bets(wagers_bets):
                     if check_surebet(cond_bet1.v1, cond_bet2.v2):
                         w1 = Wager(get_wager_bet_name(bet_name, cond_bet1.cond, 0), cond_bet1.v1)
                         w2 = Wager(get_wager_bet_name(bet_name, cond_bet2.cond, 1), cond_bet2.v2)
-                        surebets.append(Surebet(w1, w2))
+                        surebets.append(Surebet(w1, w2, get_profit(cond_bet1.v1, cond_bet2.v2)))
 
                     if check_surebet(cond_bet1.v2, cond_bet2.v1):
                         w1 = Wager(get_wager_bet_name(bet_name, cond_bet1.cond, 1), cond_bet1.v2)
                         w2 = Wager(get_wager_bet_name(bet_name, cond_bet2.cond, 0), cond_bet2.v1)
-                        surebets.append(Surebet(w1, w2))
+                        surebets.append(Surebet(w1, w2, get_profit(cond_bet1.v2, cond_bet2.v1)))
     return surebets
 
 
