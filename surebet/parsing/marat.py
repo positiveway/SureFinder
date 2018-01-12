@@ -3,6 +3,7 @@ from lxml import html
 from surebet.parsing import *
 from .bets import *
 
+
 xp_event_id = '//table[@class="table-shortcuts-menu"]'
 
 xp_blocks = '//*[contains(@id, "block")]'
@@ -54,7 +55,7 @@ def get_separator(event_name):
 
 def parse(site_info):
     sport_tree = get_sport_tree(site_info["sport_tree"])
-    closed_events_bets = get_closed_events_bets(site_info["html"])
+    closed_events_bets = get_closed_events_bets(site_info["add_info"])
 
     bookmaker = Bookmaker()
     for event_html in site_info["events"]:
@@ -87,12 +88,12 @@ def get_sport_tree(raw_sport_tree):
 
     sport_tree = {}
     for sport in raw_sport_tree:
-        sport_name = sport["label"]
+        sport_name = sport["name"]
         if sport_name not in proper_names:
             continue
-        for category in sport["childs"]:
-            for event in category["childs"]:
-                sport_tree[event["uid"]] = EventInfo(proper_names[sport_name], event["label"])
+
+        for event in sport["events"]:
+            sport_tree[event["id"]] = EventInfo(proper_names[sport_name], event["name"])
     return sport_tree
 
 
@@ -265,11 +266,14 @@ def handle_add_block(add_block, teams):
     return add_parts_bets
 
 
-def get_closed_events_bets(site_html):
-    site_doc = html.fromstring(site_html)
-
+def get_closed_events_bets(add_info):
     closed_events_bets = {}
     for sport_name in ("Tennis", "Volleyball"):
+        if sport_name not in add_info:
+            continue
+
+        site_doc = html.fromstring(add_info[sport_name])
+
         events = site_doc.xpath(xp_closed_events.format(sport_name))
         for event_id, bets in handle_closed_events(events):
             closed_events_bets[event_id] = bets
@@ -282,9 +286,9 @@ def handle_closed_events(events):
 
         win_bets = []
         for cur_bet in range(2):
-            bet_node = xpath_with_check(event, xp_win_bet.format(cur_bet + 1))[0]
-            if factor_not_blocked(bet_node):
-                win_bets.append(get_factor(bet_node))
+            bet_node = event.xpath(xp_win_bet.format(cur_bet + 1))
+            if bet_node and factor_not_blocked(bet_node[0]):
+                win_bets.append(get_factor(bet_node[0]))
         if not win_bets:
             continue
         if len(win_bets) == 1:
