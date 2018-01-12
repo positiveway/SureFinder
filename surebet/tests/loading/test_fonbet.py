@@ -9,11 +9,11 @@ def test_loading():
     selenium = Selenium()
     selenium.browser.implicitly_wait(60)
 
-    for j in range(3):
+    for j in range(2):
         print("load: ({})".format(j))
 
         load(selenium.browser)
-        for i in range(8):
+        for i in range(5):
             print("load events: ({})".format(i))
 
             result = load_events(selenium.browser)
