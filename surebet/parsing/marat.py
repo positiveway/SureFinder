@@ -3,7 +3,6 @@ from lxml import html
 from surebet.parsing import *
 from .bets import *
 
-
 xp_event_id = '//table[@class="table-shortcuts-menu"]'
 
 xp_blocks = '//*[contains(@id, "block")]'
@@ -31,10 +30,6 @@ class WinBets:
     def __init__(self, o1, o2):
         self.o1 = o1
         self.o2 = o2
-
-
-def get_text(elem):
-    return elem.text.strip()
 
 
 def factor_not_blocked(elem):

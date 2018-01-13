@@ -18,7 +18,7 @@ def get_event_ids():
     req_url = "https://olimp.com/betting"
 
     r = requests.post(req_url, headers={"cookie": "curr_lang=2;"})
-    check_status(name, r.status_code)
+    check_status(r.status_code)
 
     site_doc = html.fromstring(r.text)
 
@@ -44,6 +44,6 @@ def get_events_html(event_ids):
     }
 
     r = requests.post(req_url, headers=headers, data=form_data)
-    check_status(name, r.status_code)
+    check_status(r.status_code)
 
     return r.text
