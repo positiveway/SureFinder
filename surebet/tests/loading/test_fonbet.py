@@ -13,7 +13,7 @@ def test_loading():
         print("load: ({})".format(j))
 
         load(selenium.browser)
-        for i in range(5):
+        for i in range(4):
             print("load events: ({})".format(i))
 
             result = load_events(selenium.browser)
@@ -22,7 +22,7 @@ def test_loading():
             else:
                 raise LoadException("got empty html")
 
-            time.sleep(2)
+            time.sleep(1)
 
         time.sleep(5)
 

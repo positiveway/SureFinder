@@ -14,6 +14,10 @@ def parse_factor(text):
     return float(text.strip())
 
 
+def get_text(node):
+    return node.text.strip()
+
+
 def xpath_with_check(node, xpath):
     res = node.xpath(xpath)
     if not res:

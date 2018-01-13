@@ -3,9 +3,8 @@ import requests
 import json
 import asyncio
 import aiohttp
-import async_timeout
 
-from surebet.loading import check_status, log_loaded
+from surebet.loading import *
 
 name = "marat"
 
@@ -17,12 +16,10 @@ sport_names = ["Basketball", "Football", "Ice Hockey", "Tennis", "Volleyball"]
 
 details_url = "https://www.marathonbet.co.uk/en/livemarkets.htm?treeId={}"
 
-TIMEOUT = 10
-
 
 def load_events():
     r = requests.get(url)
-    check_status(name, r.status_code)
+    check_status(r.status_code)
 
     site_html = r.text
     res = re.search(r"reactData = ({.*});", site_html)
@@ -75,29 +72,16 @@ def process_sport_tree(raw_sport_tree):
 async def get_event_details(event_id, session):
     req_url = details_url.format(event_id)
 
-    return await post_req(session, req_url)
-
-
-async def post_req(session, url):
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
-    with async_timeout.timeout(TIMEOUT):
-        async with session.post(url, headers=headers) as response:
-            if response.status == 204:
-                return None
-            check_status(name, response.status)
+    resp = await async_post(session, req_url, headers=headers, allow_empty=True)
 
-            result = await response.json(content_type=response.content_type)
-            return result["ADDITIONAL_MARKETS"]
+    result = None
+    if resp:
+        result = resp["ADDITIONAL_MARKETS"]
+    return result
 
 
 async def get_add_info(sport_id, sport_name, session):
     req_url = url + "/{}".format(sport_id)
 
-    return {"sport": sport_name, "html": await get_req(session, req_url)}
-
-
-async def get_req(session, url):
-    with async_timeout.timeout(TIMEOUT):
-        async with session.get(url) as response:
-            check_status(name, response.status)
-            return await response.text()
+    return {"sport": sport_name, "html": await async_get(session, req_url)}
