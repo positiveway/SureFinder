@@ -4,7 +4,6 @@ import re
 from surebet.parsing import *
 from surebet.parsing.bets import *
 
-# table_xpath = '//*[@id="champ_container_"]/table/tr[position() mod 2 = 0]/td/table'
 BLOCKS_XPATH = '//*[@id="champ_container_"]/table/tr'
 BLOCK_BODY_ROWS_XPATH = 'td/table/tr'
 RAW_SPORT_NAME_XPATH = 'td[1]/text()'
@@ -12,7 +11,7 @@ TEAMS_STR_XPATH = 'td[2]/font/b/span/text()'
 MAIN_BETS_ROWS_XPATH = 'td/div/nobr'
 OTHER_BETS_XPATH = 'td/div/div/*'
 
-BET_TYPES = ['X2', '12', '1X', '2', 'X', '1']  # ['Tot', 'H2', 'H1']
+BET_TYPES = ['X2', '12', '1X', '2', 'X', '1']
 
 DOUBLE_PARENTHESES_REGEXP = r'^.*\(.*\) - .*\(.*\).*$'
 PARENTHESES_REGEXP = r'^.*\(.*\).*$'
@@ -73,9 +72,6 @@ def parse(source):
 
 
 def get_main_bets(main_bets_rows):
-    # if main_bets_rows == []:
-    #     print('suspended')
-    # ['o1', 'ox', 'o2', 'o1x', 'o12', 'ox2']
     bets = PartBets()
     for row in main_bets_rows:
         bet_type = row.text.strip().partition(' ')[0].partition('(')[0]
@@ -130,7 +126,6 @@ def get_individual_totals(other_bets_rows, first_team, second_team):
 
 
 def get_teams(teams_str):
-    # '  International - RS (U19) - EC XV De Novembro Jau SP (U19)'
     teams_str = delete_prefix_number(teams_str.strip())
     teams_str_parts = tuple(map(lambda s: s.strip(), teams_str.split(' - ')))
     if len(teams_str_parts) == 2:
@@ -146,8 +141,8 @@ def get_teams(teams_str):
     raise ParseException('Teams string parsing error. Raw : "{}". Handled: "{}".'.format(teams_str, teams_str_parts))
 
 
-def delete_prefix_number(string):
-    if not string:
-        raise ParseException('Empty string')
-    result = re.match(r'^[0-9]+\.', string)
-    return string[result.end():] if result else string
+def delete_prefix_number(teams_str):
+    if not teams_str:
+        raise ParseException('teams_str is empty')
+    result = re.match(r'^[0-9]+\.(.*)', teams_str)
+    return result.group(1) if result else teams_str
