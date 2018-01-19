@@ -1,7 +1,6 @@
 [
 	{
 		"profit": 0.85,
-		"reverse": false,
 		"w1": {
 			"factor": 4.9,
 			"name": "o1"
@@ -13,72 +12,77 @@
 	},
 	{
 		"profit": 0.93,
-		"reverse": true,
 		"w1": {
 			"cond": 19.5,
 			"factor": 1.65,
-			"name": "total"
+			"name": "total",
+			"suffix": "U"
 		},
 		"w2": {
 			"cond": 19.5,
 			"factor": 2.6,
-			"name": "total"
+			"name": "total",
+			"suffix": "O"
 		}
 	},
 	{
 		"profit": 0.9,
-		"reverse": true,
 		"w1": {
 			"cond": 15.5,
 			"factor": 1.67,
-			"name": "ind_total1"
+			"name": "ind_total1",
+			"suffix": "U"
 		},
 		"w2": {
 			"cond": 15.5,
 			"factor": 2.55,
-			"name": "ind_total1"
+			"name": "ind_total1",
+			"suffix": "O"
 		}
 	},
 	{
 		"profit": 0.3,
-		"reverse": false,
 		"w1": {
 			"cond": 0.0,
 			"factor": 1.75,
-			"name": "hand"
+			"name": "hand",
+			"suffix": "1"
 		},
 		"w2": {
-			"cond": 0.0,
+			"cond": -0.0,
 			"factor": 2.35,
-			"name": "hand"
+			"name": "hand",
+			"suffix": "2"
 		}
 	},
 	{
 		"profit": 6.16,
-		"reverse": false,
 		"w1": {
 			"cond": -1.0,
 			"factor": 4.02,
-			"name": "hand"
+			"name": "hand",
+			"suffix": "1"
 		},
 		"w2": {
-			"cond": -1.0,
+			"cond": 1.0,
 			"factor": 1.45,
-			"name": "hand"
+			"name": "hand",
+			"suffix": "2"
 		}
 	},
 	{
 		"profit": 0.64,
-		"reverse": false,
 		"w1": {
 			"cond": 34.5,
 			"factor": 1.9,
-			"name": "hand"
+			"name": "hand",
+			"suffix": "1"
 		},
 		"w2": {
-			"cond": 34.5,
+			"cond": -34.5,
 			"factor": 2.14,
-			"name": "hand"
+			"name": "hand",
+			"suffix": "2"
 		}
 	}
 ]

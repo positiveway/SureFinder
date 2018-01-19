@@ -11,7 +11,7 @@ xp_part_block_name = './div[contains(@class, "name")]'
 
 xp_details = './div[contains(@class, "table")]/div'
 xp_detail_name = './table[1]/tbody/tr/td[2]/div'
-xp_detail_rows = './table[2]/tbody/tr'
+xp_detail_rows = './table[2]/tr'
 
 xp_row_cond = "./td[{}]/div/div[1]"
 xp_row_factor = "./td[{}]/div/div[2]/span"
@@ -48,11 +48,10 @@ def get_separator(event_name):
     return " @ " if "@" in event_name else " - "
 
 
-def parse(site_info):
+def parse(site_info, bookmaker):
     sport_tree = get_sport_tree(site_info["sport_tree"])
     closed_events_bets = get_closed_events_bets(site_info["add_info"])
 
-    bookmaker = Bookmaker()
     for event_html in site_info["events"]:
         event_doc = html.fromstring(event_html)
 
@@ -68,8 +67,6 @@ def parse(site_info):
         sport_name = event_info.sport_name
         cur_sport = getattr(bookmaker, sport_name)
         cur_sport.append(event)
-
-    return bookmaker
 
 
 def get_sport_tree(raw_sport_tree):
@@ -199,13 +196,23 @@ def result_bets_handler(detail, teams):
 
 
 def get_result_bet_name(row_name, teams):
-    outcomes = ("1", "x", "2")
-    bet_name = "o"
-    for out_pos, outcome in enumerate((teams[0], "Draw", teams[1])):
-        if outcome in row_name:
-            bet_name += outcomes[out_pos]
-    if bet_name == "o":
-        raise ParseException("result bet name not found")
+    outcomes = {
+        "{} To Win".format(teams[0]): "o1",
+        "Draw": "ox",
+        "{} To Win".format(teams[1]): "o2",
+        "{} To Win or Draw".format(teams[0]): "o1x",
+        "{} To Win or {} To Win".format(teams[0], teams[1]): "o12",
+        "{} To Win or Draw".format(teams[1]): "ox2",
+    }
+
+    if row_name in outcomes:
+        bet_name = outcomes[row_name]
+    else:
+        bet_name = {
+            teams[0]: "o1",
+            teams[1]: "o2",
+        }[row_name]
+
     return bet_name
 
 
@@ -238,7 +245,7 @@ def cond_bet_handler(detail, cond_bet_type):
                 v2 = second_value[1]
                 break
         if v2 is None:
-            raise ParseException("conditions in columns not matching")
+            continue
 
         if cond_bet_type > 0:
             v1, v2 = v2, v1  # over and under have wrong order

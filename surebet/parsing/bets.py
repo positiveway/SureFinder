@@ -50,16 +50,19 @@ class Event:
 
 
 class Bookmaker:
-    def __init__(self) -> None:
+    def __init__(self, name) -> None:
+        self.name = name
         self.soccer, self.tennis, self.hockey, self.basket, self.volley = ([] for i in range(5))
 
     def _del_empty(self):
-        for attr, val in self.__dict__.items():
+        items = [(attr, val) for attr, val in self.__dict__.items() if attr != "name"]
+        for attr, val in items:
             new_val = [event for event in val if exist_not_empty(event)]
             setattr(self, attr, new_val)
 
     def _format(self):
-        for val in self.__dict__.values():
+        values = [val for attr, val in self.__dict__.items() if attr != "name"]
+        for val in values:
             for event in val:
                 event._format()
 
@@ -70,7 +73,7 @@ class Bookmaker:
 
 class Bookmakers:
     def __init__(self) -> None:
-        self.fonbet, self.olimp, self.marat = (Bookmaker() for i in range(3))
+        self.fonbet, self.olimp, self.marat = (Bookmaker(name) for name in ['fonbet', 'olimp', 'marat'])
 
     def format(self):
         for bookmaker in self.__dict__.values():

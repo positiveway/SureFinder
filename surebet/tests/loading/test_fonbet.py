@@ -7,7 +7,6 @@ from surebet.loading.fonbet import load, load_events
 
 def test_loading():
     selenium = Selenium()
-    selenium.browser.implicitly_wait(60)
 
     for j in range(2):
         print("load: ({})".format(j))
