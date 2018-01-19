@@ -22,12 +22,14 @@ def check_status(status_code):
 
 async def _async_req(method, handler, url, **kwargs):
     headers = kwargs.get('headers', None)
+    data = kwargs.get('data', None)
     allow_empty = kwargs.get('allow_empty', False)
+    allow_not_found = kwargs.get('allow_not_found', False)
     timeout = kwargs.get('timeout', TIMEOUT)
 
     with async_timeout.timeout(timeout):
-        async with method(url, headers=headers) as response:
-            if allow_empty and response.status == 204:
+        async with method(url, data=data, headers=headers) as response:
+            if (allow_empty and response.status == 204) or (allow_not_found and response.status == 404):
                 return None
             check_status(response.status)
 
