@@ -5,6 +5,7 @@ certifi==2017.11.5
 chardet==3.0.4
 coverage==4.4.2
 EasyProcess==0.2.3
+fuzzywuzzy==0.16.0
 idna==2.6
 lxml==4.1.1
 multidict==3.3.2
@@ -12,6 +13,7 @@ pluggy==0.6.0
 py==1.5.2
 pytest==3.3.2
 pytest-cov==2.5.1
+python-Levenshtein==0.12.0
 PyVirtualDisplay==0.2.1
 requests==2.18.4
 selenium==3.8.1
