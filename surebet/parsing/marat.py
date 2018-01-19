@@ -188,32 +188,26 @@ def get_cond_bet_type(detail_name, teams):
 def result_bets_handler(detail, teams):
     for row_node in xpath_with_check(detail, xp_detail_rows):
         row_name = get_text(xpath_with_check(row_node, "./td/div[1]")[0])
-        bet_name = get_result_bet_name(row_name, teams)
+        bet_name = get_result_bet_name(row_name, *teams)
 
         factor_node = xpath_with_check(row_node, "./td/div[2]/span")[0]
         if factor_not_blocked(factor_node):
             yield bet_name, get_factor(factor_node)
 
 
-def get_result_bet_name(row_name, teams):
+def get_result_bet_name(row_name, team1, team2):
     outcomes = {
-        "{} To Win".format(teams[0]): "o1",
+        "{} To Win".format(team1): "o1",
         "Draw": "ox",
-        "{} To Win".format(teams[1]): "o2",
-        "{} To Win or Draw".format(teams[0]): "o1x",
-        "{} To Win or {} To Win".format(teams[0], teams[1]): "o12",
-        "{} To Win or Draw".format(teams[1]): "ox2",
+        "{} To Win".format(team2): "o2",
+        "{} To Win or Draw".format(team1): "o1x",
+        "{} To Win or {} To Win".format(team1, team2): "o12",
+        "{} To Win or Draw".format(team2): "ox2",
+        team1: "o1",
+        team2: "o2",
     }
 
-    if row_name in outcomes:
-        bet_name = outcomes[row_name]
-    else:
-        bet_name = {
-            teams[0]: "o1",
-            teams[1]: "o2",
-        }[row_name]
-
-    return bet_name
+    return outcomes[row_name]
 
 
 def cond_bet_handler(detail, cond_bet_type):
