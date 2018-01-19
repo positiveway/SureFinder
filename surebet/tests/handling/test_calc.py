@@ -2,10 +2,10 @@ from os import path
 import pickle
 
 from surebet import *
-from surebet.handling.calc_surebets import calc_surebets
+from surebet.handling.calculating import calc_surebets
 from surebet.tests.handling import *
 
-resource_dir = path.join(package_dir, "calc_surebets")
+resource_dir = path.join(package_dir, "calculating")
 
 
 def test_known_result():
