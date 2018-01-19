@@ -4,7 +4,7 @@ from surebet.handling import *
 from surebet.handling.matching import match_sports
 from surebet.handling.calculating import calc_surebets
 
-from surebet.parsing.bets import CondBet, Bookmaker
+from surebet.parsing.bets import CondBet
 
 opposite_bets = {
     "o1": "o2",
