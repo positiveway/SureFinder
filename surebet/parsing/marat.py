@@ -159,7 +159,7 @@ def handle_details(details, teams):
 def get_handler_type(detail_name):
     handler_type = None
     if "Total" in detail_name or "Handicap" in detail_name:
-        excluded_names = ("Result", "Asian", "Sets")
+        excluded_names = ("Result", "Asian", "Sets", "Halves")
         for name in excluded_names:
             if name in detail_name:
                 break
