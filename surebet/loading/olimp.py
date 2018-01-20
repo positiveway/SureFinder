@@ -28,8 +28,9 @@ sports_by_id = {
 }
 
 
-def get_headers(form_data):
-    to_encode = ";".join([str(form_data[key]) for key in sorted(form_data.keys())] + [token_salt])
+def get_xtoken(form_data):
+    sorted_values = [str(form_data[key]) for key in sorted(form_data.keys())] + [token_salt]
+    to_encode = ";".join(sorted_values)
     return {"X-TOKEN": md5(to_encode.encode()).hexdigest()}
 
 
@@ -42,13 +43,14 @@ def load():
         "passw": passw,
     })
 
-    r = requests.post(req_url, headers=get_headers(form_data), data=form_data)
+    r = requests.post(req_url, headers=get_xtoken(form_data), data=form_data)
     check_status(r.status_code)
 
+    # FIXME: global vars is bad style, mb replace by returnable value
     global session_id
     session_id = r.json()["data"]["session"]
 
-    print("{}: loaded".format(name))
+    log_loaded(name)
 
 
 def get_sport_tree():
@@ -61,7 +63,7 @@ def get_sport_tree():
         "time_shift": "0",
     })
 
-    r = requests.post(req_url, headers=get_headers(form_data), data=form_data)
+    r = requests.post(req_url, headers=get_xtoken(form_data), data=form_data)
     check_status(r.status_code)
     response = r.json()
 
@@ -87,9 +89,10 @@ async def get_event_details(event_id, sport_id, session):
         "id": event_id,
     })
 
-    resp = await async_post(session, req_url, headers=get_headers(form_data), data=form_data, allow_not_found=True)
+    resp = await async_post(session, req_url, headers=get_xtoken(form_data), data=form_data, allow_not_found=True)
 
-    return {"sport_id": sport_id, "details": resp["data"]}
+    details = resp["data"] if resp else None
+    return {"sport_id": sport_id, "details": details}
 
 
 def load_events():
@@ -112,5 +115,5 @@ def load_events():
         if event_info["details"]:
             events_info[sport].append(event_info["details"])
 
-    log_loaded(name)
+    log_loaded_events(name)
     return events_info

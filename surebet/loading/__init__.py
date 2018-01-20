@@ -51,6 +51,10 @@ async def async_get(session, url, **kwargs):
 
 
 def log_loaded(site_name):
+    print("{}: loaded".format(site_name))
+
+
+def log_loaded_events(site_name):
     print("{}: loaded events".format(site_name))
 
 

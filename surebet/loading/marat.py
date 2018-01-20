@@ -50,7 +50,7 @@ def load_events():
         if add_info["html"]:
             add_infos[add_info["sport"]] = add_info["html"]
 
-    log_loaded(name)
+    log_loaded_events(name)
     return {"events": details, "add_info": add_infos, "sport_tree": sport_tree}
 
 
