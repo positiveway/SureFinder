@@ -12,7 +12,7 @@ base_url = "http://191.101.165.203:10600/api/{}"
 session_id = None
 login = "3959858"
 passw = "O335673J"
-token_salt = "b2c59ba4-7702-4b12-bef5-0908391851d9"
+secret_key = "b2c59ba4-7702-4b12-bef5-0908391851d9"
 
 base_form_data = {
     "platforma": "ANDROID1",
@@ -29,7 +29,7 @@ sports_by_id = {
 
 
 def get_xtoken(form_data):
-    sorted_values = [str(form_data[key]) for key in sorted(form_data.keys())] + [token_salt]
+    sorted_values = [str(form_data[key]) for key in sorted(form_data.keys())] + [secret_key]
     to_encode = ";".join(sorted_values)
     return {"X-TOKEN": md5(to_encode.encode()).hexdigest()}
 
