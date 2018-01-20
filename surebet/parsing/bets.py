@@ -54,16 +54,17 @@ class Bookmaker:
         self.name = name
         self.soccer, self.tennis, self.hockey, self.basket, self.volley = ([] for i in range(5))
 
+    def attrs_dict(self):
+        return {attr: val for attr, val in self.__dict__.items() if attr != "name"}
+
     def _del_empty(self):
-        items = [(attr, val) for attr, val in self.__dict__.items() if attr != "name"]
-        for attr, val in items:
+        for attr, val in self.attrs_dict().items():
             new_val = [event for event in val if exist_not_empty(event)]
             setattr(self, attr, new_val)
 
     def _format(self):
-        values = [val for attr, val in self.__dict__.items() if attr != "name"]
-        for val in values:
-            for event in val:
+        for sport in self.attrs_dict().values():
+            for event in sport:
                 event._format()
 
     def format(self):
