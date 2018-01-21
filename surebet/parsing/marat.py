@@ -1,6 +1,7 @@
 from lxml import html
 
 from surebet.parsing import *
+from surebet.converting import format_spaces
 from .bets import *
 
 xp_event_id = '//table[@class="table-shortcuts-menu"]'
@@ -197,6 +198,7 @@ def result_bets_handler(detail, teams):
 
 
 def get_result_bet_name(row_name, team1, team2):
+    row_name = format_spaces(row_name)
     outcomes = {
         "{} To Win".format(team1): "o1",
         "Draw": "ox",
