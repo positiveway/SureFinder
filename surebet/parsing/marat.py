@@ -106,6 +106,7 @@ def parse_event(event_doc, event_info):
     parts = []
     event_name = event_info.name
     teams = parse_teams(event_name, get_separator(event_name))
+    teams = [team.strip() for team in teams]
 
     main_part_bets = handle_details(main_part_details, teams)
     main_part_bets.part = 0

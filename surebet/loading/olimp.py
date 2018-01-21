@@ -29,8 +29,8 @@ sports_by_id = {
 
 
 def get_xtoken(form_data):
-    sorted_values = [str(form_data[key]) for key in sorted(form_data.keys())] + [secret_key]
-    to_encode = ";".join(sorted_values)
+    sorted_values = [str(form_data[key]) for key in sorted(form_data.keys())]
+    to_encode = ";".join(sorted_values + [secret_key])
     return {"X-TOKEN": md5(to_encode.encode()).hexdigest()}
 
 
