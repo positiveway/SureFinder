@@ -1,5 +1,6 @@
-from os import path
 import pickle
+
+from os import path
 
 from surebet import *
 from surebet.handling.calculating import calc_surebets
@@ -17,7 +18,7 @@ def test_known_result():
     with open(filename, "rb") as file:
         known_res_sample = pickle.load(file)
 
-    surebets = calc_surebets(known_res_sample)
+    surebets = calc_surebets(*known_res_sample)
 
     assert obj_to_json(surebets) == json_dumps(known_res)
 
@@ -33,10 +34,10 @@ def test_sample():
     sample[1].sort(key=lambda o: o["sport"])
     for bets_pair in range(len(sample[0])):
         part1, part2 = sample[0][bets_pair], sample[1][bets_pair]
-        wagers_bets = [part1["part_bets"], part2["part_bets"]]
+        wagers_bets = (part1["part_bets"], part2["part_bets"])
         if part1["sport"] == "tennis" or part1["sport"] == "volley":
-            calc_surebets(wagers_bets, with_draw=False)
+            calc_surebets(*wagers_bets, with_draw=False)
         else:
-            calc_surebets(wagers_bets)
+            calc_surebets(*wagers_bets)
 
     logging.info("PASS: sample")

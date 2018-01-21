@@ -11,22 +11,19 @@ result_bets_without_draw = {
 }
 
 
-def calc_surebets(bets_pair, with_draw=True):
-    if not bets_pair or len(bets_pair) != 2:
-        raise HandlingException("wagers bets have wrong len")
-
+def calc_surebets(bets1, bets2, with_draw=True):
     surebets = []
 
     opposite_bets = result_bets if with_draw else result_bets_without_draw
     for bet_name in opposite_bets.keys():
-        factor1 = getattr(bets_pair[0], bet_name)
-        factor2 = getattr(bets_pair[1], opposite_bets[bet_name])
+        factor1 = getattr(bets1, bet_name)
+        factor2 = getattr(bets2, opposite_bets[bet_name])
         if check_surebet(factor1, factor2):
             w1 = Wager(bet_name, factor1)
             w2 = Wager(opposite_bets[bet_name], factor2)
             surebets.append(Surebet(w1, w2, get_profit(factor1, factor2)))
 
-    surebets.extend(handle_cond_bets(bets_pair))
+    surebets.extend(handle_cond_bets(bets1, bets2))
 
     return surebets
 
@@ -40,28 +37,43 @@ def get_profit(factor1, factor2):
     return round(profit, 2)
 
 
-def handle_cond_bets(bets_pair):
+def calc_cond_surebet(bet_name, cond_bet1, cond_bet2, bets_reversed):
+    # calculate suffixes (O/U for total or 1/2 for hand)
+    first_suffix = get_bet_suffix(bet_name, 0)
+    second_suffix = get_bet_suffix(bet_name, 1)
+
+    # cond is the same for cond_bet1 and cond_bet2
+    cond = cond_bet1.cond
+    opposite_cond = -cond if bet_name == "hand" else cond
+
+    if bets_reversed:
+        cond_bet1, cond_bet2 = cond_bet2, cond_bet1
+
+    w1 = CondWager(bet_name, cond_bet1.v1, first_suffix, cond)
+    w2 = CondWager(bet_name, cond_bet2.v2, second_suffix, opposite_cond)
+
+    if bets_reversed:
+        w1, w2 = w2, w1
+
+    return Surebet(w1, w2, get_profit(cond_bet1.v1, cond_bet2.v2))
+
+
+def handle_cond_bets(bets1, bets2):
     surebets = []
     for bet_name in ("total", "ind_total1", "ind_total2", "hand"):
-        cond_bets2 = {cond_bet.cond: cond_bet for cond_bet in getattr(bets_pair[1], bet_name)}
-        for cond_bet1 in getattr(bets_pair[0], bet_name):
-            if cond_bet1.cond in cond_bets2:
-                cond_bet2 = cond_bets2[cond_bet1.cond]
-
-                # calculate suffixes (O/U for total or 1/2 for hand)
-                first_suffix = get_bet_suffix(bet_name, 0)
-                second_suffix = get_bet_suffix(bet_name, 1)
-                # cond is the same for cond_bet1 and cond_bet2
-                opposite_cond = -cond_bet1.cond if bet_name == "hand" else cond_bet1.cond
+        cond_bets2_map = {cond_bet.cond: cond_bet for cond_bet in getattr(bets2, bet_name)}
+        for cond_bet1 in getattr(bets1, bet_name):
+            cond_bet2 = cond_bets2_map.get(cond_bet1.cond, None)
+            if cond_bet2:
+                bets_reversed = None
                 if check_surebet(cond_bet1.v1, cond_bet2.v2):
-                    w1 = CondWager(bet_name, cond_bet1.v1, first_suffix, cond_bet1.cond)
-                    w2 = CondWager(bet_name, cond_bet2.v2, second_suffix, opposite_cond)
-                    surebets.append(Surebet(w1, w2, get_profit(cond_bet1.v1, cond_bet2.v2)))
+                    bets_reversed = False
+                elif check_surebet(cond_bet1.v2, cond_bet2.v1):
+                    bets_reversed = True
 
-                if check_surebet(cond_bet1.v2, cond_bet2.v1):
-                    w1 = CondWager(bet_name, cond_bet1.v2, second_suffix, opposite_cond)
-                    w2 = CondWager(bet_name, cond_bet2.v1, first_suffix, cond_bet2.cond)
-                    surebets.append(Surebet(w1, w2, get_profit(cond_bet1.v2, cond_bet2.v1)))
+                if bets_reversed is not None:
+                    cond_surebet = calc_cond_surebet(bet_name, cond_bet1, cond_bet2, bets_reversed)
+                    surebets.append(cond_surebet)
     return surebets
 
 

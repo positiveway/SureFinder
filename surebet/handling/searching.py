@@ -64,7 +64,7 @@ def find_for_2_books(book1, book2):
                 part_num = part_bets1.part
                 part_bets2 = part_bets2_map.get(part_num, None)
                 if part_bets2:
-                    part_surebets = calc_surebets((part_bets1, part_bets2), with_draw=with_draw)
+                    part_surebets = calc_surebets(part_bets1, part_bets2, with_draw=with_draw)
                     if part_surebets:
                         e_surebets.parts.append(PartSurebets(part_surebets, part_num))
 
