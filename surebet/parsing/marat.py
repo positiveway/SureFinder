@@ -1,6 +1,7 @@
 from lxml import html
 
 from surebet.parsing import *
+from surebet.converting import format_spaces
 from .bets import *
 
 xp_event_id = '//table[@class="table-shortcuts-menu"]'
@@ -106,6 +107,7 @@ def parse_event(event_doc, event_info):
     parts = []
     event_name = event_info.name
     teams = parse_teams(event_name, get_separator(event_name))
+    teams = [team.strip() for team in teams]
 
     main_part_bets = handle_details(main_part_details, teams)
     main_part_bets.part = 0
@@ -159,7 +161,7 @@ def handle_details(details, teams):
 def get_handler_type(detail_name):
     handler_type = None
     if "Total" in detail_name or "Handicap" in detail_name:
-        excluded_names = ("Result", "Asian", "Sets")
+        excluded_names = ("Result", "Asian", "Sets", "Halves")
         for name in excluded_names:
             if name in detail_name:
                 break
@@ -196,6 +198,7 @@ def result_bets_handler(detail, teams):
 
 
 def get_result_bet_name(row_name, team1, team2):
+    row_name = format_spaces(row_name)
     outcomes = {
         "{} To Win".format(team1): "o1",
         "Draw": "ox",

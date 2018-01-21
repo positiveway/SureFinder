@@ -3,7 +3,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
-from surebet.loading import log_loaded, LoadException
+from surebet.loading import *
 
 name = "fonbet"
 
@@ -34,12 +34,12 @@ def load(browser):
     browser.find_element_by_css_selector(expand_all).click()
 
     WebDriverWait(browser, 10).until(ec.invisibility_of_element_located((By.CSS_SELECTOR, expand_all)))
-    print("{}: loaded".format(name))
+    log_loaded(name)
 
 
 def load_events(browser):
     browser.execute_script(expand_remain)
 
     result = browser.find_element_by_css_selector(node).get_attribute("outerHTML")
-    log_loaded(name)
+    log_loaded_events(name)
     return result
