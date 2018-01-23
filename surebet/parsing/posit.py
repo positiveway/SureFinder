@@ -4,6 +4,7 @@ from re import match
 
 from surebet.handling import *
 from surebet.parsing import *
+from surebet.converting import format_spaces
 
 book_names = ["fonbet", "marat", "olimp"]
 
@@ -79,7 +80,7 @@ def _get_events_teams(node, is_reversed):
 
     events_teams = []
     for name_node in name_nodes:
-        name = get_text(name_node)
+        name = format_spaces(get_text(name_node))
         events_teams.append(parse_teams(name, " vs "))
 
     return events_teams
@@ -88,6 +89,7 @@ def _get_events_teams(node, is_reversed):
 def _get_part_num(node):
     part_num = 0
     node_text = get_text(xpath_with_check(node, "./nobr/a")[0])
+    node_text = format_spaces(node_text)
 
     res = search(r"\((\d) [a-z]+\)", node_text)
     if res:
@@ -120,6 +122,7 @@ def _get_surebet(node, is_reversed):
     wagers = []
     for wager_num in range(2):
         stake_name = get_text(stake_nodes[wager_num]) + "$"  # adding $ for proper regexp matching
+        stake_name = format_spaces(stake_name)
         if excluded_name in stake_name:
             continue
 
