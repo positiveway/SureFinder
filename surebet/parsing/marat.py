@@ -1,7 +1,6 @@
 from lxml import html
 
 from surebet.parsing import *
-from surebet.converting import format_spaces
 from .bets import *
 
 xp_event_id = '//table[@class="table-shortcuts-menu"]'

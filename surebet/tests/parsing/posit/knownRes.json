@@ -1,0 +1,405 @@
+[
+  {
+    "basket": [],
+    "book1": "fonbet",
+    "book2": "marat",
+    "hockey": [],
+    "soccer": [],
+    "tennis": [
+      {
+        "parts": [
+          {
+            "part": 0,
+            "surebets": [
+              {
+                "profit": null,
+                "w1": {
+                  "factor": 0,
+                  "name": "o1"
+                },
+                "w2": {
+                  "factor": 0,
+                  "name": "o2"
+                }
+              }
+            ]
+          }
+        ],
+        "teams1": [
+          "Cepelova/Kuzmova",
+          "Bucsa/Sizikova"
+        ],
+        "teams2": [
+          "J.Cepelova/V.Kuzmova",
+          "C.Bucsa/Y.Sizikova"
+        ]
+      },
+      {
+        "parts": [
+          {
+            "part": 2,
+            "surebets": [
+              {
+                "profit": null,
+                "w1": {
+                  "cond": -1.5,
+                  "factor": 0,
+                  "name": "hand",
+                  "suffix": "2"
+                },
+                "w2": {
+                  "cond": 1.5,
+                  "factor": 0,
+                  "name": "hand",
+                  "suffix": "1"
+                }
+              },
+              {
+                "profit": null,
+                "w1": {
+                  "cond": 5.5,
+                  "factor": 0,
+                  "name": "ind_total2",
+                  "suffix": "O"
+                },
+                "w2": {
+                  "cond": 5.5,
+                  "factor": 0,
+                  "name": "ind_total2",
+                  "suffix": "U"
+                }
+              }
+            ]
+          }
+        ],
+        "teams1": [
+          "Voegele S",
+          "Liu C"
+        ],
+        "teams2": [
+          "Voegele, Stefanie",
+          "Liu, Claire"
+        ]
+      }
+    ],
+    "volley": [
+      {
+        "parts": [
+          {
+            "part": 0,
+            "surebets": [
+              {
+                "profit": null,
+                "w1": {
+                  "cond": 145.5,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "O"
+                },
+                "w2": {
+                  "cond": 154.5,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "U"
+                }
+              }
+            ]
+          }
+        ],
+        "teams1": [
+          "Pamvochaikos",
+          "PAOK"
+        ],
+        "teams2": [
+          "Pamvochaikos",
+          "PAOK"
+        ]
+      },
+      {
+        "parts": [
+          {
+            "part": 1,
+            "surebets": [
+              {
+                "profit": null,
+                "w1": {
+                  "cond": 42.5,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "O"
+                },
+                "w2": {
+                  "cond": 42.5,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "U"
+                }
+              }
+            ]
+          }
+        ],
+        "teams1": [
+          "Liberec",
+          "RWE Brno"
+        ],
+        "teams2": [
+          "Liberec",
+          "Brno"
+        ]
+      },
+      {
+        "parts": [
+          {
+            "part": 1,
+            "surebets": [
+              {
+                "profit": null,
+                "w1": {
+                  "cond": 48.5,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "U"
+                },
+                "w2": {
+                  "cond": 48.5,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "O"
+                }
+              }
+            ]
+          }
+        ],
+        "teams1": [
+          "Bielsko-Biala U20",
+          "Rybnik U20"
+        ],
+        "teams2": [
+          "BBTS Bielsko-Biala U-19",
+          "Rybnik U-19"
+        ]
+      }
+    ]
+  },
+  {
+    "basket": [],
+    "book1": "fonbet",
+    "book2": "olimp",
+    "hockey": [
+      {
+        "parts": [
+          {
+            "part": 1,
+            "surebets": [
+              {
+                "profit": null,
+                "w1": {
+                  "cond": 2.5,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "O"
+                },
+                "w2": {
+                  "cond": 2.5,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "U"
+                }
+              }
+            ]
+          }
+        ],
+        "teams1": [
+          "Fehervari Titanok",
+          "Ferencvarosi"
+        ],
+        "teams2": [
+          "Fehervari Titanok",
+          "Ferencv\u00e1ros"
+        ]
+      }
+    ],
+    "soccer": [],
+    "tennis": [
+      {
+        "parts": [
+          {
+            "part": 2,
+            "surebets": [
+              {
+                "profit": null,
+                "w1": {
+                  "cond": -1.5,
+                  "factor": 0,
+                  "name": "hand",
+                  "suffix": "1"
+                },
+                "w2": {
+                  "cond": 1.5,
+                  "factor": 0,
+                  "name": "hand",
+                  "suffix": "2"
+                }
+              },
+              {
+                "profit": null,
+                "w1": {
+                  "factor": 0,
+                  "name": "o1"
+                },
+                "w2": {
+                  "factor": 0,
+                  "name": "o2"
+                }
+              }
+            ]
+          },
+          {
+            "part": 0,
+            "surebets": [
+              {
+                "profit": null,
+                "w1": {
+                  "cond": 26.5,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "U"
+                },
+                "w2": {
+                  "cond": 26.5,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "O"
+                }
+              }
+            ]
+          }
+        ],
+        "teams1": [
+          "Janvier M",
+          "Robredo T"
+        ],
+        "teams2": [
+          "Janvier M.",
+          "Robredo T."
+        ]
+      }
+    ],
+    "volley": []
+  },
+  {
+    "basket": [],
+    "book1": "marat",
+    "book2": "olimp",
+    "hockey": [
+      {
+        "parts": [
+          {
+            "part": 0,
+            "surebets": [
+              {
+                "profit": null,
+                "w1": {
+                  "factor": 0,
+                  "name": "o1"
+                },
+                "w2": {
+                  "cond": 0.5,
+                  "factor": 0,
+                  "name": "hand",
+                  "suffix": "2"
+                }
+              },
+              {
+                "profit": null,
+                "w1": {
+                  "factor": 0,
+                  "name": "o1"
+                },
+                "w2": {
+                  "factor": 0,
+                  "name": "ox2"
+                }
+              },
+              {
+                "profit": null,
+                "w1": {
+                  "cond": 5.0,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "O"
+                },
+                "w2": {
+                  "cond": 5.0,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "U"
+                }
+              }
+            ]
+          },
+          {
+            "part": 3,
+            "surebets": [
+              {
+                "profit": null,
+                "w1": {
+                  "cond": 2.0,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "O"
+                },
+                "w2": {
+                  "cond": 2.0,
+                  "factor": 0,
+                  "name": "total",
+                  "suffix": "U"
+                }
+              }
+            ]
+          }
+        ],
+        "teams1": [
+          "China PR U-20",
+          "Israel U-20"
+        ],
+        "teams2": [
+          "China",
+          "Israel"
+        ]
+      }
+    ],
+    "soccer": [],
+    "tennis": [
+      {
+        "parts": [
+          {
+            "part": 2,
+            "surebets": [
+              {
+                "profit": null,
+                "w1": {
+                  "factor": 0,
+                  "name": "o1"
+                },
+                "w2": {
+                  "factor": 0,
+                  "name": "o2"
+                }
+              }
+            ]
+          }
+        ],
+        "teams1": [
+          "Janvier, Maxime",
+          "Robredo, Tommy"
+        ],
+        "teams2": [
+          "Janvier M.",
+          "Robredo T."
+        ]
+      }
+    ],
+    "volley": []
+  }
+]
