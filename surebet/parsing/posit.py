@@ -34,13 +34,13 @@ def parse(source):
         sport = getattr(all_surebets[book_pair], sport_name)
 
         events_teams = _get_events_teams(cols[3], is_reversed)
-        e_surebets = next((ev for ev in sport if ev.teams1 == events_teams[0] and ev.teams2 == events_teams[1]), None)
+        e_surebets = find_by_predicate(sport, lambda ev: ev.teams1 == events_teams[0] and ev.teams2 == events_teams[1])
         if not e_surebets:
             e_surebets = EventSurebets(*events_teams)
             sport.append(e_surebets)
 
         part_num = _get_part_num(cols[4])
-        part_surebets = next((part for part in e_surebets.parts if part.part == part_num), None)
+        part_surebets = find_by_predicate(e_surebets.parts, lambda part: part.part == part_num)
         if not part_surebets:
             part_surebets = PartSurebets([], part_num)
             e_surebets.parts.append(part_surebets)
@@ -156,3 +156,10 @@ def _get_surebet(node, is_reversed):
     if len(wagers) == 2:
         surebet = Surebet(*wagers)
     return surebet
+
+
+def find_by_predicate(iterable, predicate):
+    for item in iterable:
+        if predicate(item):
+            return item
+    return None
