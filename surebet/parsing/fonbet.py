@@ -160,6 +160,9 @@ def handle_row(row_node):
 
 
 def handle_cond_bet(nodes, ids):
+    if ids[-1] >= len(nodes):
+        return None
+
     factors = []
     for id in ids:
         text = nodes[id].text
