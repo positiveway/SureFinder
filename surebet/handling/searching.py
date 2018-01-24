@@ -13,7 +13,7 @@ opposite_bets = {
 opposite_bets.update({val: key for key, val in opposite_bets.items()})  # add reversed bets
 
 
-def get_reversed_event(event):
+def _get_reversed_event(event):
     event.team1, event.team2 = event.team2, event.team1
 
     for part in event.parts:
@@ -28,7 +28,7 @@ def get_reversed_event(event):
     return event
 
 
-def get_reversed_surebets(e_surebets):
+def _get_reversed_surebets(e_surebets):
     e_surebets.teams2 = (e_surebets.teams2[1], e_surebets.teams2[0])
 
     for part_surebets in e_surebets.parts:
@@ -55,7 +55,7 @@ def find_for_2_books(book1, book2):
         for event_pair in match_sports(sport1, sport2):
             event1, event2 = event_pair.event1, event_pair.event2
             if event_pair.teams_reversed:
-                event2 = get_reversed_event(event2)
+                event2 = _get_reversed_event(event2)
 
             e_surebets = EventSurebets((event1.team1, event1.team2), (event2.team1, event2.team2))
 
@@ -70,7 +70,7 @@ def find_for_2_books(book1, book2):
 
             if e_surebets.parts:
                 if event_pair.teams_reversed:  # reverse second wagers in surebets
-                    e_surebets = get_reversed_surebets(e_surebets)
+                    e_surebets = _get_reversed_surebets(e_surebets)
 
                 sport = getattr(surebets, sport_name)
                 sport.append(e_surebets)
@@ -82,7 +82,8 @@ def find_surebets(bookmakers):
     bookmakers.format()
 
     all_surebets = []
-    for book1, book2 in combinations(bookmakers.__dict__.values(), 2):
+    for book1_name, book2_name in combinations(book_names, 2):
+        book1, book2 = getattr(bookmakers, book1_name), getattr(bookmakers, book2_name)
         all_surebets.append(find_for_2_books(book1, book2))
 
     return all_surebets
