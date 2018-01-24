@@ -1,7 +1,15 @@
+from itertools import combinations
+
+book_names = ["fonbet", "marat", "olimp"]
+
+
 class Wager:
     def __init__(self, name, factor):
         self.name = name
         self.factor = factor
+
+    def __eq__(self, other):
+        return self.name == other.name
 
 
 class CondWager(Wager):
@@ -10,12 +18,18 @@ class CondWager(Wager):
         self.cond = cond
         self.suffix = suffix
 
+    def __eq__(self, other):
+        return super().__eq__(other) and self.suffix == other.suffix and self.cond == other.cond
+
 
 class Surebet:
     def __init__(self, w1, w2, profit=None):
         self.w1 = w1
         self.w2 = w2
         self.profit = profit
+
+    def __eq__(self, other):
+        return self.w1 == other.w1 and self.w2 == other.w2
 
 
 class PartSurebets:
@@ -34,6 +48,13 @@ class Surebets:
     def __init__(self, book1, book2):
         self.book1, self.book2 = book1, book2
         self.soccer, self.tennis, self.hockey, self.basket, self.volley = ([] for i in range(5))
+
+
+def generate_all_surebets():
+    all_surebets = []
+    for book1_name, book2_name in combinations(book_names, 2):
+        all_surebets.append(Surebets(book1_name, book2_name))
+    return all_surebets
 
 
 class HandlingException(Exception):
