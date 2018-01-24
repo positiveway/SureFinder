@@ -221,8 +221,8 @@ def get_result_bet_name(row_name, team1, team2):
     bet_name = None
     try:
         bet_name = outcomes[row_name]
-    except KeyError as e:
-        print(str(e))
+    except KeyError:
+        print("keyError: {}".format(row_name))
     return bet_name
 
 
