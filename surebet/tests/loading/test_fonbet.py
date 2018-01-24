@@ -7,13 +7,12 @@ from surebet.loading.fonbet import load, load_events
 
 def test_loading():
     selenium = Selenium()
-    selenium.browser.implicitly_wait(30)
 
-    for j in range(3):
+    for j in range(2):
         print("load: ({})".format(j))
 
         load(selenium.browser)
-        for i in range(8):
+        for i in range(4):
             print("load events: ({})".format(i))
 
             result = load_events(selenium.browser)
@@ -22,7 +21,7 @@ def test_loading():
             else:
                 raise LoadException("got empty html")
 
-            time.sleep(2)
+            time.sleep(1)
 
         time.sleep(5)
 

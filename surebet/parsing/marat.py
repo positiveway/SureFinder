@@ -3,7 +3,6 @@ from lxml import html
 from surebet.parsing import *
 from .bets import *
 
-
 xp_event_id = '//table[@class="table-shortcuts-menu"]'
 
 xp_blocks = '//*[contains(@id, "block")]'
@@ -12,7 +11,7 @@ xp_part_block_name = './div[contains(@class, "name")]'
 
 xp_details = './div[contains(@class, "table")]/div'
 xp_detail_name = './table[1]/tbody/tr/td[2]/div'
-xp_detail_rows = './table[2]/tbody/tr'
+xp_detail_rows = './table[2]/tr'
 
 xp_row_cond = "./td[{}]/div/div[1]"
 xp_row_factor = "./td[{}]/div/div[2]/span"
@@ -33,10 +32,6 @@ class WinBets:
         self.o2 = o2
 
 
-def get_text(elem):
-    return elem.text.strip()
-
-
 def factor_not_blocked(elem):
     return elem.get("class") != "igrey"
 
@@ -53,11 +48,10 @@ def get_separator(event_name):
     return " @ " if "@" in event_name else " - "
 
 
-def parse(site_info):
+def parse(site_info, bookmaker):
     sport_tree = get_sport_tree(site_info["sport_tree"])
     closed_events_bets = get_closed_events_bets(site_info["add_info"])
 
-    bookmaker = Bookmaker()
     for event_html in site_info["events"]:
         event_doc = html.fromstring(event_html)
 
@@ -73,8 +67,6 @@ def parse(site_info):
         sport_name = event_info.sport_name
         cur_sport = getattr(bookmaker, sport_name)
         cur_sport.append(event)
-
-    return bookmaker
 
 
 def get_sport_tree(raw_sport_tree):
@@ -114,6 +106,7 @@ def parse_event(event_doc, event_info):
     parts = []
     event_name = event_info.name
     teams = parse_teams(event_name, get_separator(event_name))
+    teams = [team.strip() for team in teams]
 
     main_part_bets = handle_details(main_part_details, teams)
     main_part_bets.part = 0
@@ -167,7 +160,7 @@ def handle_details(details, teams):
 def get_handler_type(detail_name):
     handler_type = None
     if "Total" in detail_name or "Handicap" in detail_name:
-        excluded_names = ("Result", "Asian", "Sets")
+        excluded_names = ("Result", "Asian", "Sets", "Halves")
         for name in excluded_names:
             if name in detail_name:
                 break
@@ -196,22 +189,27 @@ def get_cond_bet_type(detail_name, teams):
 def result_bets_handler(detail, teams):
     for row_node in xpath_with_check(detail, xp_detail_rows):
         row_name = get_text(xpath_with_check(row_node, "./td/div[1]")[0])
-        bet_name = get_result_bet_name(row_name, teams)
+        bet_name = get_result_bet_name(row_name, *teams)
 
         factor_node = xpath_with_check(row_node, "./td/div[2]/span")[0]
         if factor_not_blocked(factor_node):
             yield bet_name, get_factor(factor_node)
 
 
-def get_result_bet_name(row_name, teams):
-    outcomes = ("1", "x", "2")
-    bet_name = "o"
-    for out_pos, outcome in enumerate((teams[0], "Draw", teams[1])):
-        if outcome in row_name:
-            bet_name += outcomes[out_pos]
-    if bet_name == "o":
-        raise ParseException("result bet name not found")
-    return bet_name
+def get_result_bet_name(row_name, team1, team2):
+    row_name = format_spaces(row_name)
+    outcomes = {
+        "{} To Win".format(team1): "o1",
+        "Draw": "ox",
+        "{} To Win".format(team2): "o2",
+        "{} To Win or Draw".format(team1): "o1x",
+        "{} To Win or {} To Win".format(team1, team2): "o12",
+        "{} To Win or Draw".format(team2): "ox2",
+        team1: "o1",
+        team2: "o2",
+    }
+
+    return outcomes[row_name]
 
 
 def cond_bet_handler(detail, cond_bet_type):
@@ -243,7 +241,7 @@ def cond_bet_handler(detail, cond_bet_type):
                 v2 = second_value[1]
                 break
         if v2 is None:
-            raise ParseException("conditions in columns not matching")
+            continue
 
         if cond_bet_type > 0:
             v1, v2 = v2, v1  # over and under have wrong order
