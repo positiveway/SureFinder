@@ -17,6 +17,17 @@ DOUBLE_PARENTHESES_REGEXP = r'^.*\(.*\) - .*\(.*\).*$'
 PARENTHESES_REGEXP = r'^.*\(.*\).*$'
 
 
+def parse_json(json):
+    bookmaker = Bookmaker()
+    bookmaker_sports = {
+        'Soccer': bookmaker.soccer,
+        'Ice Hockey': bookmaker.hockey,
+        'Basketball': bookmaker.basket,
+        'Tennis': bookmaker.tennis,
+        'Volleyball': bookmaker.volley,
+    }
+
+
 def parse(source):
     bookmaker = Bookmaker()
     bookmaker_sports = {
@@ -97,6 +108,8 @@ def get_main_bets(main_bets_rows):
         if bet_type == 'H2':
             if bets.hand:
                 bets.hand[0].v2 = parse_factor(span.get('data-v2'))
+                if bets.hand[0].v2 == 0.0:
+                    raise ParseException('hand[0].v2 == 0')
 
     return bets
 
@@ -112,8 +125,8 @@ def get_individual_totals(other_bets_rows, first_team, second_team):
                 team = row.text.rpartition('(')[0].strip()
                 span = xpath_with_check(row, 'span')[0]
                 cond_bet = CondBet(parse_factor(span.get('data-v1')),
-                                   parse_factor(span.get('data-v2')),
-                                   parse_factor(span.get('data-v3')))
+                                   parse_factor(span.get('data-v3')),  # over
+                                   parse_factor(span.get('data-v2')))  # under
                 if team == first_team:
                     ind_total1.append(cond_bet)
                 elif team == second_team:

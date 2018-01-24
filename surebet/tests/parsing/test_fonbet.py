@@ -16,7 +16,7 @@ def abs_path(filename):
 def test_samples():
     for num in range(3):
         filename = abs_path('sample{}.html'.format(num))
-        with open(filename, encoding='utf-8') as file:
+        with open(filename) as file:
             html = file.read()
         parse(html)
         logging.info('PASS: sample{}'.format(num))
