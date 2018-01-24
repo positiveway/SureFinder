@@ -27,8 +27,11 @@ def xpath_with_check(node, xpath):
 
 def parse_teams(name, sep):
     teams = name.split(sep)
-    if len(teams) != 2 or sep not in name:
+    if sep not in name:
         raise StructureException('event name')
+    if len(teams) != 2:
+        return None
+
     return teams
 
 
