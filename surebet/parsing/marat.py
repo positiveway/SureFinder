@@ -59,8 +59,10 @@ def parse(site_info, bookmaker):
         event_info = sport_tree[event_id]
 
         event = parse_event(event_doc, event_info)
+        if not event:
+            continue
 
-        if event_id in closed_events_bets:
+        if event.parts and event_id in closed_events_bets:
             event.parts[0].o1 = closed_events_bets[event_id].o1  # Closed events have bets only for part 0
             event.parts[0].o2 = closed_events_bets[event_id].o2
 
@@ -92,6 +94,13 @@ def get_sport_tree(raw_sport_tree):
 def parse_event(event_doc, event_info):
     sport_name = event_info.sport_name
 
+    event_name = event_info.name
+    teams = parse_teams(event_name, get_separator(event_name))
+    if not teams:
+        return None
+
+    teams = [team.strip() for team in teams]
+
     main_part_details = []
     add_parts_block = None
     for block in xpath_with_check(event_doc, xp_blocks):
@@ -104,9 +113,6 @@ def parse_event(event_doc, event_info):
             add_parts_block = block
 
     parts = []
-    event_name = event_info.name
-    teams = parse_teams(event_name, get_separator(event_name))
-    teams = [team.strip() for team in teams]
 
     main_part_bets = handle_details(main_part_details, teams)
     main_part_bets.part = 0
@@ -189,7 +195,10 @@ def get_cond_bet_type(detail_name, teams):
 def result_bets_handler(detail, teams):
     for row_node in xpath_with_check(detail, xp_detail_rows):
         row_name = get_text(xpath_with_check(row_node, "./td/div[1]")[0])
+
         bet_name = get_result_bet_name(row_name, *teams)
+        if not bet_name:
+            continue
 
         factor_node = xpath_with_check(row_node, "./td/div[2]/span")[0]
         if factor_not_blocked(factor_node):
@@ -209,7 +218,12 @@ def get_result_bet_name(row_name, team1, team2):
         team2: "o2",
     }
 
-    return outcomes[row_name]
+    bet_name = None
+    try:
+        bet_name = outcomes[row_name]
+    except KeyError:
+        print("keyError: {}".format(row_name))
+    return bet_name
 
 
 def cond_bet_handler(detail, cond_bet_type):
