@@ -1,4 +1,3 @@
-from itertools import combinations
 from lxml import html
 from re import match
 
@@ -6,16 +5,14 @@ from surebet.handling import *
 from surebet.parsing import *
 from surebet.converting import format_spaces
 
-book_names = ["fonbet", "marat", "olimp"]
-
 xp_rows = '//table/tbody/tr[not(@id="")]'
 none_factor = 0
 
 
-def parse(source):
-    all_surebets = {}
-    for book1_name, book2_name in combinations(book_names, 2):
-        all_surebets[(book1_name, book2_name)] = Surebets(book1_name, book2_name)
+def parse(source, all_surebets):
+    books_surebets = {}
+    for book_surebets in all_surebets:
+        books_surebets[(book_surebets.book1, book_surebets.book2)] = book_surebets
 
     doc = html.fromstring(source)
     for row in xpath_with_check(doc, xp_rows):
@@ -31,7 +28,7 @@ def parse(source):
             continue
 
         sport_name = _get_sport_name(cols[0])
-        sport = getattr(all_surebets[book_pair], sport_name)
+        sport = getattr(books_surebets[book_pair], sport_name)
 
         events_teams = _get_events_teams(cols[3], is_reversed)
         e_surebets = find_by_predicate(sport, lambda ev: ev.teams1 == events_teams[0] and ev.teams2 == events_teams[1])
@@ -45,9 +42,8 @@ def parse(source):
             part_surebets = PartSurebets([], part_num)
             e_surebets.parts.append(part_surebets)
 
-        part_surebets.surebets.append(surebet)
-
-    return list(all_surebets.values())
+        if surebet not in part_surebets.surebets:
+            part_surebets.surebets.append(surebet)
 
 
 def _get_sport_name(node):
