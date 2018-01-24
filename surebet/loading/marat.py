@@ -1,7 +1,10 @@
 import re
 import requests
 import json
-from surebet.loading import check_status, log_loaded
+import asyncio
+import aiohttp
+
+from surebet.loading import *
 
 name = "marat"
 
@@ -16,7 +19,7 @@ details_url = "https://www.marathonbet.co.uk/en/livemarkets.htm?treeId={}"
 
 def load_events():
     r = requests.get(url)
-    check_status(name, r.status_code)
+    check_status(r.status_code)
 
     site_html = r.text
     res = re.search(r"reactData = ({.*});", site_html)
@@ -24,20 +27,31 @@ def load_events():
 
     sport_tree = process_sport_tree(raw_sport_tree)
 
-    events = []
-    add_info = {}
+    loop = asyncio.get_event_loop()
+    session = aiohttp.ClientSession(loop=loop)
+
+    details_task = []
+    add_info_task = []
     for sport in sport_tree:
         if sport["name"] == "Tennis" or sport["name"] == "Volleyball":
-            html = get_add_info(sport["id"])
-            if html:
-                add_info[sport["name"]] = html
+            add_info_task.append(get_add_info(sport["id"], sport["name"], session))
         for event in sport["events"]:
-            event_details = get_event_details(event["id"])
-            if event_details:
-                events.append(event_details)
+            details_task.append(get_event_details(event["id"], session))
 
-    log_loaded(name)
-    return {"events": events, "add_info": add_info, "sport_tree": sport_tree}
+    details_resp, add_info_resp = loop.run_until_complete(asyncio.gather(
+        asyncio.gather(*details_task),
+        asyncio.gather(*add_info_task),
+    ))
+    session.close()
+
+    details = [detail for detail in details_resp if detail]
+    add_infos = {}
+    for add_info in add_info_resp:
+        if add_info["html"]:
+            add_infos[add_info["sport"]] = add_info["html"]
+
+    log_loaded_events(name)
+    return {"events": details, "add_info": add_infos, "sport_tree": sport_tree}
 
 
 def process_sport_tree(raw_sport_tree):
@@ -55,23 +69,19 @@ def process_sport_tree(raw_sport_tree):
     return sport_tree
 
 
-def get_event_details(event_id):
+async def get_event_details(event_id, session):
     req_url = details_url.format(event_id)
 
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
+    resp = await async_post(session, req_url, headers=headers, allow_empty=True)
 
-    r = requests.post(req_url, headers=headers)
-    if r.status_code == 204:
-        return None
-    check_status(name, r.status_code)
-
-    return r.json()["ADDITIONAL_MARKETS"]
+    result = None
+    if resp:
+        result = resp["ADDITIONAL_MARKETS"]
+    return result
 
 
-def get_add_info(sport_id):
+async def get_add_info(sport_id, sport_name, session):
     req_url = url + "/{}".format(sport_id)
 
-    r = requests.get(req_url)
-    check_status(name, r.status_code)
-
-    return r.text
+    return {"sport": sport_name, "html": await async_get(session, req_url)}

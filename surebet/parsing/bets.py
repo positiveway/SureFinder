@@ -4,8 +4,8 @@ from surebet.converting import format_spaces
 class CondBet:
     def __init__(self, cond, v1, v2) -> None:
         self.cond = cond
-        self.v1 = v1
-        self.v2 = v2
+        self.v1 = v1  # Over/Hand1
+        self.v2 = v2  # Under/Hand2
 
     def _not_empty(self):
         return self.v1 or self.v2
@@ -50,17 +50,21 @@ class Event:
 
 
 class Bookmaker:
-    def __init__(self) -> None:
+    def __init__(self, name) -> None:
+        self.name = name
         self.soccer, self.tennis, self.hockey, self.basket, self.volley = ([] for i in range(5))
 
+    def attrs_dict(self):
+        return {attr: val for attr, val in self.__dict__.items() if attr != "name"}
+
     def _del_empty(self):
-        for attr, val in self.__dict__.items():
+        for attr, val in self.attrs_dict().items():
             new_val = [event for event in val if exist_not_empty(event)]
             setattr(self, attr, new_val)
 
     def _format(self):
-        for val in self.__dict__.values():
-            for event in val:
+        for sport in self.attrs_dict().values():
+            for event in sport:
                 event._format()
 
     def format(self):
@@ -70,7 +74,7 @@ class Bookmaker:
 
 class Bookmakers:
     def __init__(self) -> None:
-        self.fonbet, self.olimp, self.marat = (Bookmaker() for i in range(3))
+        self.fonbet, self.olimp, self.marat = (Bookmaker(name) for name in ['fonbet', 'olimp', 'marat'])
 
     def format(self):
         for bookmaker in self.__dict__.values():

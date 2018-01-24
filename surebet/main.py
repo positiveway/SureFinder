@@ -1,6 +1,6 @@
 from surebet.loading import *
-from surebet.loading.fonbet import save
+from surebet.loading.fonbet import load
 
 selenium = Selenium()
-save(selenium.browser)
+load(selenium.browser)
 selenium.quit()

@@ -3,11 +3,10 @@ from os import path
 
 from surebet import *
 from surebet.parsing import ParseException
-from surebet.parsing.bets import Bookmaker
-from surebet.parsing.fonbet import parse
+from surebet.parsing.posit import parse
 from surebet.tests.parsing import *
 
-name = "fonbet"
+name = "posit"
 resource_dir = path.join(package_dir, name)
 
 
@@ -20,7 +19,7 @@ def test_samples():
         filename = abs_path('sample{}.html'.format(num))
         with open(filename) as file:
             html = file.read()
-        parse(html, Bookmaker(name))
+        parse(html)
         logging.info('PASS: sample{}'.format(num))
 
 
@@ -33,11 +32,9 @@ def test_known_result():
     with open(filename) as file:
         html = file.read()
 
-    fonbet = Bookmaker(name)
-    parse(html, fonbet)
-    fonbet.format()
+    all_surebets = parse(html)
 
-    assert obj_to_json(fonbet) == json_dumps(known_res)
+    assert obj_to_json(all_surebets) == json_dumps(known_res)
 
     logging.info('PASS: known result')
 
@@ -48,6 +45,6 @@ def test_broken_structure():
         html = file.read()
 
     with pytest.raises(ParseException, message='Expecting ParseException'):
-        parse(html, Bookmaker(name))
+        parse(html)
 
     logging.info('PASS: broken structure')

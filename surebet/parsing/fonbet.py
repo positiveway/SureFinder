@@ -21,11 +21,10 @@ class RowInfo:
         self.node = node
 
 
-def parse(source):
+def parse(source, bookmaker):
     html = lxml.html.fromstring(source)
     row_nodes = xpath_with_check(html, table_rows)
 
-    bookmaker = Bookmaker()
     sports = {
         '1': bookmaker.soccer,
         '2': bookmaker.hockey,
@@ -58,7 +57,6 @@ def parse(source):
         rows_info.append(RowInfo(row_class, row_node))
 
     append_event(rows_info, prev_sport)
-    return bookmaker
 
 
 def append_event(rows_info, sport):
@@ -162,16 +160,16 @@ def handle_row(row_node):
 
 
 def handle_cond_bet(nodes, ids):
+    if ids[-1] >= len(nodes):
+        return None
+
     factors = []
     for id in ids:
         text = nodes[id].text
         if text:
             factors.append(parse_factor(text))
 
-    if not factors:
-        return None
-
     if len(factors) != 3:
-        raise StructureException('cond bet')
+        return None
 
     return CondBet(*factors)
