@@ -26,11 +26,3 @@ def load_events(browser):
     result = browser.find_element_by_css_selector(node).get_attribute("outerHTML")
     log_loaded(name)
     return result
-
-
-# browser = webdriver.Chrome()
-# browser.get(url)
-# browser.find_element_by_link_text("Live bets").click()
-# print(browser.find_element_by_css_selector(node).get_attribute("outerHTML"))
-#
-# load(browser)
