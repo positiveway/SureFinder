@@ -11,8 +11,8 @@ none_factor = 0
 
 def parse(source, all_surebets):
     books_surebets = {}
-    for book_surebets in all_surebets:
-        books_surebets[(book_surebets.book1, book_surebets.book2)] = book_surebets
+    for book_pair in all_surebets:
+        books_surebets[(book_pair.book1, book_pair.book2)] = book_pair
 
     doc = html.fromstring(source)
     for row in xpath_with_check(doc, xp_rows):
