@@ -1,11 +1,8 @@
 import subprocess
 
 import async_timeout
-from os import path
 from pyvirtualdisplay import Display
 from selenium import webdriver
-
-from surebet import package_dir
 
 # kill Chrome at program launch
 subprocess.run(['killall', '-s', '9', 'Xvfb'])
@@ -37,11 +34,9 @@ async def _async_req(method, handler, url, **kwargs):
 
             try:
                 check_status(response.status)
-            except LoadException:
-                filename = path.join(package_dir, "{}-error-loading".format(url))
-                with open(filename, "w") as out:
-                    out.write(response.text)
-                raise
+            except LoadException as e:
+                error_text = "response text: {}".format(response.text)
+                raise LoadException(error_text) from e
 
             return await handler(response)
 
