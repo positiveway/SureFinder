@@ -3,6 +3,7 @@ from fuzzywuzzy import fuzz
 from surebet.handling import MatchedEventPair
 
 MATCH_RATIO = 70
+ROUGH_RATIO = 95
 
 
 def match_sports(sport1, sport2):
@@ -16,13 +17,15 @@ def match_sports(sport1, sport2):
 
             is_teams_reversed = _match_events(*events)
             if is_teams_reversed is not None:
+                matched_pair = MatchedEventPair(*events, is_teams_reversed)
+
                 used_teams = _get_used_teams(events_teams, matched_teams)
                 if used_teams:
                     _del_used_pair(matched_events, used_teams)
                     continue
 
                 matched_teams.update(events_teams)
-                matched_events.append(MatchedEventPair(*events, is_teams_reversed))
+                matched_events.append(matched_pair)
 
     return matched_events
 
@@ -48,8 +51,8 @@ def _format_teams(event):
     return event.team1.lower(), event.team2.lower()
 
 
-def _is_equal(str1, str2):
-    return fuzz.ratio(str1, str2) > MATCH_RATIO
+def _is_equal(str1, str2, match_ration=MATCH_RATIO):
+    return fuzz.ratio(str1, str2) > match_ration
 
 
 def _get_teams(events):
