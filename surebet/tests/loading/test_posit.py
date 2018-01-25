@@ -7,21 +7,19 @@ from surebet.tests.loading import *
 
 
 def test_loading():
-    for j in range(2):
-        selenium = Selenium()
-        time.sleep(5)
+    selenium = Selenium()
 
-        print("load: ({})".format(j))
+    print("loaded")
 
-        try_load(load, name, browser=selenium.browser)
-        for i in range(4):
-            print("load events: ({})".format(i))
+    try_load(load, name, browser=selenium.browser)
+    for i in range(4):
+        print("load events: ({})".format(i))
 
-            result = try_load(load_events, name, browser=selenium.browser)
-            check_result(result)
+        result = try_load(load_events, name, browser=selenium.browser)
+        check_result(result)
 
-            time.sleep(1)
+        time.sleep(1)
 
-        selenium.quit()
+    selenium.quit()
 
     logging.info("PASS: loading")
