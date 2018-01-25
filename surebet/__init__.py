@@ -1,6 +1,10 @@
 import json
 import logging
 
+import os
+
+package_dir = os.path.dirname(__file__)
+
 # setup default logging level
 logging.basicConfig(level=logging.INFO)
 

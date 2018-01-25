@@ -1,9 +1,7 @@
-from json import dumps
-
 from surebet import *
-from surebet.loading import LoadException
-from surebet.loading.marat import load_events
-
+from surebet.loading import try_load
+from surebet.loading.marat import load_events, name
+from surebet.tests.loading import *
 
 allowable_ratio = 0.85
 min_size = 100
@@ -13,13 +11,8 @@ def test_loading():
     for i in range(7):
         print("iteration: ({})".format(i))
 
-        result = load_events()
-
-        result_size = len(dumps(result))
-        if result_size < min_size:
-            raise LoadException("result with small size")
-        else:
-            print(result_size)
+        result = try_load(load_events, name)
+        check_result(json_dumps(result), min_size)
 
         events_amount = get_events_amount(result["sport_tree"])
         if len(result["events"]) < int(events_amount * allowable_ratio):
