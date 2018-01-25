@@ -1,0 +1,2 @@
+ignore:
+  - "surebet/tests"  # ignore testing folder
