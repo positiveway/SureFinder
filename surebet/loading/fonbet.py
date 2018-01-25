@@ -1,7 +1,7 @@
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.ui import WebDriverWait
 
 from surebet.loading import *
 
@@ -27,19 +27,23 @@ def load(browser):
 
     try:
         browser.find_element_by_css_selector(expand).click()
+
+        browser.find_element_by_css_selector(expand_all).click()
+
+        WebDriverWait(browser, 10).until(ec.invisibility_of_element_located((By.CSS_SELECTOR, expand_all)))
     except NoSuchElementException:
-        browser.get_screenshot_as_file("{}-error.png".format(name))
-        raise LoadException("site is not responding")
+        handle_loading_err(browser, name)
 
-    browser.find_element_by_css_selector(expand_all).click()
-
-    WebDriverWait(browser, 10).until(ec.invisibility_of_element_located((By.CSS_SELECTOR, expand_all)))
     log_loaded(name)
 
 
 def load_events(browser):
     browser.execute_script(expand_remain)
 
-    result = browser.find_element_by_css_selector(node).get_attribute("outerHTML")
-    log_loaded_events(name)
-    return result
+    try:
+        result = browser.find_element_by_css_selector(node).get_attribute("outerHTML")
+    except NoSuchElementException:
+        handle_loading_err(browser, name)
+    else:
+        log_loaded_events(name)
+        return result
