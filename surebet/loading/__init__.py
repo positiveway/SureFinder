@@ -1,8 +1,12 @@
 import subprocess
+from traceback import format_exc
 
 import async_timeout
+import os
 from pyvirtualdisplay import Display
 from selenium import webdriver
+
+from surebet import package_dir
 
 # kill Chrome at program launch
 subprocess.run(['killall', '-s', '9', 'Xvfb'])
@@ -13,6 +17,17 @@ TIMEOUT = 10
 
 class LoadException(Exception):
     pass
+
+
+def try_load(load_func, site_name, **kwargs):
+    try:
+        result = load_func(**kwargs)
+    except LoadException:
+        filename = os.path.join(package_dir, "error-loading-{}".format(site_name))
+        with open(filename, "w") as out:
+            out.write(format_exc())
+        raise
+    return result
 
 
 def check_status(status_code):
@@ -35,7 +50,7 @@ async def _async_req(method, handler, url, **kwargs):
             try:
                 check_status(response.status)
             except LoadException as e:
-                error_text = "response text: {}".format(response.text)
+                error_text = "response text: {}".format(await response.text())
                 raise LoadException(error_text) from e
 
             return await handler(response)
@@ -75,3 +90,7 @@ class Selenium:
         self.browser.quit()
 
         self._display.stop()
+
+
+def save_err_screen(browser, name):
+    browser.get_screenshot_as_file("{}-error.png".format(name))

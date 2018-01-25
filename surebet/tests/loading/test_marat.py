@@ -1,7 +1,7 @@
 from surebet import *
+from surebet.loading import try_load
 from surebet.loading.marat import load_events, name
 from surebet.tests.loading import *
-
 
 allowable_ratio = 0.85
 min_size = 100
@@ -11,7 +11,7 @@ def test_loading():
     for i in range(7):
         print("iteration: ({})".format(i))
 
-        result = try_load_events(load_events, name)
+        result = try_load(load_events, name)
         check_result(json_dumps(result), min_size)
 
         events_amount = get_events_amount(result["sport_tree"])
