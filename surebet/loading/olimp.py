@@ -1,7 +1,8 @@
+import asyncio
+
+import aiohttp
 import requests
 from hashlib import md5
-import asyncio
-import aiohttp
 
 from surebet.loading import *
 
@@ -9,9 +10,6 @@ name = "olimp"
 
 base_url = "http://191.101.165.203:10600/api/{}"
 
-session_id = None
-login = "3959858"
-passw = "O335673J"
 secret_key = "b2c59ba4-7702-4b12-bef5-0908391851d9"
 
 base_form_data = {
@@ -34,31 +32,11 @@ def get_xtoken(form_data):
     return {"X-TOKEN": md5(to_encode.encode()).hexdigest()}
 
 
-def load():
-    req_url = base_url.format("autorize")
-
-    form_data = base_form_data.copy()
-    form_data.update({
-        "login": login,
-        "passw": passw,
-    })
-
-    r = requests.post(req_url, headers=get_xtoken(form_data), data=form_data)
-    check_status(r.status_code)
-
-    # FIXME: global vars is bad style, mb replace by returnable value
-    global session_id
-    session_id = r.json()["data"]["session"]
-
-    log_loaded(name)
-
-
 def get_sport_tree():
     req_url = base_url.format("slice")
 
     form_data = base_form_data.copy()
     form_data.update({
-        "session": session_id,
         "live": "1",
         "time_shift": "0",
     })
@@ -82,7 +60,6 @@ async def get_event_details(event_id, sport_id, session):
 
     form_data = base_form_data.copy()
     form_data.update({
-        "session": session_id,
         "live": "1",
         "time_shift": "0",
         "sport_id": sport_id,
