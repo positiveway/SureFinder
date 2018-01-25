@@ -94,4 +94,4 @@ class Selenium:
 
 def handle_loading_err(browser, name):
     browser.get_screenshot_as_file("{}-error.png".format(name))
-    raise LoadException("site is not responding")
+    raise LoadException("{} is not responding".format(name))
