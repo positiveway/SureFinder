@@ -24,8 +24,7 @@ def load(browser, account=default_account):
         browser.find_element_by_name("yt1").click()
         browser.find_element_by_xpath("//select[@name='Bets[per_page]']/option[text()='30']").click()
     except NoSuchElementException:
-        save_err_screen(browser, name)
-        raise LoadException("site is not responding")
+        handle_loading_err(browser, name)
 
     log_loaded(name)
 
@@ -34,8 +33,7 @@ def load_events(browser):
     try:
         result = browser.find_element_by_css_selector(node).get_attribute("outerHTML")
     except NoSuchElementException:
-        save_err_screen(browser, name)
-        raise LoadException("site is not responding")
-
-    log_loaded(name)
-    return result
+        handle_loading_err(browser, name)
+    else:
+        log_loaded(name)
+        return result

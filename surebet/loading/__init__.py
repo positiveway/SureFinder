@@ -92,5 +92,6 @@ class Selenium:
         self._display.stop()
 
 
-def save_err_screen(browser, name):
+def handle_loading_err(browser, name):
     browser.get_screenshot_as_file("{}-error.png".format(name))
+    raise LoadException("site is not responding")

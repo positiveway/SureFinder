@@ -32,8 +32,7 @@ def load(browser):
 
         WebDriverWait(browser, 10).until(ec.invisibility_of_element_located((By.CSS_SELECTOR, expand_all)))
     except NoSuchElementException:
-        save_err_screen(browser, name)
-        raise LoadException("site is not responding")
+        handle_loading_err(browser, name)
 
     log_loaded(name)
 
@@ -44,8 +43,7 @@ def load_events(browser):
     try:
         result = browser.find_element_by_css_selector(node).get_attribute("outerHTML")
     except NoSuchElementException:
-        save_err_screen(browser, name)
-        raise LoadException("site is not responding")
-
-    log_loaded_events(name)
-    return result
+        handle_loading_err(browser, name)
+    else:
+        log_loaded_events(name)
+        return result
