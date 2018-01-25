@@ -2,14 +2,15 @@ import time
 
 from surebet import *
 from surebet.loading import Selenium
-from surebet.loading.fonbet import load, load_events, name
+from surebet.loading.posit import load, load_events, name
 from surebet.tests.loading import *
 
 
 def test_loading():
-    selenium = Selenium()
-
     for j in range(2):
+        selenium = Selenium()
+        time.sleep(5)
+
         print("load: ({})".format(j))
 
         load(selenium.browser)
@@ -21,7 +22,6 @@ def test_loading():
 
             time.sleep(1)
 
-        time.sleep(5)
+        selenium.quit()
 
-    selenium.quit()
     logging.info("PASS: loading")
