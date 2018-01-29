@@ -37,7 +37,7 @@ def test_known_result():
     parse(known_result_in, marat)
     marat.format()
 
-    assert obj_to_json(marat) == json_dumps(known_result)
+    assert obj_dumps(marat) == json_dumps(known_result)
 
     logging.info('PASS: known result')
 

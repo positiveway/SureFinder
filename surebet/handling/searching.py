@@ -1,6 +1,7 @@
 from surebet.handling import *
 from surebet.handling.calculating import calc_surebets
 from surebet.handling.matching import match_events
+from surebet.handling.surebets import *
 from surebet.parsing.bets import CondBet
 
 opposite_bets = {
