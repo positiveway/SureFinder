@@ -43,16 +43,17 @@ def get_matched_events(bookmakers):
 
 def calc_intersection_len(matched_events, known_res):
     intersection_len = 0
-    for pair1 in matched_events:
-        for pair2 in known_res:
+    for matched_pair in matched_events:
+        for known_pair in known_res:
             is_equal = True
             for cur_event in ("event1", "event2"):
-                pair1_event = getattr(pair1, cur_event)
-                pair2_event = pair2[cur_event]
-                if (pair1_event.team1, pair1_event.team2) != (pair2_event["team1"], pair2_event["team2"]):
+                matched_pair_event = getattr(matched_pair, cur_event)
+                known_pair_event = known_pair[cur_event]
+                if (matched_pair_event.team1, matched_pair_event.team2) != \
+                        (known_pair_event["team1"], known_pair_event["team2"]):
                     is_equal = False
                     break
-            if pair1.teams_reversed == pair2["teams_reversed"] and is_equal:
+            if matched_pair.teams_reversed == known_pair["teams_reversed"] and is_equal:
                 intersection_len += 1
                 break
     return intersection_len
