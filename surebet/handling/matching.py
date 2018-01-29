@@ -1,5 +1,3 @@
-from queue import Queue
-
 from fuzzywuzzy import fuzz
 
 from surebet.handling import MatchedEventPair
@@ -8,12 +6,8 @@ MIN_RATIO = 60
 
 
 def match_events(events1, events2):
-    first_events = Queue()
-    for event in events1:
-        first_events.put(event)
     matched = {}
-    while not first_events.empty():
-        event1 = first_events.get()
+    for event1 in events1:
         max_ratio = MIN_RATIO
         found_event = None
 
@@ -27,15 +21,8 @@ def match_events(events1, events2):
         if max_ratio == MIN_RATIO:
             continue
 
-        if found_event not in matched:
-            matched[found_event] = event1
-        else:
-            first_events.put(matched[found_event])
-            del matched[found_event]
-            matched[found_event] = event1
-
-    for event2, event1 in matched.items():
-        yield MatchedEventPair(event1, event2, is_teams_reversed((event1, event2)))
+        matched[found_event] = event1
+        yield MatchedEventPair(event1, found_event, is_teams_reversed((event1, found_event)))
 
 
 def calc_ratio(events):
