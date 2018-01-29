@@ -37,7 +37,7 @@ def test_known_result():
     parse(html, fonbet)
     fonbet.format()
 
-    assert obj_to_json(fonbet) == json_dumps(known_res)
+    assert obj_dumps(fonbet) == json_dumps(known_res)
 
     logging.info('PASS: known result')
 

@@ -20,7 +20,7 @@ def test_known_result():
 
     surebets = calc_surebets(*known_res_sample)
 
-    assert obj_to_json(surebets) == json_dumps(known_res)
+    assert obj_dumps(surebets) == json_dumps(known_res)
 
     logging.info("PASS: known result")
 

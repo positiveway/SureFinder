@@ -1,4 +1,4 @@
-from surebet.handling import *
+from surebet.handling.surebets import *
 
 result_bets = {
     "o1": "ox2",

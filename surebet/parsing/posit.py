@@ -1,9 +1,11 @@
 from lxml import html
 from re import match
 
-from surebet.handling import *
-from surebet.parsing import *
+from surebet import find_by_predicate
 from surebet.converting import format_spaces
+from surebet.handling import *
+from surebet.handling.surebets import *
+from surebet.parsing import *
 
 xp_rows = '//table/tbody/tr[not(@id="")]'
 none_factor = 0
@@ -152,10 +154,3 @@ def _get_surebet(node, is_reversed):
     if len(wagers) == 2:
         surebet = Surebet(*wagers)
     return surebet
-
-
-def find_by_predicate(iterable, predicate):
-    for item in iterable:
-        if predicate(item):
-            return item
-    return None

@@ -2,10 +2,10 @@ import pytest
 from os import path
 
 from surebet import *
+from surebet.handling import generate_all_surebets
 from surebet.parsing import ParseException
 from surebet.parsing.posit import parse
 from surebet.tests.parsing import *
-from surebet.handling import generate_all_surebets
 
 name = "posit"
 resource_dir = path.join(package_dir, name)
@@ -37,7 +37,7 @@ def test_known_result():
     all_surebets = generate_all_surebets()
     parse(html, all_surebets)
 
-    assert obj_to_json(all_surebets) == json_dumps(known_res)
+    assert obj_dumps(all_surebets) == json_dumps(known_res)
 
     logging.info('PASS: known result')
 
