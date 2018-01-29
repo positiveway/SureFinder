@@ -1,9 +1,6 @@
-from itertools import combinations
-
 from surebet.handling import *
-from surebet.handling.matching import match_sports
 from surebet.handling.calculating import calc_surebets
-
+from surebet.handling.matching import match_events
 from surebet.parsing.bets import CondBet
 
 opposite_bets = {
@@ -52,7 +49,7 @@ def find_for_2_books(book1, book2):
         sport1, sport2 = getattr(book1, sport_name), getattr(book2, sport_name)
 
         with_draw = sport_name not in ("tennis", "volley")
-        for event_pair in match_sports(sport1, sport2):
+        for event_pair in match_events(sport1, sport2):
             event1, event2 = event_pair.event1, event_pair.event2
             if event_pair.teams_reversed:
                 event2 = _get_reversed_event(event2)
