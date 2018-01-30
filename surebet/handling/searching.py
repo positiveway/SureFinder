@@ -1,4 +1,3 @@
-from surebet.handling import *
 from surebet.handling.calculating import calc_surebets
 from surebet.handling.matching import match_events
 from surebet.handling.surebets import *
@@ -44,7 +43,7 @@ def _get_reversed_surebets(e_surebets):
 
 
 def find_for_2_books(book1, book2):
-    surebets = Surebets(book1.name, book2.name)
+    book_surebets = BookSurebets(book1.name, book2.name)
 
     for sport_name in book1.attrs_dict().keys():
         sport1, sport2 = getattr(book1, sport_name), getattr(book2, sport_name)
@@ -70,18 +69,18 @@ def find_for_2_books(book1, book2):
                 if event_pair.teams_reversed:  # reverse second wagers in surebets
                     e_surebets = _get_reversed_surebets(e_surebets)
 
-                sport = getattr(surebets, sport_name)
+                sport = getattr(book_surebets, sport_name)
                 sport.append(e_surebets)
 
-    return surebets
+    return book_surebets
 
 
 def find_surebets(bookmakers):
     bookmakers.format()
 
-    all_surebets = []
-    for book1_name, book2_name in combinations(book_names, 2):
-        book1, book2 = getattr(bookmakers, book1_name), getattr(bookmakers, book2_name)
-        all_surebets.append(find_for_2_books(book1, book2))
+    surebets = Surebets()
+    for book_idx, book_surebets in enumerate(surebets.books_surebets):
+        book1, book2 = getattr(bookmakers, book_surebets.book1), getattr(bookmakers, book_surebets.book2)
+        surebets.books_surebets[book_idx] = find_for_2_books(book1, book2)
 
-    return all_surebets
+    return surebets

@@ -2,7 +2,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 from surebet.loading import *
 
-default_account = {'login': "kolyan312@gmail.com", 'password': "1q1w1e1r"}
+default_account = {'login': "lester0578@gmail.com", 'password': "1q1w1e1r"}
 name = "positivebet"
 url = "https://positivebet.com/en/user/login"
 
@@ -35,5 +35,5 @@ def load_events(browser):
     except NoSuchElementException:
         handle_loading_err(browser, name)
     else:
-        log_loaded(name)
+        log_loaded_events(name)
         return result
