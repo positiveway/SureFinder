@@ -1,9 +1,9 @@
+import logging
 import time
 
-from surebet import *
-from surebet.loading import *
-from surebet.loading.fonbet import load, load_events, name
-from surebet.tests.loading import *
+from surebet.loading.fonbet import *
+from surebet.loading.selenium import Selenium
+from surebet.tests.loading import check_result
 
 
 def test_loading():

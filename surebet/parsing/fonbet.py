@@ -1,7 +1,7 @@
 import lxml.html
 
 from surebet.parsing import *
-from .bets import *
+from surebet.parsing.bets import *
 
 table_rows = '//table[@id="lineTable"]/tbody/tr'
 ev_name = './/td[contains(@class, "eventCellName")]/div[contains(@id, "event")]'

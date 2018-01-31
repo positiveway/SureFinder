@@ -1,11 +1,13 @@
+import json
+import logging
 import pickle
+from itertools import combinations
 
 from os import path
 
-from surebet import *
 from surebet.handling import HandlingException
 from surebet.handling.matching import match_events
-from surebet.handling.surebets import *
+from surebet.handling.surebets import book_names
 from surebet.tests.handling import package_dir
 
 resource_dir = path.join(package_dir, "matching")
