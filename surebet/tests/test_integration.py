@@ -1,14 +1,12 @@
-from surebet import *
+import logging
 
-from surebet.loading import *
 import surebet.loading.fonbet as fonbet_loading
 import surebet.loading.marat as marat_loading
-
-from surebet.parsing.bets import *
 import surebet.parsing.fonbet as fonbet_parsing
 import surebet.parsing.marat as marat_parsing
-
 from surebet.handling.searching import find_surebets
+from surebet.loading.selenium import Selenium
+from surebet.parsing.bets import Bookmakers
 
 
 def test_integration():
