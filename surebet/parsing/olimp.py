@@ -1,161 +1,298 @@
-import lxml.html
 import re
 
 from surebet.parsing import *
 from surebet.parsing.bets import *
 
-BLOCKS_XPATH = '//*[@id="champ_container_"]/table/tr'
-BLOCK_BODY_ROWS_XPATH = 'td/table/tr'
-RAW_SPORT_NAME_XPATH = 'td[1]/text()'
-TEAMS_STR_XPATH = 'td[2]/font/b/span/text()'
-MAIN_BETS_ROWS_XPATH = 'td/div/nobr'
-OTHER_BETS_XPATH = 'td/div/div/*'
-
-BET_TYPES = ['X2', '12', '1X', '2', 'X', '1']
-
-DOUBLE_PARENTHESES_REGEXP = r'^.*\(.*\) - .*\(.*\).*$'
-PARENTHESES_REGEXP = r'^.*\(.*\).*$'
+TOTAL_INFO_KEYS = ['on', 'i', 'p', 'v']
+HANDICAP_INFO_KEYS = ['on', 'p', 'v']
 
 
-def parse_json(json):
-    bookmaker = Bookmaker()
+class Total:
+    def __init__(self):
+        self._type = self._id = ''
+        self._step = self.cond = self.coef = 0
+
+    def add(self, _id, _type, cond, coef):
+        if not (len(_type) == 1 and _type in 'OU'):
+            raise ParseException('Unknown total type "{}" '
+                                 '(id: "{}", cond: "{}", coef: "{}").'.format(_type, _id, cond, coef))
+        if self._step == 0:
+            self.fill(_id, _type, cond, coef)
+            self._step = 1
+        elif self._step == 1:
+            if _id == self._id and _type != self._type and cond == self.cond:
+                v1, v2 = self.coef, coef
+                if _type == 'O':
+                    v1, v2 = v2, v1
+                self.clear()
+                return CondBet(cond, v1, v2)
+            else:  # error
+                self.fill(_id, _type, cond, coef)
+
+    def fill(self, _id, _type, cond, coef):
+        self._id = _id
+        self._type = _type
+        self.cond = cond
+        self.coef = coef
+
+    def clear(self):
+        self.__init__()
+
+
+class TotalInfo:
+    def __init__(self, bet):
+        for key in TOTAL_INFO_KEYS:
+            if key not in bet:
+                raise StructureException('There is no key "{}" in bet: "{}".'.format(key, bet))
+        self.id = bet['on']
+        self.type = bet['i'][-1]
+        self.cond = float(bet['p'])
+        self.coef = float(bet['v'])
+        self.team = 0
+        team_char = bet['on'][-1]
+        if team_char.isdigit():
+            self.team = int(team_char)
+
+
+class Handicap:
+    def __init__(self):
+        self._id = ''
+        self._step = self.team = self.cond = self.coef = 0
+
+    def add(self, _id, team, cond, coef):
+        if self._step == 0:
+            self.fill(_id, team, cond, coef)
+            self._step = 1
+        elif self._step == 1:
+            if _id == self._id and team != self.team and cond == -self.cond:
+                v1, v2 = coef, self.coef
+                if cond >= 0:
+                    cond = -cond
+                    v1, v2 = v2, v1
+                self.clear()
+                return CondBet(cond, v1, v2)
+            else:  # error
+                self.fill(_id, team, cond, coef)
+
+    def fill(self, _id, team, cond, coef):
+        self._id = _id
+        self.team = team
+        self.cond = cond
+        self.coef = coef
+
+    def clear(self):
+        self.__init__()
+
+
+class HandicapInfo:
+    def __init__(self, bet):
+        for key in HANDICAP_INFO_KEYS:
+            if key not in bet:
+                raise StructureException('There is no key "{}" in bet: "{}".'.format(key, bet))
+        self.id = bet['on'][:-1]
+        self.cond = float(bet['p'])
+        self.coef = float(bet['v'])
+        self.team = int(bet['on'][-1])
+
+
+def parse(json, bookmaker):
     bookmaker_sports = {
-        'Soccer': bookmaker.soccer,
-        'Ice Hockey': bookmaker.hockey,
-        'Basketball': bookmaker.basket,
-        'Tennis': bookmaker.tennis,
-        'Volleyball': bookmaker.volley,
+        'soccer': bookmaker.soccer,
+        'hockey': bookmaker.hockey,
+        'basket': bookmaker.basket,
+        'tennis': bookmaker.tennis,
+        'volley': bookmaker.volley,
     }
 
+    for sport_name, events in json.items():
+        for event in events:
+            first_team = event['c1']
+            second_team = event['c2']
+            # print('{} VS {}'.format(first_team, second_team))
 
-def parse(source):
-    bookmaker = Bookmaker()
-    bookmaker_sports = {
-        'Soccer': bookmaker.soccer,
-        'Ice Hockey': bookmaker.hockey,
-        'Basketball': bookmaker.basket,
-        'Tennis': bookmaker.tennis,
-        'Volleyball': bookmaker.volley,
-    }
-
-    html = lxml.html.fromstring(source)
-
-    rows = xpath_with_check(html, BLOCKS_XPATH)
-    if len(rows) % 2 != 0:
-        raise ParseException('count of tr elements in {} should be even'.format(BLOCKS_XPATH))
-
-    blocks = []
-    for i in range(len(rows) // 2):
-        blocks.append((rows[i * 2], rows[i * 2 + 1]))
-
-    for block_head, block_body in blocks:
-        # each block has same sport name
-        raw_sport_name = ''.join(xpath_with_check(block_head, RAW_SPORT_NAME_XPATH))
-        sport_name = raw_sport_name.partition('.')[0].strip()
-        if sport_name not in bookmaker_sports:
-            continue
-
-        block_body_rows = xpath_with_check(block_body, BLOCK_BODY_ROWS_XPATH)
-        if len(block_body_rows) % 2 != 0:
-            raise ParseException('count of tr elements in {} should be even'.format(BLOCK_BODY_ROWS_XPATH))
-
-        for i in range(len(block_body_rows) // 2):
-            # current event
-            teams_row, coefficients_row = block_body_rows[i * 2], block_body_rows[i * 2 + 1]
-
-            teams_str = ''.join(xpath_with_check(teams_row, TEAMS_STR_XPATH))
-            first_team, second_team = get_teams(teams_str)
-
-            # getting coefficients
+            event_data = event['it']
             parts = []
-            # main bets
-            main_bets_rows = coefficients_row.xpath(MAIN_BETS_ROWS_XPATH)  # main_bets_rows may be []
-            bets = get_main_bets(main_bets_rows)
-            # other bets
-            other_bets_rows = coefficients_row.xpath(OTHER_BETS_XPATH)
-            bets.ind_total1, bets.ind_total2 = get_individual_totals(other_bets_rows, first_team, second_team)
+            main_bets = PartBets()
+            for bets_part in event_data:
+                bets_part_name = bets_part['n']
+                if bets_part_name == 'Main Bets':
+                    bets = bets_part['i']
+                    hand = Handicap()
+                    total = Total()
 
-            parts.append(bets)
+                    for bet in bets:
+                        bet_type = bet['on']
+                        coef = float(bet['v'])
+                        if bet_type == 'П1':  # 1
+                            main_bets.o1 = coef
+                        elif bet_type == 'П2':  # 2
+                            main_bets.o2 = coef
+                        elif bet_type == 'Х':  # X
+                            main_bets.ox = coef
+                        elif bet_type == '1Х':  # 1X
+                            main_bets.o1x = coef
+                        elif bet_type == '12':  # 12
+                            main_bets.o12 = coef
+                        elif bet_type == 'Х2':  # X2
+                            main_bets.ox2 = coef
+                        elif bet_type == 'Ф1' or bet_type == 'Ф2':  # H1 and H2
+                            info = HandicapInfo(bet)
+                            cond_bet = hand.add(info.id, info.team, info.cond, info.coef)
+                            if cond_bet:
+                                main_bets.hand.append(cond_bet)
+                        elif bet_type == 'Тот':  # Tot
+                            info = TotalInfo(bet)
+                            cond_bet = total.add(info.id, info.type, info.cond, info.coef)
+                            if cond_bet:
+                                main_bets.total.append(cond_bet)
+                elif bets_part_name == 'Individual total':  # only soccer
+                    if sport_name == 'soccer':
+                        bets = bets_part['i']
+                        total = Total()
+
+                        for bet in bets:
+                            info = TotalInfo(bet)
+                            cond_bet = total.add(info.id, info.type, info.cond, info.coef)
+                            if cond_bet:
+                                ind_total = main_bets.ind_total1 if info.team == 1 else main_bets.ind_total2
+                                ind_total.append(cond_bet)
+                elif bets_part_name == 'Points':  # only basket (individual total)
+                    if sport_name == 'basket':
+                        bets = bets_part['i']
+                        total = Total()
+                        for bet in bets:
+                            info = TotalInfo(bet)
+                            cond_bet = total.add(info.id, info.type, info.cond, info.coef)
+                            if cond_bet:
+                                ind_total = main_bets.ind_total1 if info.team == 1 else main_bets.ind_total2
+                                ind_total.append(cond_bet)
+                elif bets_part_name == 'Additional total':
+                    bets = bets_part['i']
+                    total = Total()
+
+                    for bet in bets:
+                        info = TotalInfo(bet)
+                        cond_bet = total.add(info.id, info.type, info.cond, info.coef)
+                        if cond_bet:
+                            main_bets.total.append(cond_bet)
+                elif bets_part_name == 'Additional handicap' or bets_part_name == 'Handicap':
+                    bets = bets_part['i']
+                    hand = Handicap()
+
+                    for bet in bets:
+                        info = HandicapInfo(bet)
+                        cond_bet = hand.add(info.id, info.team, info.cond, info.coef)
+                        if cond_bet:
+                            main_bets.hand.append(cond_bet)
+
+            parts.append(main_bets)
+
+            # quarter, period, set
+            # TODO Goals, Bets by sets
+
+            for bets_part in event_data:
+                bets_part_name = bets_part['n']
+                if bets_part_name == 'Quarters outcome':  # basket
+                    # Ч3П1 Ч3Н Ч3П2 Ч3П1Ф0 Ч3П2Ф0 Ч3Ф1 Ч3Ф2 Ч3Тот
+                    bets = bets_part['i']
+                    if bets:
+                        quarter_bets = get_part_bets(parts, int(bets[0]['on'][1]))
+                        hand = Handicap()
+                        total = Total()
+
+                        for bet in bets:
+                            bet_name = bet['on']
+                            coef = float(bet['v'])
+                            if bet_name[-2:] == 'П1':  # 1
+                                quarter_bets.o1 = coef
+                            elif bet_name[-2:] == 'П2':  # 2
+                                quarter_bets.o2 = coef
+                            elif bet_name[-1] == 'Н':  # X
+                                quarter_bets.ox = coef
+                            elif bet_name[-3:] == 'Тот':
+                                info = TotalInfo(bet)
+                                cond_bet = total.add(info.id, info.type, info.cond, info.coef)
+                                if cond_bet:
+                                    quarter_bets.total.append(cond_bet)
+                            elif bet_name[-2:] == 'Ф1' or bet_name[-2:] == 'Ф2':  # H1 and H2
+                                info = HandicapInfo(bet)
+                                cond_bet = hand.add(info.id, info.team, info.cond, info.coef)
+                                if cond_bet:
+                                    quarter_bets.hand.append(cond_bet)
+                elif re.match(r'^[0-9] period: Periods outcome', bets_part_name):  # hockey
+                    # П3П1 П3Н П3П2 П31Х П312 П3Х2 П3Ф1 П3Ф2 П3Тот
+                    bets = bets_part['i']
+                    if bets:
+                        period_bets = get_part_bets(parts, int(bets[0]['on'][1]))
+                        hand = Handicap()
+                        total = Total()
+
+                        for bet in bets:
+                            bet_name = bet['on']
+                            coef = float(bet['v'])
+                            if bet_name[-2:] == 'П1':
+                                period_bets.o1 = coef
+                            elif bet_name[-1] == 'Н':
+                                period_bets.ox = coef
+                            elif bet_name[-2:] == 'П2':
+                                period_bets.o2 = coef
+                            elif bet_name[-2:] == '1Х':
+                                period_bets.o1x = coef
+                            elif bet_name[-2:] == '12':
+                                period_bets.o12 = coef
+                            elif bet_name[-2:] == 'Х2':
+                                period_bets.ox2 = coef
+                            elif bet_name[-2:] == 'Ф1' or bet_name[-2:] == 'Ф2':
+                                info = HandicapInfo(bet)
+                                cond_bet = hand.add(info.id, info.team, info.cond, info.coef)
+                                if cond_bet:
+                                    period_bets.hand.append(cond_bet)
+                            elif bet_name[-3:] == 'Тот':
+                                info = TotalInfo(bet)
+                                cond_bet = total.add(info.id, info.type, info.cond, info.coef)
+                                if cond_bet:
+                                    period_bets.total.append(cond_bet)
+                elif re.match(r'^[0-9] period: Individual total', bets_part_name):  # hockey
+                    # П3К1 П3К2
+                    bets = bets_part['i']
+                    if bets:
+                        period_bets = get_part_bets(parts, int(bets[0]['on'][1]))
+                        total = Total()
+
+                        for bet in bets:
+                            info = TotalInfo(bet)
+                            cond_bet = total.add(info.id, info.type, info.cond, info.coef)
+                            if cond_bet:
+                                ind_total = period_bets.ind_total1 if info.team == 1 else period_bets.ind_total2
+                                ind_total.append(cond_bet)
+                elif re.match(r'^[0-9] period: Additional total', bets_part_name):  # hockey
+                    # П3Тот2
+                    bets = bets_part['i']
+                    if bets:
+                        period_bets = get_part_bets(parts, int(bets[0]['on'][1]))
+                        total = Total()
+
+                        for bet in bets:
+                            info = TotalInfo(bet)
+                            cond_bet = total.add(info.id, info.type, info.cond, info.coef)
+                            if cond_bet:
+                                period_bets.total.append(cond_bet)
+                elif bets_part_name == 'Bets by sets':  # tennis
+                    # С2П1 С2П2 С2_Ф1_-3.5 С2_Ф2_3.5 С2_Ф1_-2.5 С2_Ф2_2.5 С2_Ф1_-1.5 С2_Ф2_1.5
+                    # С2Тот С2Тот С2Тот2 С2Тот2 С2Тот3 С2Тот3
+                    # sample0.json | Women. ITF Tournament. Midland. Hard. Qualification | Mateas M. VS Scholl Ch.
+                    pass
 
             bookmaker_sports[sport_name].append(Event(first_team, second_team, parts))
 
     return bookmaker
 
 
-def get_main_bets(main_bets_rows):
-    bets = PartBets()
-    for row in main_bets_rows:
-        bet_type = row.text.strip().partition(' ')[0].partition('(')[0]
-        span = xpath_with_check(row, 'span')[0]
-
-        # X2, 12, 1X, 2, X, 1
-        if bet_type in BET_TYPES:
-            attribute_name = 'o' + bet_type.lower()
-            set_exist_attr(bets, attribute_name, parse_factor(span.get('data-v1')))
-
-        # Total
-        if bet_type == 'Tot':
-            bets.total.append(CondBet(parse_factor(span.get('data-v1')),
-                                      parse_factor(span.get('data-v3')),
-                                      parse_factor(span.get('data-v2'))))
-
-        # Handicap
-        if bet_type == 'H1':
-            bets.hand.append(CondBet(parse_factor(span.get('data-v1')),
-                                     parse_factor(span.get('data-v2')),
-                                     0.0))
-
-        if bet_type == 'H2':
-            if bets.hand:
-                bets.hand[0].v2 = parse_factor(span.get('data-v2'))
-                if bets.hand[0].v2 == 0.0:
-                    raise ParseException('hand[0].v2 == 0')
-
-    return bets
-
-
-def get_individual_totals(other_bets_rows, first_team, second_team):
-    ind_total1, ind_total2 = [], []
-    bet_type = ''
-    for row in other_bets_rows:
-        if row.tag == 'b':
-            bet_type = xpath_with_check(row, 'i')[0].text.strip()
-        if row.tag == 'nobr':
-            if bet_type == 'Individual total:':
-                team = row.text.rpartition('(')[0].strip()
-                span = xpath_with_check(row, 'span')[0]
-                cond_bet = CondBet(parse_factor(span.get('data-v1')),
-                                   parse_factor(span.get('data-v3')),  # over
-                                   parse_factor(span.get('data-v2')))  # under
-                if team == first_team:
-                    ind_total1.append(cond_bet)
-                elif team == second_team:
-                    ind_total2.append(cond_bet)
-                else:
-                    raise ParseException('Undefined team "{}". First: "{}". Second: "{}"'.format(team, first_team,
-                                                                                                 second_team))
-
-    return ind_total1, ind_total2
-
-
-def get_teams(teams_str):
-    teams_str = delete_prefix_number(teams_str.strip())
-    teams_str_parts = tuple(map(lambda s: s.strip(), teams_str.split(' - ')))
-    if len(teams_str_parts) == 2:
-        return teams_str_parts
-
-    matches_double_parentheses = bool(re.match(DOUBLE_PARENTHESES_REGEXP, teams_str))  # *(*) - *(*)
-    if matches_double_parentheses:
-        for i in range(1, len(teams_str_parts)):
-            first_team, second_team = ' - '.join(teams_str_parts[:i]), ' - '.join(teams_str_parts[i:])
-            if re.match(PARENTHESES_REGEXP, first_team) and re.match(PARENTHESES_REGEXP, second_team):
-                return first_team, second_team
-
-    raise ParseException('Teams string parsing error. Raw : "{}". Handled: "{}".'.format(teams_str, teams_str_parts))
-
-
-def delete_prefix_number(teams_str):
-    if not teams_str:
-        raise ParseException('teams_str is empty')
-    result = re.match(r'^[0-9]+\.(.*)', teams_str)
-    return result.group(1) if result else teams_str
+def get_part_bets(parts, part):
+    for part_bets in parts:
+        if part_bets.part == part:
+            return part_bets
+    part_bets = PartBets()
+    part_bets.part = part
+    parts.append(part_bets)
+    return part_bets
