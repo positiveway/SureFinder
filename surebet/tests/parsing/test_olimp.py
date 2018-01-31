@@ -1,11 +1,15 @@
+import json
+import logging
+
 import pytest
 from os import path
 
-from surebet import *
+from surebet.json_funcs import obj_dumps, json_dumps
 from surebet.parsing import ParseException
 from surebet.parsing.bets import Bookmaker
 from surebet.parsing.olimp import parse
-from surebet.tests.parsing import *
+from surebet.tests.parsing import package_dir
+
 
 name = 'olimp'
 resource_dir = path.join(package_dir, name)
@@ -35,7 +39,7 @@ def test_known_result():
     parse(raw_data, olimp)
     olimp.format()
 
-    assert obj_to_json(olimp) == json_dumps(handled_data)
+    assert obj_dumps(olimp) == json_dumps(handled_data)
 
     logging.info('PASS: known result')
 
