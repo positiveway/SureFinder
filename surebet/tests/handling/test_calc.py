@@ -1,10 +1,12 @@
+import json
+import logging
 import pickle
 
 from os import path
 
-from surebet import *
 from surebet.handling.calculating import calc_surebets
-from surebet.tests.handling import *
+from surebet.json_funcs import obj_dumps, json_dumps
+from surebet.tests.handling import package_dir
 
 resource_dir = path.join(package_dir, "calculating")
 
