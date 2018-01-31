@@ -1,7 +1,9 @@
-from surebet import *
-from surebet.loading import try_load
-from surebet.loading.marat import load_events, name
-from surebet.tests.loading import *
+import logging
+
+from surebet.json_funcs import json_dumps
+from surebet.loading import try_load, LoadException
+from surebet.loading.marat import *
+from surebet.tests.loading import check_result
 
 allowable_ratio = 0.85
 min_size = 100

@@ -4,7 +4,8 @@ import aiohttp
 import requests
 from hashlib import md5
 
-from surebet.loading import *
+from surebet.loading import check_status, log_loaded_events
+from surebet.loading.async import async_post
 
 name = "olimp"
 

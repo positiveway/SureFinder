@@ -1,11 +1,14 @@
+import json
+import logging
+
 import pytest
 from os import path
 
-from surebet import *
 from surebet.handling.surebets import Surebets
+from surebet.json_funcs import obj_dumps, json_dumps
 from surebet.parsing import ParseException
 from surebet.parsing.posit import parse
-from surebet.tests.parsing import *
+from surebet.tests.parsing import package_dir, read_html
 
 name = "posit"
 resource_dir = path.join(package_dir, name)
@@ -18,8 +21,7 @@ def abs_path(filename):
 def test_samples():
     for num in range(3):
         filename = abs_path('sample{}.html'.format(num))
-        with open(filename) as file:
-            html = file.read()
+        html = read_html(filename)
 
         parse(html, Surebets())
         logging.info('PASS: sample{}'.format(num))
@@ -31,8 +33,7 @@ def test_known_result():
         known_res = json.load(file)
 
     filename = abs_path('knownRes.html')
-    with open(filename) as file:
-        html = file.read()
+    html = read_html(filename)
 
     surebets = Surebets()
     parse(html, surebets)
@@ -44,8 +45,7 @@ def test_known_result():
 
 def test_broken_structure():
     filename = abs_path('brokenStruct.html')
-    with open(filename) as file:
-        html = file.read()
+    html = read_html(filename)
 
     with pytest.raises(ParseException, message='Expecting ParseException'):
         parse(html, Surebets())
