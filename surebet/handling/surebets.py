@@ -1,3 +1,8 @@
+from itertools import combinations
+
+book_names = ["fonbet", "marat", "olimp"]
+
+
 class Wager:
     def __init__(self, name, factor):
         self.name = name
@@ -45,7 +50,7 @@ class EventSurebets:
         return self.teams1 == other.teams1 and self.teams2 == other.teams2
 
 
-class Surebets:
+class BookSurebets:
     def __init__(self, book1, book2):
         self.book1, self.book2 = book1, book2
         self.soccer, self.tennis, self.hockey, self.basket, self.volley = ([] for i in range(5))
@@ -55,3 +60,10 @@ class Surebets:
 
     def __eq__(self, other):
         return self.book1 == other.book1 and self.book2 == other.book2
+
+
+class Surebets:
+    def __init__(self):
+        self.books_surebets = []
+        for book1_name, book2_name in combinations(book_names, 2):
+            self.books_surebets.append(BookSurebets(book1_name, book2_name))
