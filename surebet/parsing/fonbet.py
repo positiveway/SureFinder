@@ -1,7 +1,7 @@
 import lxml.html
 
 from surebet.parsing import *
-from .bets import *
+from surebet.parsing.bets import *
 
 table_rows = '//table[@id="lineTable"]/tbody/tr'
 ev_name = './/td[contains(@class, "eventCellName")]/div[contains(@id, "event")]'
@@ -105,8 +105,11 @@ def get_event_info(row_node):
     title = xpath_with_check(row_node, ev_name)
     name_node = xpath_with_check(title[0], './/text()')
 
-    name = name_node[1].strip()
-    is_not_blocked = title[0].get('class') != 'eventBlocked'
+    name = None
+    is_not_blocked = False
+    if len(name_node) > 1:
+        name = name_node[1].strip()
+        is_not_blocked = title[0].get('class') != 'eventBlocked'
 
     return name, is_not_blocked
 

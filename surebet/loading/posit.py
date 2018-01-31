@@ -35,5 +35,5 @@ def load_events(browser):
     except NoSuchElementException:
         handle_loading_err(browser, name)
     else:
-        log_loaded(name)
+        log_loaded_events(name)
         return result

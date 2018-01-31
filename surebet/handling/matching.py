@@ -2,73 +2,53 @@ from fuzzywuzzy import fuzz
 
 from surebet.handling import MatchedEventPair
 
-MATCH_RATIO = 70
+MIN_RATIO = 60
 
 
-def match_sports(sport1, sport2):
-    matched_teams = set()
-    matched_events = []
+def match_events(events1, events2):
+    matched = {}
+    for event1 in events1:
+        max_ratio = MIN_RATIO
+        found_event = None
 
-    for event1 in sport1:
-        for event2 in sport2:
-            events = (event1, event2)
-            events_teams = _get_teams(events)
+        for event2 in events2:
+            cur_ratio = calc_ratio((event1, event2))
+            if cur_ratio > max_ratio:
+                if event2 not in matched or cur_ratio > calc_ratio((matched[event2], event2)):
+                    max_ratio = cur_ratio
+                    found_event = event2
 
-            is_teams_reversed = _match_events(*events)
-            if is_teams_reversed is not None:
-                used_teams = _get_used_teams(events_teams, matched_teams)
-                if used_teams:
-                    _del_used_pair(matched_events, used_teams)
-                    continue
+        if max_ratio == MIN_RATIO:
+            continue
 
-                matched_teams.update(events_teams)
-                matched_events.append(MatchedEventPair(*events, is_teams_reversed))
-
-    return matched_events
+        matched[found_event] = event1
+        yield MatchedEventPair(event1, found_event, is_teams_reversed((event1, found_event)))
 
 
-def _join_teams(team1, team2):
-    return " ".join((team1, team2))
+def calc_ratio(events):
+    teams1, teams2 = get_teams(events)
+    return max(_calc_ratio(teams1, teams2), _calc_ratio(teams1, reversed(teams2)))
 
 
-def _match_events(event1, event2):
-    is_teams_reversed = None
-
-    teams1 = _format_teams(event1)
-    teams2 = _format_teams(event2)
-    if _is_equal(_join_teams(*teams1), _join_teams(*teams2)):
-        is_teams_reversed = False
-    elif _is_equal(_join_teams(*teams1), _join_teams(*reversed(teams2))):
-        is_teams_reversed = True
-
-    return is_teams_reversed
+def _calc_ratio(teams1, teams2):
+    return fuzz.ratio(join_teams(teams1), join_teams(teams2))
 
 
-def _format_teams(event):
-    return event.team1.lower(), event.team2.lower()
+def join_teams(teams):
+    return " ".join(teams)
 
 
-def _is_equal(str1, str2):
-    return fuzz.ratio(str1, str2) > MATCH_RATIO
-
-
-def _get_teams(events):
+def get_teams(events):
     teams = []
     for event in events:
-        teams.append((event.team1, event.team2))
+        teams.append(format_teams(event))
     return teams
 
 
-def _get_used_teams(events_teams, matched_teams):
-    for teams in events_teams:
-        if teams in matched_teams:
-            return teams
-    return None
+def format_teams(event):
+    return event.team1.lower(), event.team2.lower()
 
 
-def _del_used_pair(matched_events, used_teams):
-    for pair_idx, matched_pair in enumerate(matched_events):
-        for event in (matched_pair.event1, matched_pair.event2):
-            if (event.team1, event.team2) == (used_teams[0], used_teams[1]):
-                del matched_events[pair_idx]
-                return
+def is_teams_reversed(events):
+    teams1, teams2 = get_teams(events)
+    return _calc_ratio(teams1, teams2) < _calc_ratio(teams1, reversed(teams2))
