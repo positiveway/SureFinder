@@ -1,10 +1,12 @@
+import asyncio
+import json
+
+import aiohttp
 import re
 import requests
-import json
-import asyncio
-import aiohttp
 
-from surebet.loading import *
+from surebet.loading import log_loaded_events, check_status
+from surebet.loading.async import async_post, async_get
 
 name = "marat"
 

@@ -1,7 +1,9 @@
-from surebet import *
+import logging
+
+from surebet.json_funcs import json_dumps
 from surebet.loading import try_load
-from surebet.loading.olimp import load_events, name
-from surebet.tests.loading import *
+from surebet.loading.olimp import *
+from surebet.tests.loading import check_result
 
 min_size = 100
 

@@ -55,7 +55,7 @@ class Bookmaker:
         self.soccer, self.tennis, self.hockey, self.basket, self.volley = ([] for i in range(5))
 
     def attrs_dict(self):
-        return {attr: val for attr, val in self.__dict__.items() if attr != "name"}
+        return {attr: val for attr, val in self.__dict__.items() if isinstance(val, list)}
 
     def _del_empty(self):
         for attr, val in self.attrs_dict().items():

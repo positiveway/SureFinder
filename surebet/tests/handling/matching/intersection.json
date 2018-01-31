@@ -1,0 +1,574 @@
+[
+  {
+    "event1": {
+      "team1": "NK Domzale",
+      "team2": "Ruzomberok"
+    },
+    "event2": {
+      "team1": "Domzale",
+      "team2": "Ruzomberok"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Aalborg",
+      "team2": "Shonan Bellmare"
+    },
+    "event2": {
+      "team1": "Aalborg",
+      "team2": "Shonan Bellmare"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Sofapaka",
+      "team2": "KCCC FC"
+    },
+    "event2": {
+      "team1": "Sofapaka",
+      "team2": "Kampala City"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Akzhayik",
+      "team2": "Voluntari"
+    },
+    "event2": {
+      "team1": "Akzhayik",
+      "team2": "Voluntari"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Yanbian Fude",
+      "team2": "Seoul FC"
+    },
+    "event2": {
+      "team1": "Yanbian Fude",
+      "team2": "Seoul"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "NK Krsko",
+      "team2": "Krupa FC"
+    },
+    "event2": {
+      "team1": "Krsko",
+      "team2": "Krupa Na Vrbasu"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Lech Poznan",
+      "team2": "Hajduk Split"
+    },
+    "event2": {
+      "team1": "Lech Poznan",
+      "team2": "Hajduk Split"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Keshla",
+      "team2": "Rabotnicki Skopje"
+    },
+    "event2": {
+      "team1": "Kesla",
+      "team2": "Rabotnicki"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Aspire Academy U17",
+      "team2": "Esperance Tunis U17"
+    },
+    "event2": {
+      "team1": "Esperance U-17",
+      "team2": "Aspire Academy U-17"
+    },
+    "teams_reversed": true
+  },
+  {
+    "event1": {
+      "team1": "Pecsi MFC",
+      "team2": "Kecskemeti TE"
+    },
+    "event2": {
+      "team1": "Pecsi",
+      "team2": "Kecskemeti"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Nykobing",
+      "team2": "Roskilde"
+    },
+    "event2": {
+      "team1": "Nykobing",
+      "team2": "Roskilde"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Balikesirspor",
+      "team2": "Erzurumspor"
+    },
+    "event2": {
+      "team1": "Balikesirspor",
+      "team2": "BB Erzurumspor"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Blida",
+      "team2": "JS Saoura"
+    },
+    "event2": {
+      "team1": "USM Blida",
+      "team2": "JS Saoura"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "NA Hussein Dey",
+      "team2": "MC Oran"
+    },
+    "event2": {
+      "team1": "Hussein Dey",
+      "team2": "MC Oran"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Paradou",
+      "team2": "JS Kabylie"
+    },
+    "event2": {
+      "team1": "Paradou",
+      "team2": "JS Kabylie"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "USM Bel Abbes",
+      "team2": "CS Konstantine"
+    },
+    "event2": {
+      "team1": "USM Bel Abbes",
+      "team2": "CS Constantine"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "ASM Oran",
+      "team2": "Amal Bou Saada"
+    },
+    "event2": {
+      "team1": "ASM Oran",
+      "team2": "AC Bou Saada"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "CA Batna",
+      "team2": "Tlemcen"
+    },
+    "event2": {
+      "team1": "CA Batna",
+      "team2": "WA Tlemcen"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "JSM Skikda",
+      "team2": "GS Mascara"
+    },
+    "event2": {
+      "team1": "JSM Skikda",
+      "team2": "GC Mascara"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "ASO Chlef",
+      "team2": "RC Relizane"
+    },
+    "event2": {
+      "team1": "ASO Chlef",
+      "team2": "Relizane"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Bengaluru",
+      "team2": "North East United"
+    },
+    "event2": {
+      "team1": "Bengaluru",
+      "team2": "Northeast United"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Shabab Al Khalil",
+      "team2": "Shabab Al Khadr"
+    },
+    "event2": {
+      "team1": "Shabab Al Khaleel",
+      "team2": "Shabab Al Khader"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Holguin",
+      "team2": "Artemisa"
+    },
+    "event2": {
+      "team1": "Holguin",
+      "team2": "Artemisa"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Mayabeque",
+      "team2": "Matanzas"
+    },
+    "event2": {
+      "team1": "Mayabeque",
+      "team2": "Matanzas"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Pospisil V",
+      "team2": "Halys Q"
+    },
+    "event2": {
+      "team1": "Halys, Quentin",
+      "team2": "Pospisil, Vasek"
+    },
+    "teams_reversed": true
+  },
+  {
+    "event1": {
+      "team1": "Gimeno-Traver D",
+      "team2": "Giustino L"
+    },
+    "event2": {
+      "team1": "Gimeno-Traver, Daniel",
+      "team2": "Giustino, Lorenzo"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Monteiro J",
+      "team2": "Chung Yunseong"
+    },
+    "event2": {
+      "team1": "Monteiro, Joao",
+      "team2": "Chung, Yunseong"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Schoofs B",
+      "team2": "Ferro F"
+    },
+    "event2": {
+      "team1": "Ferro, Fiona",
+      "team2": "Schoofs, Bibiane"
+    },
+    "teams_reversed": true
+  },
+  {
+    "event1": {
+      "team1": "Andrei L-I/Serban",
+      "team2": "Francati/Shinikova"
+    },
+    "event2": {
+      "team1": "L.Andrei/R.Serban",
+      "team2": "E.Francati/I.Shinikova"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Russkie Vityazi",
+      "team2": "Krylia Sovetov MHK"
+    },
+    "event2": {
+      "team1": "Russkie Vityazi",
+      "team2": "Krylya Sovetov"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Ladiya",
+      "team2": "Altay Ust-Kamenogorsk"
+    },
+    "event2": {
+      "team1": "Ladja",
+      "team2": "Altai Ust-Kamenogorsk"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Reactor",
+      "team2": "Omskie Yastreby"
+    },
+    "event2": {
+      "team1": "Reaktor",
+      "team2": "Omskie Yastreby"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Irbis Kazan",
+      "team2": "Snezhnye barsy"
+    },
+    "event2": {
+      "team1": "Irbis",
+      "team2": "Snezhnye Barsy"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "SKA-Gazprombank U18",
+      "team2": "HK Riga U18"
+    },
+    "event2": {
+      "team1": "SKA-Gazprombank U-18",
+      "team2": "Riga U-17"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Beybarys",
+      "team2": "Arlan"
+    },
+    "event2": {
+      "team1": "Beybarys Atyrau",
+      "team2": "Arlan Kokshetau"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Hc Litvinov U21",
+      "team2": "Zlin U21"
+    },
+    "event2": {
+      "team1": "Litvinov Youth",
+      "team2": "Zlin Youth"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Sparta Praha U21",
+      "team2": "Vitkovice U21"
+    },
+    "event2": {
+      "team1": "Sparta Praha Youth",
+      "team2": "Vitkovice Youth"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Kladno U21",
+      "team2": "Kometa Brno U21"
+    },
+    "event2": {
+      "team1": "Kladno Youth",
+      "team2": "Kometa Brno Youth"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Hc Plzen U18",
+      "team2": "Slavia Praha U18"
+    },
+    "event2": {
+      "team1": "Plzen U-18",
+      "team2": "Slavia Praha U-18"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Karlovy Vary U18",
+      "team2": "Kladno U18"
+    },
+    "event2": {
+      "team1": "Karlovy Vary U-18",
+      "team2": "Kladno U-18"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Ceske Budejovice U18",
+      "team2": "Zaltsburg U18"
+    },
+    "event2": {
+      "team1": "Ceske Budejovice U-18",
+      "team2": "Red Bull Salzburg U-18"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Gnezno U20",
+      "team2": "Zastal Zielona Gora U20"
+    },
+    "event2": {
+      "team1": "MKK Gniezno U-20",
+      "team2": "Zastal Fatto Zielona Gora U-20"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Trefl Sopot U20",
+      "team2": "Gimbasket Wroclaw U20"
+    },
+    "event2": {
+      "team1": "Trefl Sopot U-20",
+      "team2": "Gimbasket Wroclaw U-20"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Homentmen",
+      "team2": "Rades"
+    },
+    "event2": {
+      "team1": "Homenetmen",
+      "team2": "Etoile de Rades"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Waldviertel",
+      "team2": "Spartak Myjava"
+    },
+    "event2": {
+      "team1": "Waldviertel",
+      "team2": "Spartak Myjava"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Stroitel Minsk",
+      "team2": "Mogilev"
+    },
+    "event2": {
+      "team1": "Stroitel Minsk",
+      "team2": "Mogilev"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "ASK Amoucha",
+      "team2": "CS Setif"
+    },
+    "event2": {
+      "team1": "ASC Amoucha",
+      "team2": "CS Setif"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "ES Tadjenanet",
+      "team2": "OMK El Milia"
+    },
+    "event2": {
+      "team1": "ES Tadjenanet",
+      "team2": "El Milia"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "NA Hussein Dey",
+      "team2": "MB Saida"
+    },
+    "event2": {
+      "team1": "Hussein Dey",
+      "team2": "MB Saida"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Olympique El Kseur",
+      "team2": "NRB Bou Arreridj"
+    },
+    "event2": {
+      "team1": "Olympique El Kseur",
+      "team2": "NR Bordj Bou Arreridj"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "PO Chlef",
+      "team2": "Ain Azel"
+    },
+    "event2": {
+      "team1": "Chlef",
+      "team2": "Ain Azel"
+    },
+    "teams_reversed": false
+  },
+  {
+    "event1": {
+      "team1": "Al Tarajee U21",
+      "team2": "Al Nahda U21"
+    },
+    "event2": {
+      "team1": "Al Taraje U-21",
+      "team2": "Al Nahda U-21"
+    },
+    "teams_reversed": false
+  }
+]

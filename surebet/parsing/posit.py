@@ -1,21 +1,22 @@
 from lxml import html
 from re import match
 
-from surebet.handling import *
-from surebet.parsing import *
+from surebet import find_by_predicate
 from surebet.converting import format_spaces
+from surebet.handling.surebets import *
+from surebet.parsing import *
 
 xp_rows = '//table/tbody/tr[not(@id="")]'
 none_factor = 0
 
 
-def parse(source, all_surebets):
+def parse(source, surebets):
     books_surebets = {}
-    for book_pair in all_surebets:
-        books_surebets[(book_pair.book1, book_pair.book2)] = book_pair
+    for book_surebets in surebets.books_surebets:
+        books_surebets[(book_surebets.book1, book_surebets.book2)] = book_surebets
 
     doc = html.fromstring(source)
-    for row in xpath_with_check(doc, xp_rows):
+    for row in doc.xpath(xp_rows):
         cols = xpath_with_check(row, "./td")
 
         book_pair = _get_book_pair(cols[2])
@@ -152,10 +153,3 @@ def _get_surebet(node, is_reversed):
     if len(wagers) == 2:
         surebet = Surebet(*wagers)
     return surebet
-
-
-def find_by_predicate(iterable, predicate):
-    for item in iterable:
-        if predicate(item):
-            return item
-    return None

@@ -1,11 +1,14 @@
+import json
+import logging
+
 import pytest
 from os import path
 
-from surebet import *
+from surebet.json_funcs import obj_dumps, json_dumps
 from surebet.parsing import ParseException
 from surebet.parsing.bets import Bookmaker
 from surebet.parsing.marat import parse
-from surebet.tests.parsing import *
+from surebet.tests.parsing import package_dir
 
 name = "marat"
 resource_dir = path.join(package_dir, name)
@@ -37,7 +40,7 @@ def test_known_result():
     parse(known_result_in, marat)
     marat.format()
 
-    assert obj_to_json(marat) == json_dumps(known_result)
+    assert obj_dumps(marat) == json_dumps(known_result)
 
     logging.info('PASS: known result')
 
