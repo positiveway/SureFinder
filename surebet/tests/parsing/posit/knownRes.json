@@ -13,6 +13,7 @@
               "part": 0,
               "surebets": [
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "factor": 0,
@@ -41,6 +42,7 @@
               "part": 2,
               "surebets": [
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "cond": -1.5,
@@ -56,6 +58,7 @@
                   }
                 },
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "cond": 5.5,
@@ -90,6 +93,7 @@
               "part": 0,
               "surebets": [
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "cond": 145.5,
@@ -122,6 +126,7 @@
               "part": 1,
               "surebets": [
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "cond": 42.5,
@@ -154,6 +159,7 @@
               "part": 1,
               "surebets": [
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "cond": 48.5,
@@ -193,6 +199,7 @@
               "part": 1,
               "surebets": [
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "cond": 2.5,
@@ -228,6 +235,7 @@
               "part": 2,
               "surebets": [
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "cond": -1.5,
@@ -243,6 +251,7 @@
                   }
                 },
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "factor": 0,
@@ -259,6 +268,7 @@
               "part": 0,
               "surebets": [
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "cond": 26.5,
@@ -299,6 +309,7 @@
               "part": 0,
               "surebets": [
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "factor": 0,
@@ -312,6 +323,7 @@
                   }
                 },
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "factor": 0,
@@ -323,6 +335,7 @@
                   }
                 },
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "cond": 5.0,
@@ -343,6 +356,7 @@
               "part": 3,
               "surebets": [
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "cond": 2.0,
@@ -378,6 +392,7 @@
               "part": 2,
               "surebets": [
                 {
+                  "mark": 15,
                   "profit": null,
                   "w1": {
                     "factor": 0,
