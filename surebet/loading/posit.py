@@ -1,8 +1,18 @@
+from json import load
+
+from os import path
+from random import choice, seed
 from selenium.common.exceptions import NoSuchElementException
 
 from surebet.loading import *
 
-default_account = {'login': "kolyan312@gmail.com", 'password': "1q1w1e1r"}
+# TODO: replace by mock
+# temporary generates random account
+seed()
+with open(path.join(package_dir, "accounts.json")) as file:
+    accounts = load(file)
+default_account = choice(accounts)
+
 name = "positivebet"
 url = "https://positivebet.com/en/user/login"
 
@@ -14,7 +24,7 @@ def load(browser, account=default_account):
 
     try:
         browser.find_element_by_id("UserLogin_username").send_keys(account['login'])
-        browser.find_element_by_id("UserLogin_password").send_keys(account['password'])
+        browser.find_element_by_id("UserLogin_password").send_keys(account['pass'])
         browser.find_element_by_id("UserLogin_rememberMe").click()
         browser.find_element_by_name("yt0").click()
 
