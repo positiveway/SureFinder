@@ -2,9 +2,9 @@ from traceback import format_exc
 
 import os
 
-from surebet import package_dir
+from surebet import project_dir
 
-loading_dir = os.path.dirname(__file__)
+package_dir = os.path.dirname(__file__)
 
 
 class LoadException(Exception):
@@ -15,7 +15,7 @@ def try_load(load_func, site_name, **kwargs):
     try:
         result = load_func(**kwargs)
     except LoadException:
-        filename = os.path.join(package_dir, "error-loading-{}".format(site_name))
+        filename = os.path.join(project_dir, "error-loading-{}".format(site_name))
         with open(filename, "w") as out:
             out.write(format_exc())
         raise

@@ -6,8 +6,10 @@ from selenium.common.exceptions import NoSuchElementException
 
 from surebet.loading import *
 
+# TODO: replace by mock
+# temporary generates random account
 seed()
-with open(path.join(loading_dir, "accounts.json")) as file:
+with open(path.join(package_dir, "accounts.json")) as file:
     accounts = load(file)
 default_account = choice(accounts)
 
