@@ -6,6 +6,8 @@ from surebet.loading.posit import *
 from surebet.loading.selenium import Selenium
 from surebet.parsing.posit import parse
 
+LOAD_INTERVAL = 6
+
 
 class Posit:
     def __init__(self, account=default_account):
@@ -15,7 +17,7 @@ class Posit:
         self.surebets = Surebets()
 
         while self._add_new_surebets() != 0:
-            sleep(6)  # wait for positive to auto refresh page
+            sleep(LOAD_INTERVAL)  # wait for positive to auto refresh page
 
     def _add_new_surebets(self) -> int:  # returns amount of newly added surebets
         sample = try_load(load_events, name, browser=self.selenium.browser)
