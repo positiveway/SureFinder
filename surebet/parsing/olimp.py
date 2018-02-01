@@ -79,6 +79,7 @@ class Handicap:
                 v1, v2 = self.coef, coef
                 if self.team == 2:
                     v1, v2 = v2, v1
+                    cond = -cond
                 self.clear()
                 return CondBet(cond, v1, v2)
             else:  # error
