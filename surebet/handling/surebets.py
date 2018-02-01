@@ -6,7 +6,7 @@ HOLDING_LIMIT = 15
 
 
 class Wager:
-    def __init__(self, name, factor):
+    def __init__(self, name, factor: float):
         self.name = name
         self.factor = factor
 
@@ -15,7 +15,7 @@ class Wager:
 
 
 class CondWager(Wager):
-    def __init__(self, name, factor, suffix, cond):
+    def __init__(self, name, factor: float, suffix: str, cond: float):
         super().__init__(name, factor)
         self.cond = cond
         self.suffix = suffix
@@ -25,7 +25,7 @@ class CondWager(Wager):
 
 
 class Surebet:
-    def __init__(self, w1, w2, profit=None):
+    def __init__(self, w1: Wager, w2: Wager, profit: float = None):
         self.w1 = w1
         self.w2 = w2
         self.profit = profit
@@ -35,7 +35,7 @@ class Surebet:
 
 
 class MarkedSurebet(Surebet):
-    def __init__(self, w1, w2, profit=None):
+    def __init__(self, w1: Wager, w2: Wager, profit: float = None):
         super().__init__(w1, w2, profit)
         self.mark = HOLDING_LIMIT
 
@@ -45,34 +45,35 @@ class MarkedSurebet(Surebet):
     def dec_mark(self):
         self.mark -= 1
 
-    def is_mark_empty(self):
+    def is_mark_empty(self) -> bool:
         return self.mark == 0
 
 
 class PartSurebets:
-    def __init__(self, surebets, part):
-        self.surebets = surebets
-        self.part = part
+    def __init__(self, surebets: list, part: int):
+        self.surebets = surebets  # list of surebets (class Surebet/MarkedSurebet)
+        self.part = part  # number of event's part
 
     def __eq__(self, other):
         return self.part == other.part
 
 
 class EventSurebets:
-    def __init__(self, teams1, teams2):
-        self.teams1, self.teams2 = teams1, teams2
-        self.parts = []
+    def __init__(self, teams1: list, teams2: list):
+        self.teams1, self.teams2 = teams1, teams2  # lists of teams for first and second event
+        self.parts = []  # list of surebets for certain parts of event (class PartSurebets)
 
     def __eq__(self, other):
         return self.teams1 == other.teams1 and self.teams2 == other.teams2
 
 
 class BookSurebets:
-    def __init__(self, book1, book2):
-        self.book1, self.book2 = book1, book2
+    def __init__(self, book1: str, book2: str):
+        self.book1, self.book2 = book1, book2  # bookmakers names
+        # lists of surebets for certain sports, each consists of surebets for certain events (EventSurebets)
         self.soccer, self.tennis, self.hockey, self.basket, self.volley = ([] for i in range(5))
 
-    def attrs_dict(self):
+    def attrs_dict(self) -> dict:
         return {attr: val for attr, val in self.__dict__.items() if isinstance(val, list)}
 
     def __eq__(self, other):
@@ -81,6 +82,6 @@ class BookSurebets:
 
 class Surebets:
     def __init__(self):
-        self.books_surebets = []
+        self.books_surebets = []  # list of surebets for every pair of bookmakers (BookSurebets)
         for book1_name, book2_name in combinations(book_names, 2):
             self.books_surebets.append(BookSurebets(book1_name, book2_name))

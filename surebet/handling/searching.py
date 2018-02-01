@@ -26,7 +26,7 @@ def _get_reversed_event(event):
 
 
 def _get_reversed_surebets(e_surebets):
-    e_surebets.teams2 = (e_surebets.teams2[1], e_surebets.teams2[0])
+    e_surebets.teams2 = [e_surebets.teams2[1], e_surebets.teams2[0]]
 
     for part_surebets in e_surebets.parts:
         for surebet in part_surebets.surebets:
@@ -54,7 +54,7 @@ def find_for_2_books(book1, book2):
             if event_pair.teams_reversed:
                 event2 = _get_reversed_event(event2)
 
-            e_surebets = EventSurebets((event1.team1, event1.team2), (event2.team1, event2.team2))
+            e_surebets = EventSurebets([event1.team1, event1.team2], [event2.team1, event2.team2])
 
             part_bets2_map = {part_bets.part: part_bets for part_bets in event2.parts}
             for part_bets1 in event1.parts:
