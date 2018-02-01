@@ -2,6 +2,8 @@ from itertools import combinations
 
 book_names = ["fonbet", "marat", "olimp"]
 
+LIMIT = 15
+
 
 class Wager:
     def __init__(self, name, factor):
@@ -30,6 +32,18 @@ class Surebet:
 
     def __eq__(self, other):
         return self.w1 == other.w1 and self.w2 == other.w2
+
+
+class MarkedSurebet(Surebet):
+    def __init__(self, w1, w2, profit=None):
+        super().__init__(w1, w2, profit)
+        self.mark = LIMIT
+
+    def restore_mark(self):
+        self.mark = LIMIT
+
+    def dec_mark(self):
+        self.mark -= 1
 
 
 class PartSurebets:

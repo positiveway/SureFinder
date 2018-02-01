@@ -10,7 +10,9 @@ xp_rows = '//table/tbody/tr[not(@id="")]'
 none_factor = 0
 
 
-def parse(source, surebets):
+def parse(source):
+    surebets = Surebets()
+
     books_surebets = {}
     for book_surebets in surebets.books_surebets:
         books_surebets[(book_surebets.book1, book_surebets.book2)] = book_surebets
@@ -43,8 +45,9 @@ def parse(source, surebets):
             part_surebets = PartSurebets([], part_num)
             e_surebets.parts.append(part_surebets)
 
-        if surebet not in part_surebets.surebets:
-            part_surebets.surebets.append(surebet)
+        part_surebets.surebets.append(surebet)
+
+    return surebets
 
 
 def _get_sport_name(node):
@@ -151,5 +154,5 @@ def _get_surebet(node, is_reversed):
 
     surebet = None
     if len(wagers) == 2:
-        surebet = Surebet(*wagers)
+        surebet = MarkedSurebet(*wagers)
     return surebet
