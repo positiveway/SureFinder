@@ -4,7 +4,6 @@ import logging
 import pytest
 from os import path
 
-from surebet.handling.surebets import Surebets
 from surebet.json_funcs import obj_dumps, json_dumps
 from surebet.parsing import ParseException
 from surebet.parsing.posit import parse
@@ -23,7 +22,7 @@ def test_samples():
         filename = abs_path('sample{}.html'.format(num))
         html = read_html(filename)
 
-        parse(html, Surebets())
+        parse(html)
         logging.info('PASS: sample{}'.format(num))
 
 
@@ -35,9 +34,9 @@ def test_known_result():
     filename = abs_path('knownRes.html')
     html = read_html(filename)
 
-    surebets = Surebets()
-    parse(html, surebets)
-
+    surebets = parse(html)
+    with open("knownRes.json", "w") as out:
+        out.write(obj_dumps(surebets))
     assert obj_dumps(surebets) == json_dumps(known_res)
 
     logging.info('PASS: known result')
@@ -48,6 +47,6 @@ def test_broken_structure():
     html = read_html(filename)
 
     with pytest.raises(ParseException, message='Expecting ParseException'):
-        parse(html, Surebets())
+        parse(html)
 
     logging.info('PASS: broken structure')
