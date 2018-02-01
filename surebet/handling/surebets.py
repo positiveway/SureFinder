@@ -2,7 +2,7 @@ from itertools import combinations
 
 book_names = ["fonbet", "marat", "olimp"]
 
-LIMIT = 15
+HOLDING_LIMIT = 15
 
 
 class Wager:
@@ -37,13 +37,16 @@ class Surebet:
 class MarkedSurebet(Surebet):
     def __init__(self, w1, w2, profit=None):
         super().__init__(w1, w2, profit)
-        self.mark = LIMIT
+        self.mark = HOLDING_LIMIT
 
     def restore_mark(self):
-        self.mark = LIMIT
+        self.mark = HOLDING_LIMIT
 
     def dec_mark(self):
         self.mark -= 1
+
+    def is_mark_empty(self):
+        return self.mark == 0
 
 
 class PartSurebets:

@@ -35,8 +35,7 @@ def test_known_result():
     html = read_html(filename)
 
     surebets = parse(html)
-    with open("knownRes.json", "w") as out:
-        out.write(obj_dumps(surebets))
+
     assert obj_dumps(surebets) == json_dumps(known_res)
 
     logging.info('PASS: known result')
