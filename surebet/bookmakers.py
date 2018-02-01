@@ -17,7 +17,7 @@ class Posit:
         while self._add_new_surebets() != 0:
             sleep(6)  # wait for positive to auto refresh page
 
-    def _add_new_surebets(self) -> int:
+    def _add_new_surebets(self) -> int:  # returns amount of newly added surebets
         sample = try_load(load_events, name, browser=self.selenium.browser)
         new_surebets = parse(sample)
 
@@ -25,7 +25,7 @@ class Posit:
         new_added = self._merge_surebets(new_surebets)
         # self.surebets.format()  # TODO: need to implement method format
 
-        return new_added  # amount of newly added surebets
+        return new_added
 
     def _decrease_marks(self):
         for book in self.surebets.books_surebets:
@@ -38,7 +38,7 @@ class Posit:
                             if surebet.is_mark_empty():
                                 part.surebets.remove(surebet)
 
-    def _merge_surebets(self, new_surebets) -> int:
+    def _merge_surebets(self, new_surebets) -> int:  # returns amount of newly added surebets
         new_added = 0
 
         for new_book in new_surebets.books_surebets:
