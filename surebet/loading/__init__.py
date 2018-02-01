@@ -4,6 +4,8 @@ import os
 
 from surebet import package_dir
 
+loading_dir = os.path.dirname(__file__)
+
 
 class LoadException(Exception):
     pass
