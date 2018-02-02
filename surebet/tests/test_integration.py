@@ -13,16 +13,15 @@ from surebet.parsing.bets import Bookmakers
 
 def test_integration():
     # loading
+    sel_service = SeleniumService()
+
     posit = Posit()
 
-    # Fonbet
-    sel_service = SeleniumService()
     fonbet_sel = sel_service.new_instance()
 
     fonbet_loading.load(fonbet_sel.browser)
     fonbet_sample = fonbet_loading.load_events(fonbet_sel.browser)
 
-    # Marat
     marat_sample = marat_loading.load_events()
 
     bookmakers = Bookmakers()
@@ -32,9 +31,8 @@ def test_integration():
 
     found_surebets = find_surebets(bookmakers)
     posit_surebets = posit.load_events()
-    exclude_posit(found_surebets, posit_surebets)
 
-    posit.quit()
+    exclude_posit(found_surebets, posit_surebets)
 
     sel_service.quit()
 
