@@ -7,8 +7,7 @@ from surebet.tests.loading import check_result
 
 
 def test_loading():
-    selenium_service = SeleniumService()
-    selenium = selenium_service.new_instance()
+    selenium = SeleniumService().new_instance()
 
     print("loaded")
 
@@ -21,6 +20,6 @@ def test_loading():
 
         time.sleep(1)
 
-    selenium_service.quit()
+    SeleniumService.quit()
 
     logging.info("PASS: loading")
