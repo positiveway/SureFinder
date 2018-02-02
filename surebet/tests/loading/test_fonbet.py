@@ -2,12 +2,12 @@ import logging
 import time
 
 from surebet.loading.fonbet import *
-from surebet.loading.selenium import Selenium
+from surebet.loading.selenium import SeleniumService
 from surebet.tests.loading import check_result
 
 
 def test_loading():
-    selenium = Selenium()
+    selenium = SeleniumService().new_instance()
 
     for j in range(2):
         print("load: ({})".format(j))
@@ -23,5 +23,6 @@ def test_loading():
 
         time.sleep(5)
 
-    selenium.quit()
+    SeleniumService.quit()
+
     logging.info("PASS: loading")
