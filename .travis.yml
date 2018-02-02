@@ -17,7 +17,7 @@ addons:
       - xvfb
 install:
   - pip install --upgrade pip
-  - pip install -r requirements.txt"
+  - pip install -r requirements.txt
   - sudo ./setup_driver.py
 script:
   - pytest --cov=surebet surebet/tests
