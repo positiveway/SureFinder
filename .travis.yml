@@ -20,7 +20,7 @@ addons:
 install:
   - pip install -r requirements.txt
 
-  - sudo python setup_driver.py
+  - python setup_driver.py
 script:
   - pytest --cov=surebet surebet/tests
 
