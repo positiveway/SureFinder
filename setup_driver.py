@@ -15,4 +15,4 @@ driver_url = 'https://chromedriver.storage.googleapis.com/{}/chromedriver_linux6
 
 urllib.request.urlretrieve(driver_url, download_path)
 
-subprocess.run(['sudo', 'unzip', '-f', download_path, '-d', unpack_dir])
+subprocess.run(['unzip', '-f', download_path, '-d', unpack_dir])
