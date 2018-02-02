@@ -106,8 +106,7 @@ class EventSurebets:
         :params teams1, teams2: lists of teams for first and second event
         :param parts: list of surebets for certain parts of event's pair (class PartSurebets)
         """
-        # Explicit casting is needed for excluding function
-        self.teams1, self.teams2 = tuple(teams1), tuple(teams2)
+        self.teams1, self.teams2 = teams1, teams2
         self.parts = []
 
     def __eq__(self, other):
