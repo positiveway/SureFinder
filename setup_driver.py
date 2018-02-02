@@ -5,16 +5,21 @@ import urllib.request
 import zipfile
 
 import os
+import stat
 
 download_dir = os.path.expandvars('$HOME/Downloads')
-file_path = os.path.join(download_dir, 'chromedriver.zip')
+unpack_dir = '/usr/bin'
 
-dest_dir = '/usr/bin'
+download_path = os.path.join(download_dir, 'chromedriver.zip')
+unpack_path = os.path.join(unpack_dir, 'chromedriver')
 
 version = '2.35'
 driver_url = 'https://chromedriver.storage.googleapis.com/{}/chromedriver_linux64.zip'.format(version)
 
-urllib.request.urlretrieve(driver_url, file_path)
+urllib.request.urlretrieve(driver_url, download_path)
 
-with zipfile.ZipFile(file_path, "r") as zip_ref:
-    zip_ref.extractall(dest_dir)
+with zipfile.ZipFile(download_path, "r") as zip_ref:
+    zip_ref.extractall(unpack_dir)
+
+st = os.stat(unpack_path)
+os.chmod(unpack_path, st.st_mode | stat.S_IEXEC)
