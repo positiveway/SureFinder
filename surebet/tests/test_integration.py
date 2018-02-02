@@ -7,7 +7,7 @@ import surebet.parsing.marat as marat_parsing
 from surebet.bookmakers import Posit
 from surebet.handling.excluding import exclude_posit
 from surebet.handling.searching import find_surebets
-from surebet.loading.selenium import Selenium
+from surebet.loading.selenium import SeleniumService
 from surebet.parsing.bets import Bookmakers
 
 
@@ -16,12 +16,12 @@ def test_integration():
     posit = Posit()
 
     # Fonbet
-    selenium = Selenium()
+    sel_service = SeleniumService()
+    fonbet_sel = sel_service.new_instance()
 
-    fonbet_loading.load(selenium.browser)
-    fonbet_sample = fonbet_loading.load_events(selenium.browser)
+    fonbet_loading.load(fonbet_sel.browser)
+    fonbet_sample = fonbet_loading.load_events(fonbet_sel.browser)
 
-    selenium.quit()
     # Marat
     marat_sample = marat_loading.load_events()
 
@@ -35,5 +35,7 @@ def test_integration():
     exclude_posit(found_surebets, posit_surebets)
 
     posit.quit()
+
+    sel_service.quit()
 
     logging.info("PASS: integration")
