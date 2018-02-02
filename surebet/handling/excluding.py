@@ -11,7 +11,9 @@ def _del_equal(found_obj, posit_obj) -> None:
                 if posit_el:
                     if isinstance(found_el, Surebet):
                         found_iter.remove(found_el)
-                    else:
+                    # object can contain lists that should not be handled by algorithm
+                    # e.g. teams is list of strings, srt is primitive type without __dict__ method
+                    elif hasattr(found_el, '__dict__'):
                         _del_equal(found_el, posit_el)
 
 
