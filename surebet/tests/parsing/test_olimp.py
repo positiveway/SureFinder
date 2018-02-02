@@ -29,10 +29,10 @@ def test_samples():
 
 
 def test_known_result():
-    with open(abs_path("knownResultRaw.json")) as file:
+    with open(abs_path("knownResultIn.json")) as file:
         raw_data = json.load(file)
 
-    with open(abs_path("knownResultHandled.json")) as file:
+    with open(abs_path("knownResultOut.json")) as file:
         handled_data = json.load(file)
 
     olimp = Bookmaker(name)
