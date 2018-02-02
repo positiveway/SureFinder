@@ -18,8 +18,8 @@ addons:
 install:
   - pip install --upgrade pip
   - pip install -r requirements.txt
-  - chmod +x setup_driver.py
-  - sudo ./setup_driver.py
+
+  - sudo python setup_driver.py
 script:
   - pytest --cov=surebet surebet/tests
 
