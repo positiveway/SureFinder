@@ -15,10 +15,11 @@ addons:
   apt:
     packages:
       - xvfb
-
-script:
+install:
+  - pip install --upgrade pip
+  - pip install -r requirements.txt"
   - sudo python3 setup_driver.py
-
+script:
   - pytest --cov=surebet surebet/tests
 
 after_success:
