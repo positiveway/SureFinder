@@ -34,4 +34,6 @@ def test_integration():
     posit_surebets = posit.load_events()
     exclude_posit(found_surebets, posit_surebets)
 
+    posit.quit()
+
     logging.info("PASS: integration")

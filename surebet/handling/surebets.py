@@ -64,7 +64,13 @@ class EventSurebets:
         self.parts = []
 
     def __eq__(self, other):
-        return self.teams1 == other.teams1 and self.teams2 == other.teams2
+        attrs = ['teams1', 'teams2']
+        checks = [self._teams_equal(getattr(self, attr), getattr(other, attr)) for attr in attrs]
+        return all(checks)
+
+    @staticmethod
+    def _teams_equal(teams1, teams2) -> bool:
+        return tuple(teams1) == tuple(teams2)
 
 
 class BookSurebets:
