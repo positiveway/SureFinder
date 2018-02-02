@@ -12,7 +12,7 @@ def _del_equal(found_obj, posit_obj) -> None:
                     if isinstance(found_el, Surebet):
                         found_iter.remove(found_el)
                     else:
-                        exclude_posit(found_el, posit_el)
+                        _del_equal(found_el, posit_el)
 
 
 # FIXME
