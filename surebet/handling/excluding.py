@@ -17,3 +17,4 @@ def _del_equal(found_obj, posit_obj) -> None:
 
 def exclude_posit(found_surebets: Surebets, posit_surebets: Surebets) -> None:
     _del_equal(found_surebets, posit_surebets)
+    # found_surebets.format()  # TODO: need to implement method format
