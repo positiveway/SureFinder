@@ -1,6 +1,12 @@
 git:
   depth: 15
+
 language: python
+cache:
+  pip: true
+  directories:
+  - Downloads
+
 python:
   - "3.6"
 # Do not move from the root dir. requirements.txt is here
@@ -9,10 +15,13 @@ addons:
   apt:
     packages:
       - xvfb
+
 before_install:
-  - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip
-  - sudo unzip chromedriver_linux64.zip -d /usr/bin
+  - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip Downloads/chromedriver.zip
+  - sudo unzip Downloads/chromedriver.zip -d /usr/bin
+
 script:
   - pytest --cov=surebet surebet/tests
+
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t 98c1d7ba-04ce-4fd7-b487-9e8938227ef6
