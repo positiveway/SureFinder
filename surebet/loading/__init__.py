@@ -1,3 +1,4 @@
+import logging
 from traceback import format_exc
 
 import os
@@ -28,11 +29,11 @@ def check_status(status_code):
 
 
 def log_loaded(site_name):
-    print("{}: loaded".format(site_name))
+    logging.info("{}: loaded".format(site_name))
 
 
 def log_loaded_events(site_name):
-    print("{}: loaded events".format(site_name))
+    logging.info("{}: loaded events".format(site_name))
 
 
 def handle_loading_err(browser, name):
