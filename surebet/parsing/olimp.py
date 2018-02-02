@@ -21,16 +21,16 @@ HANDICAP_TYPES = ['Ф1', 'Ф2']
 class Total:
     def __init__(self):
         self._type = self._id = ''
-        self._step = self.cond = self.coef = 0
+        self.cond = self.coef = 0
+        self.filled = False
 
     def add(self, _id, _type, cond, coef):
         if not (len(_type) == 1 and _type in 'OU'):
             raise ParseException('Unknown total type "{}" '
                                  '(id: "{}", cond: "{}", coef: "{}").'.format(_type, _id, cond, coef))
-        if self._step == 0:
+        if not self.filled:
             self.fill(_id, _type, cond, coef)
-            self._step = 1
-        elif self._step == 1:
+        else:
             if _id == self._id and _type != self._type and cond == self.cond:
                 v1, v2 = self.coef, coef
                 if _type == 'O':
@@ -45,6 +45,7 @@ class Total:
         self._type = _type
         self.cond = cond
         self.coef = coef
+        self.filled = True
 
     def clear(self):
         self.__init__()
@@ -67,29 +68,30 @@ class TotalInfo:
 
 class Handicap:
     def __init__(self):
-        self._id = ''
-        self._step = self.team = self.cond = self.coef = 0
+        self.first_id = ''
+        self.first_team = self.first_cond = self.first_coef = 0
+        self.filled = False
 
     def add(self, _id, team, cond, coef):
-        if self._step == 0:
+        if not self.filled:
             self.fill(_id, team, cond, coef)
-            self._step = 1
-        elif self._step == 1:
-            if _id == self._id and team != self.team and cond == -self.cond:
-                v1, v2 = self.coef, coef
-                if self.team == 2:
-                    v1, v2 = v2, v1
-                    cond = -cond
+        else:
+            if _id == self.first_id and team != self.first_team and cond == -self.first_cond:
+                if self.first_team == 1:
+                    cond1, v1, v2 = self.first_cond, self.first_coef, coef
+                else:
+                    cond1, v1, v2 = cond, coef, self.first_coef
                 self.clear()
-                return CondBet(cond, v1, v2)
+                return CondBet(cond1, v1, v2)
             else:  # error
                 self.fill(_id, team, cond, coef)
 
     def fill(self, _id, team, cond, coef):
-        self._id = _id
-        self.team = team
-        self.cond = cond
-        self.coef = coef
+        self.first_id = _id
+        self.first_team = team
+        self.first_cond = cond
+        self.first_coef = coef
+        self.filled = True
 
     def clear(self):
         self.__init__()
