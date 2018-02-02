@@ -21,16 +21,16 @@ HANDICAP_TYPES = ['Ф1', 'Ф2']
 class Total:
     def __init__(self):
         self._type = self._id = ''
-        self._step = self.cond = self.coef = 0
+        self.cond = self.coef = 0
+        self.filled = False
 
     def add(self, _id, _type, cond, coef):
         if not (len(_type) == 1 and _type in 'OU'):
             raise ParseException('Unknown total type "{}" '
                                  '(id: "{}", cond: "{}", coef: "{}").'.format(_type, _id, cond, coef))
-        if self._step == 0:
+        if not self.filled:
             self.fill(_id, _type, cond, coef)
-            self._step = 1
-        elif self._step == 1:
+        else:
             if _id == self._id and _type != self._type and cond == self.cond:
                 v1, v2 = self.coef, coef
                 if _type == 'O':
@@ -45,6 +45,7 @@ class Total:
         self._type = _type
         self.cond = cond
         self.coef = coef
+        self.filled = True
 
     def clear(self):
         self.__init__()
@@ -67,28 +68,30 @@ class TotalInfo:
 
 class Handicap:
     def __init__(self):
-        self._id = ''
-        self._step = self.team = self.cond = self.coef = 0
+        self.first_id = ''
+        self.first_team = self.first_cond = self.first_coef = 0
+        self.filled = False
 
     def add(self, _id, team, cond, coef):
-        if self._step == 0:
+        if not self.filled:
             self.fill(_id, team, cond, coef)
-            self._step = 1
-        elif self._step == 1:
-            if _id == self._id and team != self.team and cond == -self.cond:
-                v1, v2 = self.coef, coef
-                if self.team == 2:
-                    v1, v2 = v2, v1
+        else:
+            if _id == self.first_id and team != self.first_team and cond == -self.first_cond:
+                if self.first_team == 1:
+                    cond1, v1, v2 = self.first_cond, self.first_coef, coef
+                else:
+                    cond1, v1, v2 = cond, coef, self.first_coef
                 self.clear()
-                return CondBet(cond, v1, v2)
+                return CondBet(cond1, v1, v2)
             else:  # error
                 self.fill(_id, team, cond, coef)
 
     def fill(self, _id, team, cond, coef):
-        self._id = _id
-        self.team = team
-        self.cond = cond
-        self.coef = coef
+        self.first_id = _id
+        self.first_team = team
+        self.first_cond = cond
+        self.first_coef = coef
+        self.filled = True
 
     def clear(self):
         self.__init__()
@@ -121,7 +124,7 @@ def parse(json, bookmaker):
 
             event_data = event['it']
             parts = [parse_main_bets(event_data, sport_name)]
-            parse_other_bets(event_data, parts)  # quarter, period, set
+            parse_other_bets(event_data, sport_name, parts)  # quarter, period, set
 
             bookmaker_sports[sport_name].append(Event(first_team, second_team, parts))
 
@@ -164,12 +167,12 @@ def parse_main_bets(event_data, sport_name):
     return main_bets
 
 
-def parse_other_bets(event_data, parts):
+def parse_other_bets(event_data, sport_name, parts):
     # TODO Bets by sets, Goals
     for bets_part in event_data:
         bets_part_name = bets_part['n']
         bets = bets_part['i']
-        if not bets:    # for part number
+        if not bets:  # for part number
             continue
 
         hand = Handicap()
@@ -177,14 +180,15 @@ def parse_other_bets(event_data, parts):
 
         if bets_part_name == 'Quarters outcome':  # basket
             # Ч3П1 Ч3Н Ч3П2 Ч3П1Ф0 Ч3П2Ф0 Ч3Ф1 Ч3Ф2 Ч3Тот
-            quarter_bets = get_part_bets(parts, int(bets[0]['on'][1]))
+            part = int(bets[0]['on'][1])
+            quarter_bets = get_part_bets(parts, part)
 
             for bet in bets:
                 bet_type = bet['on']
                 coef = float(bet['v'])
                 if bet_type[-1] == 'Н':
                     quarter_bets.ox = coef
-                elif bet_type[-2:] in PART_BETS_ATTR:    # П1 П2
+                elif bet_type[-2:] in PART_BETS_ATTR:  # П1 П2
                     set_exist_attr(quarter_bets, PART_BETS_ATTR[bet_type[-2:]], coef)
                 elif bet_type[-2:] in HANDICAP_TYPES:
                     add_handicap(bet, hand, quarter_bets)
@@ -192,14 +196,15 @@ def parse_other_bets(event_data, parts):
                     add_total(bet, total, quarter_bets)
         elif re.match(r'^[0-9] period: Periods outcome', bets_part_name):  # hockey
             # П3П1 П3Н П3П2 П31Х П312 П3Х2 П3Ф1 П3Ф2 П3Тот
-            period_bets = get_part_bets(parts, int(bets[0]['on'][1]))
+            part = int(bets[0]['on'][1])
+            period_bets = get_part_bets(parts, part)
 
             for bet in bets:
                 bet_type = bet['on']
                 coef = float(bet['v'])
                 if bet_type[-1] == 'Н':
                     period_bets.ox = coef
-                elif bet_type[-2:] in PART_BETS_ATTR:    # П1 П2
+                elif bet_type[-2:] in PART_BETS_ATTR:  # П1 П2
                     set_exist_attr(period_bets, PART_BETS_ATTR[bet_type[-2:]], coef)
                 elif bet_type[-2:] in HANDICAP_TYPES:
                     add_handicap(bet, hand, period_bets)
@@ -207,21 +212,65 @@ def parse_other_bets(event_data, parts):
                     add_total(bet, total, period_bets)
         elif re.match(r'^[0-9] period: Individual total', bets_part_name):  # hockey
             # П3К1 П3К2
-            period_bets = get_part_bets(parts, int(bets[0]['on'][1]))
+            part = int(bets[0]['on'][1])
+            period_bets = get_part_bets(parts, part)
 
             for bet in bets:
                 add_ind_total(bet, total, period_bets)
         elif re.match(r'^[0-9] period: Additional total', bets_part_name):  # hockey
             # П3Тот2
-            period_bets = get_part_bets(parts, int(bets[0]['on'][1]))
+            part = int(bets[0]['on'][1])
+            period_bets = get_part_bets(parts, part)
 
             for bet in bets:
                 add_total(bet, total, period_bets)
-        elif bets_part_name == 'Bets by sets':  # tennis
-            # С2П1 С2П2 С2_Ф1_-3.5 С2_Ф2_3.5 С2_Ф1_-2.5 С2_Ф2_2.5 С2_Ф1_-1.5 С2_Ф2_1.5
-            # С2Тот С2Тот С2Тот2 С2Тот2 С2Тот3 С2Тот3
-            # sample0.json | Women. ITF Tournament. Midland. Hard. Qualification | Mateas M. VS Scholl Ch.
-            pass
+        elif bets_part_name == 'Bets by sets':  # tennis and volley
+            if sport_name == 'tennis':
+                part = int(bets[0]['on'][1])
+                set_bets = get_part_bets(parts, part)
+
+                for bet in bets:
+                    bet_type = bet['on']
+                    bet_type_parts = bet_type.split('_')  # 'С2_Ф1_-2.5' => ['С2', 'Ф1', '-2.5']
+                    if bet_type[-2:] in PART_BETS_ATTR:
+                        set_exist_attr(set_bets, PART_BETS_ATTR[bet_type[-2:]], float(bet['v']))
+                    elif 'Тот' in bet_type:  # total
+                        add_total(bet, total, set_bets)
+                    elif len(bet_type_parts) == 3 and ('Ф1' in bet_type or 'Ф2' in bet_type):  # handicap
+                        cond_bet = hand.add(bet_type, int(bet_type_parts[1][1]),
+                                            float(bet_type_parts[2]), float(bet['v']))
+                        if cond_bet:
+                            set_bets.hand.append(cond_bet)
+            elif sport_name == 'volley':
+                # П1П2 П1Тот П1Тот2 П3Ф1 П3Ф2
+                part = int(bets[0]['on'][1])  # П1П2 д1П3Ф1 ?
+                set_bets = get_part_bets(parts, part)
+
+                for bet in bets:
+                    bet_type = bet['on']
+                    if bet_type[-2:] in PART_BETS_ATTR:
+                        set_exist_attr(set_bets, PART_BETS_ATTR[bet_type[-2:]], float(bet['v']))
+                    elif 'Тот' in bet_type:  # total
+                        add_total(bet, total, set_bets)
+                    elif bet_type[-2:] in HANDICAP_TYPES:  # handicap
+                        add_handicap(bet, hand, set_bets)
+        elif bets_part_name == 'Halves betting':
+            if sport_name == 'soccer':
+                # Т1Тот2 Т2П1 Т1П2 Т1Н Т1Тот д1Т1Ф2 д1Т1Ф1 Т112 Т2Н Т1Ф2 Т1П1 Т2П2 Т1Х2 Т11Х Т1Ф1 Т1Тот3
+                part = int(bets[0]['on'][1])
+                half_bets = get_part_bets(parts, part)
+
+                for bet in bets:
+                    bet_type = bet['on']
+                    coef = float(bet['v'])
+                    if bet_type[-1] == 'Н':
+                        half_bets.ox = coef
+                    elif bet_type[-2:] in PART_BETS_ATTR:
+                        set_exist_attr(half_bets, PART_BETS_ATTR[bet_type[-2:]], coef)
+                    elif bet_type[-2:] in HANDICAP_TYPES:
+                        add_handicap(bet, hand, half_bets)
+                    elif 'Тот' in bet_type:
+                        add_total(bet, total, half_bets)
 
 
 def get_part_bets(parts, part):

@@ -1,12 +1,18 @@
+import json
+import logging
+
 import pytest
 from os import path
 
-from surebet import *
+from surebet.json_funcs import obj_dumps, json_dumps
 from surebet.parsing import ParseException
+from surebet.parsing.bets import Bookmaker
 from surebet.parsing.olimp import parse
-from surebet.tests.parsing import *
+from surebet.tests.parsing import package_dir
 
-resource_dir = path.join(package_dir, 'olimp')
+
+name = 'olimp'
+resource_dir = path.join(package_dir, name)
 
 
 def abs_path(filename):
@@ -15,51 +21,35 @@ def abs_path(filename):
 
 def test_samples():
     for num in range(3):
-        filename = abs_path('sample{}.html'.format(num))
-        with open(filename, encoding='utf-8') as file:
-            html = file.read()
-        parse(html)
+        filename = abs_path('sample{}.json'.format(num))
+        with open(filename) as file:
+            sample = json.load(file)
+        parse(sample, Bookmaker(name))
         logging.info('PASS: sample{}'.format(num))
 
 
 def test_known_result():
-    filename = abs_path('knownResult.json')
-    with open(filename, encoding='utf-8') as file:
-        known_result = json.load(file)
+    with open(abs_path("knownResultIn.json")) as file:
+        raw_data = json.load(file)
 
-    filename = abs_path('knownResult.html')
-    with open(filename, encoding='utf-8') as file:
-        html = file.read()
+    with open(abs_path("knownResultOut.json")) as file:
+        handled_data = json.load(file)
 
-    olimp = parse(html)
+    olimp = Bookmaker(name)
+    parse(raw_data, olimp)
     olimp.format()
 
-    assert obj_to_json(olimp) == json_dumps(known_result)
+    assert obj_dumps(olimp) == json_dumps(handled_data)
 
     logging.info('PASS: known result')
 
 
 def test_broken_structure():
-    filename = abs_path('brokenStructure.html')
-    with open(filename, encoding='utf-8') as file:
-        html = file.read()
+    filename = abs_path('brokenStructure.json')
+    with open(filename) as file:
+        broken_sample = json.load(file)
 
     with pytest.raises(ParseException, message='Expecting ParseException'):
-        parse(html)
+        parse(broken_sample, Bookmaker(name))
 
     logging.info('PASS: broken structure')
-
-if __name__ == '__main__':
-    # test_samples()
-    # test_broken_structure()
-    test_known_result()
-
-    # filename = abs_path('knownResult.html')
-    # with open(filename, encoding='utf-8') as file:
-    #     html = file.read()
-    #
-    # olimp = parse(html)
-    # olimp.format()
-    #
-    # with open(abs_path('knownResult.json'), 'w', encoding='utf-8') as json_file:
-    #     json_file.write(obj_to_json(olimp))
