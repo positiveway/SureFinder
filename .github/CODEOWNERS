@@ -13,8 +13,6 @@
 /surebet/loading @marshygeek
 /surebet/loading/async.py @korovkinand
 /surebet/loading/selenium.py @korovkinand
-/surebet/loading/posit.py @Crowbar97
-
 
 /surebet/parsing/olimp.py @nikinsta
 
