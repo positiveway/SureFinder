@@ -3,6 +3,7 @@ from json import load
 from os import path
 from random import choice, seed
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.select import Select
 
 from surebet.loading import *
 
@@ -28,11 +29,11 @@ def load(browser, account=default_account):
         browser.find_element_by_id("UserLogin_rememberMe").click()
         browser.find_element_by_name("yt0").click()
 
-        browser.find_element_by_link_text("Live bets").click()
-        browser.find_element_by_link_text("Live bets").click()
+        for i in range(2):
+            browser.find_element_by_link_text("Live bets").click()
 
         browser.find_element_by_name("yt1").click()
-        browser.find_element_by_xpath("//select[@name='Bets[per_page]']/option[text()='30']").click()
+        Select(browser.find_element_by_css_selector("#ddlPerPage")).select_by_value("30")
     except NoSuchElementException:
         handle_loading_err(browser, name)
 
