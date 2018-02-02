@@ -16,9 +16,9 @@ addons:
     packages:
       - xvfb
 
-before_install:
-  - sudo python3 setup_driver.py
 script:
+  - sudo python3 setup_driver.py
+
   - pytest --cov=surebet surebet/tests
 
 after_success:
