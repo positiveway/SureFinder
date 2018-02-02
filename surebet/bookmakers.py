@@ -3,7 +3,7 @@ from time import sleep
 from surebet import find_in_iter
 from surebet.handling.surebets import *
 from surebet.loading.posit import *
-from surebet.loading.selenium import Selenium
+from surebet.loading.selenium import SeleniumService
 from surebet.parsing.posit import parse
 
 LOAD_INTERVAL = 6
@@ -11,7 +11,7 @@ LOAD_INTERVAL = 6
 
 class Posit:
     def __init__(self, account=default_account):
-        self.selenium = Selenium()
+        self.selenium = SeleniumService().new_instance()
         try_load(load, name, browser=self.selenium.browser, account=account)
 
         self.surebets = Surebets()
@@ -74,6 +74,3 @@ class Posit:
     def load_events(self):
         self._add_new_surebets()
         return self.surebets
-
-    def quit(self):
-        self.selenium.quit()
