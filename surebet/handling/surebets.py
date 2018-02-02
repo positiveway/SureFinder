@@ -94,12 +94,16 @@ class PartSurebets:
 
 
 class EventSurebets:
-    """Contains surebets for each part of event's pair."""
+    """
+    Surebets appear between two events. This pair of events has common parts
+    (e.g: period for hockey, set for tennis etc.)
+    So this class contains surebets for each common part of event's pair.
+    """
 
     def __init__(self, teams1: list, teams2: list):
         """
         :params teams1, teams2: lists of teams for first and second event
-        :param parts: list of surebets for certain parts of event (class PartSurebets)
+        :param parts: list of surebets for certain parts of event's pair (class PartSurebets)
         """
         self.teams1, self.teams2 = teams1, teams2
         self.parts = []
