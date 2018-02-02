@@ -6,7 +6,13 @@ HOLDING_LIMIT = 15
 
 
 class Wager:
+    """Base info about bet."""
+
     def __init__(self, name: str, factor: float):
+        """
+        :param name: name of bet (for instance: O1X, O12)
+        :param factor: coefficient of bet
+        """
         self.name = name
         self.factor = factor
 
@@ -15,10 +21,12 @@ class Wager:
 
 
 class CondWager(Wager):
+    """Class for bets with condition, that is Handicap or Total."""
+
     def __init__(self, name: str, factor: float, suffix: str, cond: float):
         """
-        :param suffix: suffix for wager (for instance: Hand1, "1" - suffix; TotalU, "U" - suffix)
-        :param cond: condition for wager (for instance: Hand1(-1.5), "-1.5" - cond; TotalU(2.5), "2.5" - cond)
+        :param suffix: suffix for wager (e.g.: Hand1, "1" - suffix; TotalU, "U" - suffix)
+        :param cond: condition for wager (e.g.: Hand1(-1.5), "-1.5" - cond; TotalU(2.5), "2.5" - cond)
         """
         super().__init__(name, factor)
         self.cond = cond
@@ -29,6 +37,8 @@ class CondWager(Wager):
 
 
 class Surebet:
+    """Contains 2 wagers and profit between them."""
+
     def __init__(self, w1: Wager, w2: Wager, profit: float = None):
         """
         :param w1, w2: first and second wagers of surebet
@@ -43,6 +53,14 @@ class Surebet:
 
 
 class MarkedSurebet(Surebet):
+    """
+    Specialized class for handling "Positive" buffer. Contains mark
+    designating how many loadings left to remove it.
+    After surebet's mark decreased from HOLDING_LIMIT to 0,
+    surebet can be considered as gone, that is
+    it's disappeared from positivebet pool.
+    """
+
     def __init__(self, w1: Wager, w2: Wager, profit: float = None):
         """
         :param mark: indicates whether surebet is actual or not
@@ -61,6 +79,8 @@ class MarkedSurebet(Surebet):
 
 
 class PartSurebets:
+    """Contains surebets for specific part of event. Defines number of part."""
+
     def __init__(self, surebets: list, part: int):
         """
         :param surebets: list of surebets (class Surebet/MarkedSurebet)
@@ -74,6 +94,8 @@ class PartSurebets:
 
 
 class EventSurebets:
+    """Contains surebets for each part of event's pair."""
+
     def __init__(self, teams1: list, teams2: list):
         """
         :params teams1, teams2: lists of teams for first and second event
@@ -93,6 +115,8 @@ class EventSurebets:
 
 
 class BookSurebets:
+    """Surebets for 2 bookmakers (e.g Olimp, Fonbet)."""
+
     def __init__(self, book1: str, book2: str):
         """
         :param book1, book2: bookmakers names
@@ -110,6 +134,8 @@ class BookSurebets:
 
 
 class Surebets:
+    """Pairs of BookSurebets in alphabetical order."""
+
     def __init__(self):
         """
         :param books_surebets: list of surebets for every pair of bookmakers (BookSurebets)
