@@ -1,3 +1,5 @@
+sudo: required
+
 git:
   depth: 15
 
@@ -18,7 +20,7 @@ addons:
 install:
   - pip install -r requirements.txt
 
-  - python setup_driver.py
+  - sudo python setup_driver.py
 script:
   - pytest --cov=surebet surebet/tests
 
