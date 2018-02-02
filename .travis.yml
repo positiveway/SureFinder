@@ -5,7 +5,7 @@ language: python
 cache:
   pip: true
   directories:
-  - Downloads
+  - $HOME/Downloads
 
 python:
   - "3.6"
@@ -17,9 +17,7 @@ addons:
       - xvfb
 
 before_install:
-  - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip Downloads/chromedriver.zip
-  - sudo unzip Downloads/chromedriver.zip -d /usr/bin
-
+  - sudo python3 setup_driver.py
 script:
   - pytest --cov=surebet surebet/tests
 
