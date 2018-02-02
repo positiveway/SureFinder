@@ -1,3 +1,4 @@
+from collections import Iterable
 from itertools import combinations
 
 book_names = ["fonbet", "marat", "olimp"]
@@ -100,12 +101,12 @@ class EventSurebets:
     So this class contains surebets for each common part of event's pair.
     """
 
-    def __init__(self, teams1: list, teams2: list):
+    def __init__(self, teams1: Iterable, teams2: Iterable):
         """
         :params teams1, teams2: lists of teams for first and second event
         :param parts: list of surebets for certain parts of event's pair (class PartSurebets)
         """
-        self.teams1, self.teams2 = teams1, teams2
+        self.teams1, self.teams2 = tuple(teams1), tuple(teams2)
         self.parts = []
 
     def __eq__(self, other):
