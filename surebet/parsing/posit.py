@@ -52,13 +52,17 @@ def parse(source):
 
 def _get_sport_name(node):
     raw_name = xpath_with_check(node, "./a[not(@data-delay)]/img")[0].get("alt")
-    return {
+    sport_names = {
         "Soccer": "soccer",
         "Hockey": "hockey",
         "Basketball": "basket",
         "Tennis": "tennis",
         "Volleyball": "volley",
-    }[raw_name]
+    }
+
+    if raw_name not in sport_names:
+        raise ParseException("sport name ({}) not found".format(raw_name))
+    return sport_names[raw_name]
 
 
 def _get_book_pair(node):
