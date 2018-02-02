@@ -15,7 +15,6 @@ class Selenium:
 
 class SeleniumService:
     _pool = []
-    _display = Display(visible=0, size=(1920, 1080))
 
     def __init__(self):
         if not SeleniumService._pool:
@@ -25,16 +24,16 @@ class SeleniumService:
 
             # TODO: remove old files
 
-            SeleniumService._display.start()
+            self._display = Display(visible=0, size=(1920, 1080))
+            self._display.start()
 
     @staticmethod
     def new_instance():
         SeleniumService._pool.append(Selenium())
         return SeleniumService._pool[-1]
 
-    @staticmethod
-    def quit():
+    def quit(self):
         for instance in SeleniumService._pool:
             instance.quit()
         SeleniumService._pool.clear()
-        SeleniumService._display.stop()
+        self._display.stop()

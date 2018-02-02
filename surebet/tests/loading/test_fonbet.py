@@ -25,4 +25,5 @@ def test_loading():
         time.sleep(5)
 
     selenium_service.quit()
+
     logging.info("PASS: loading")
