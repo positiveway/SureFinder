@@ -1,4 +1,3 @@
-import logging
 import time
 
 from surebet.loading.posit import *
