@@ -2,8 +2,10 @@ import logging
 
 import surebet.loading.fonbet as fonbet_loading
 import surebet.loading.marat as marat_loading
+import surebet.loading.olimp as olimp_loading
 import surebet.parsing.fonbet as fonbet_parsing
 import surebet.parsing.marat as marat_parsing
+import surebet.parsing.olimp as olimp_parsing
 from surebet.bookmakers import Posit
 from surebet.handling.excluding import exclude_posit
 from surebet.handling.searching import find_surebets
@@ -24,10 +26,13 @@ def test_integration():
 
     marat_sample = marat_loading.load_events()
 
+    olimp_sample = olimp_loading.load_events()
+
     bookmakers = Bookmakers()
     # parsing
     fonbet_parsing.parse(fonbet_sample, bookmakers.fonbet)
     marat_parsing.parse(marat_sample, bookmakers.marat)
+    olimp_parsing.parse(olimp_sample, bookmakers.olimp)
 
     found_surebets = find_surebets(bookmakers)
     posit_surebets = posit.load_events()
