@@ -64,7 +64,7 @@ class EventSurebets:
         self.parts = []
 
     def __eq__(self, other):
-        attrs = ['teams1', 'teams2']
+        attrs = ('teams1', 'teams2')
         checks = [self._teams_equal(getattr(self, attr), getattr(other, attr)) for attr in attrs]
         return all(checks)
 
