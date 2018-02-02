@@ -12,8 +12,9 @@ def _del_equal(found_obj, posit_obj) -> None:
                     if isinstance(found_el, Surebet):
                         found_iter.remove(found_el)
                     else:
-                        exclude_from_posit(found_el, posit_el)
+                        _del_equal(found_el, posit_el)
 
 
-def exclude_from_posit(found_surebets: Surebets, posit_surebets: Surebets) -> None:
+def exclude_posit(found_surebets: Surebets, posit_surebets: Surebets) -> None:
     _del_equal(found_surebets, posit_surebets)
+    # found_surebets.format()  # TODO: need to implement method format
