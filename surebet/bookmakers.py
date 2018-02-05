@@ -25,7 +25,7 @@ class Posit:
 
         self._decrease_marks()
         new_added = self._merge_surebets(new_surebets)
-        # self.surebets.format()  # TODO: need to implement method format
+        self.surebets.format()
 
         return new_added
 

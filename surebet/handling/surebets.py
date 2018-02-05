@@ -1,6 +1,8 @@
 from collections import Iterable
 from itertools import combinations
 
+from surebet.ancestors import *
+
 book_names = ["fonbet", "marat", "olimp"]
 
 HOLDING_LIMIT = 15
@@ -16,6 +18,9 @@ class Wager:
         """
         self.name = name
         self.factor = factor
+
+    def _not_empty(self):
+        return self.name
 
     def __eq__(self, other):
         return self.name == other.name
@@ -33,11 +38,14 @@ class CondWager(Wager):
         self.cond = cond
         self.suffix = suffix
 
+    def _not_empty(self):
+        return super()._not_empty() and self.cond and self.suffix
+
     def __eq__(self, other):
         return super().__eq__(other) and self.suffix == other.suffix and self.cond == other.cond
 
 
-class Surebet:
+class Surebet(BetLevel):
     """Contains 2 wagers and profit between them."""
 
     def __init__(self, w1: Wager, w2: Wager, profit: float = None):
@@ -48,6 +56,9 @@ class Surebet:
         self.w1 = w1
         self.w2 = w2
         self.profit = profit
+
+    def _not_empty(self):
+        return self.w1._not_empty() and self.w2._not_empty()
 
     def __eq__(self, other):
         return self.w1 == other.w1 and self.w2 == other.w2
@@ -79,7 +90,7 @@ class MarkedSurebet(Surebet):
         return self.mark == 0
 
 
-class PartSurebets:
+class PartSurebets(PartLevel):
     """Contains surebets for specific part of event. Defines number of part."""
 
     def __init__(self, surebets: list, part: int):
@@ -87,6 +98,7 @@ class PartSurebets:
         :param surebets: list of surebets (class Surebet/MarkedSurebet)
         :param part: number of event's part
         """
+        super().__init__()
         self.surebets = surebets
         self.part = part
 
@@ -94,7 +106,7 @@ class PartSurebets:
         return self.part == other.part
 
 
-class EventSurebets:
+class EventSurebets(EventLevel):
     """
     Surebets appear between two events. This pair of events has common parts
     (e.g: period for hockey, set for tennis etc.)
@@ -106,8 +118,8 @@ class EventSurebets:
         :params teams1, teams2: lists of teams for first and second event
         :param parts: list of surebets for certain parts of event's pair (class PartSurebets)
         """
+        super().__init__([])
         self.teams1, self.teams2 = teams1, teams2
-        self.parts = []
 
     def __eq__(self, other):
         attrs = ('teams1', 'teams2')
@@ -119,7 +131,7 @@ class EventSurebets:
         return tuple(teams1) == tuple(teams2)
 
 
-class BookSurebets:
+class BookSurebets(BookLevel):
     """Surebets for 2 bookmakers (e.g Olimp, Fonbet)."""
 
     def __init__(self, book1: str, book2: str):
@@ -128,11 +140,8 @@ class BookSurebets:
         :params soccer, tennis, hockey, basket, volley: lists of surebets for certain sports, each consists of surebets
             for certain events (EventSurebets)
         """
+        super().__init__()
         self.book1, self.book2 = book1, book2
-        self.soccer, self.tennis, self.hockey, self.basket, self.volley = ([] for i in range(5))
-
-    def attrs_dict(self) -> dict:
-        return {attr: val for attr, val in self.__dict__.items() if isinstance(val, list)}
 
     def __eq__(self, other):
         return self.book1 == other.book1 and self.book2 == other.book2
@@ -148,3 +157,7 @@ class Surebets:
         self.books_surebets = []
         for book1_name, book2_name in combinations(book_names, 2):
             self.books_surebets.append(BookSurebets(book1_name, book2_name))
+
+    def format(self):
+        for book_surebets in self.books_surebets:
+            book_surebets.format()
