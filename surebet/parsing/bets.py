@@ -44,6 +44,3 @@ class Bookmakers:
         for bookmaker in self.__dict__.values():
             bookmaker.format()
 
-
-def exist_not_empty(el):
-    return el and el._not_empty()
