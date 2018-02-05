@@ -4,7 +4,7 @@ git:
 cache:
   pip: true
   directories:
-  - $HOME/Downloads
+  - /home/travis/Downloads/chromedriver
  
 language: python
 python:
@@ -16,8 +16,8 @@ addons:
     packages:
       - xvfb
 before_install:
-  - mkdir -p $HOME/Downloads
-  - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip -O temp.zip; unzip temp.zip -o -d $HOME/Downloads; rm temp.zip
+  - mkdir -p /home/travis/Downloads/chromedriver
+  - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip -O temp.zip; unzip temp.zip -o -d /home/travis/Downloads/; rm temp.zip
 # - export PATH="$HOME/Downloads/chromedriver:$PATH"
 script:
   - pytest --cov=surebet surebet/tests
