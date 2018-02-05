@@ -17,7 +17,7 @@ addons:
       - xvfb
 before_install:
   - mkdir -p /home/travis/Downloads/
-  - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip -O temp.zip; unzip temp.zip -o -d /home/travis/Downloads/; rm temp.zip
+  - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip -O temp.zip; unzip temp.zip -o -d /home/travis/Downloads/
 # - export PATH="$HOME/Downloads/chromedriver:$PATH"
 script:
   - pytest --cov=surebet surebet/tests
