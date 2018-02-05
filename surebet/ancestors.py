@@ -16,7 +16,7 @@ class PartLevel:
     def _del_empty(self):
         bets = {attr: val for (attr, val) in self.__dict__.items() if isinstance(val, list)}
         for attr, val in bets.items():
-            new_val = [bet for bet in val if exist_not_empty(bet)]
+            new_val = [bet for bet in val if _exist_not_empty(bet)]
             setattr(self, attr, new_val)
 
 
@@ -30,7 +30,7 @@ class EventLevel:
         return bool(self.parts)
 
     def _del_empty(self):
-        self.parts = [part for part in self.parts if exist_not_empty(part)]
+        self.parts = [part for part in self.parts if _exist_not_empty(part)]
 
     def _format(self):
         pass
@@ -45,7 +45,7 @@ class BookLevel:
 
     def _del_empty(self):
         for attr, val in self.attrs_dict().items():
-            new_val = [event for event in val if exist_not_empty(event)]
+            new_val = [event for event in val if _exist_not_empty(event)]
             setattr(self, attr, new_val)
 
     def _format(self):
@@ -58,5 +58,5 @@ class BookLevel:
         self._format()
 
 
-def exist_not_empty(el):
+def _exist_not_empty(el):
     return el and el._not_empty()
