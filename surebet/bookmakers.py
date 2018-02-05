@@ -25,14 +25,13 @@ class Posit:
         self.surebets = Surebets()
 
         threshold = 0
-        cur_iter = 0
         last_inc_iter = 0
+        cur_iter = 0
         while self._add_new_surebets() > threshold:
             if cur_iter == INIT_ITER:
                 threshold = THRESHOLD_INIT
                 last_inc_iter = cur_iter
-
-            if cur_iter > INIT_ITER and cur_iter - last_inc_iter == INC_EVERY:
+            elif cur_iter > INIT_ITER and cur_iter - last_inc_iter == INC_EVERY:
                 # Increasing the threshold
                 threshold += THRESHOLD_INC
                 last_inc_iter = cur_iter
