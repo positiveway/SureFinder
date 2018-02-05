@@ -2564,37 +2564,6 @@
     {
       "parts": [
         {
-          "hand": [],
-          "ind_total1": [],
-          "ind_total2": [
-            {
-              "cond": 3.5,
-              "v1": 1.57,
-              "v2": 2.26
-            }
-          ],
-          "o1": 1.8,
-          "o12": 0.0,
-          "o1x": 0.0,
-          "o2": 4.33,
-          "ox": 3.0,
-          "ox2": 0.0,
-          "part": 0,
-          "total": [
-            {
-              "cond": 8.5,
-              "v1": 2.43,
-              "v2": 1.49
-            }
-          ]
-        }
-      ],
-      "team1": "Corners Asteras Tripolis",
-      "team2": "Corners Olympiacos"
-    },
-    {
-      "parts": [
-        {
           "hand": [
             {
               "cond": 1.0,
@@ -2962,49 +2931,6 @@
       ],
       "team1": "Deportivo Toluca",
       "team2": "Cruz Azul"
-    },
-    {
-      "parts": [
-        {
-          "hand": [
-            {
-              "cond": 3.5,
-              "v1": 2.43,
-              "v2": 1.49
-            }
-          ],
-          "ind_total1": [
-            {
-              "cond": 3.5,
-              "v1": 2.31,
-              "v2": 1.54
-            }
-          ],
-          "ind_total2": [
-            {
-              "cond": 7.5,
-              "v1": 2.31,
-              "v2": 1.54
-            }
-          ],
-          "o1": 0.0,
-          "o12": 0.0,
-          "o1x": 0.0,
-          "o2": 0.0,
-          "ox": 0.0,
-          "ox2": 0.0,
-          "part": 0,
-          "total": [
-            {
-              "cond": 10.5,
-              "v1": 1.81,
-              "v2": 1.89
-            }
-          ]
-        }
-      ],
-      "team1": "Corners Deportivo Toluca",
-      "team2": "Corners Cruz Azul"
     },
     {
       "parts": [
