@@ -18,7 +18,7 @@ addons:
 before_install:
   - mkdir -p /home/travis/Downloads/
   - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip -O temp.zip
-  - unzip temp.zip -u -d /home/travis/Downloads/
+  - unzip temp.zip -d /home/travis/Downloads/
 # - export PATH="$HOME/Downloads/chromedriver:$PATH"
 script:
   - pytest --cov=surebet surebet/tests
