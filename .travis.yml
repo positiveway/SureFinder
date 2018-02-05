@@ -3,7 +3,7 @@ git:
 cache:
   pip: true
   directories:
-  - ~/Downloads
+  - $HOME/Downloads
  
 language: python
 python:
