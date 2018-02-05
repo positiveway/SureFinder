@@ -2,15 +2,17 @@ from time import sleep
 
 from surebet import find_in_iter
 from surebet.handling.surebets import *
-from surebet.loading.posit import *
+from surebet.loading import try_load
+from surebet.loading.posit import default_account
 from surebet.loading.selenium import SeleniumService
-from surebet.parsing.posit import parse
 
 LOAD_INTERVAL = 6
 
 
 class Posit:
     def __init__(self, account=default_account):
+        from surebet.loading.posit import load, name
+
         self.selenium = SeleniumService().new_instance()
         try_load(load, name, browser=self.selenium.browser, account=account)
 
@@ -20,6 +22,9 @@ class Posit:
             sleep(LOAD_INTERVAL)  # wait for positive to auto refresh page
 
     def _add_new_surebets(self) -> int:  # returns amount of newly added surebets
+        from surebet.loading.posit import load_events, name
+        from surebet.parsing.posit import parse
+
         sample = try_load(load_events, name, browser=self.selenium.browser)
         new_surebets = parse(sample)
 
@@ -74,3 +79,36 @@ class Posit:
     def load_events(self):
         self._add_new_surebets()
         return self.surebets
+
+
+class Fonbet:
+    def __init__(self):
+        from surebet.loading.fonbet import load, name
+
+        self.selenium = SeleniumService().new_instance()
+        try_load(load, name, browser=self.selenium.browser)
+
+    def load_events(self, bookmaker):
+        from surebet.loading.fonbet import load_events, name
+        from surebet.parsing.fonbet import parse
+
+        sample = try_load(load_events, name, browser=self.selenium.browser)
+        parse(sample, bookmaker)
+
+
+class Marat:
+    def load_events(self, bookmaker):
+        from surebet.loading.marat import load_events, name
+        from surebet.parsing.marat import parse
+
+        sample = try_load(load_events, name)
+        parse(sample, bookmaker)
+
+
+class Olimp:
+    def load_events(self, bookmaker):
+        from surebet.loading.olimp import load_events, name
+        from surebet.parsing.olimp import parse
+
+        sample = try_load(load_events, name)
+        parse(sample, bookmaker)
