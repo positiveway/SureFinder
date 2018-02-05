@@ -17,6 +17,7 @@ PART_BETS_ATTR = {
 
 HANDICAP_TYPES = ['Ф1', 'Ф2']
 
+CORNERS_STR = 'Corners'
 
 class Total:
     def __init__(self):
@@ -108,6 +109,10 @@ class HandicapInfo:
         self.team = int(bet['on'][-1])
 
 
+def is_valid_team_names(first_team, second_team):
+    return not (CORNERS_STR in first_team and CORNERS_STR in second_team)
+
+
 def parse(json, bookmaker):
     bookmaker_sports = {
         'soccer': bookmaker.soccer,
@@ -121,6 +126,8 @@ def parse(json, bookmaker):
         for event in events:
             first_team = event['c1']
             second_team = event['c2']
+            if not is_valid_team_names(first_team, second_team):
+                continue
 
             event_data = event['it']
             parts = [parse_main_bets(event_data, sport_name)]
@@ -168,7 +175,7 @@ def parse_main_bets(event_data, sport_name):
 
 
 def parse_other_bets(event_data, sport_name, parts):
-    # TODO Bets by sets, Goals
+    # TODO Goals
     for bets_part in event_data:
         bets_part_name = bets_part['n']
         bets = bets_part['i']
