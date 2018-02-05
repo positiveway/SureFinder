@@ -8,10 +8,6 @@ from surebet.loading.selenium import SeleniumService
 
 LOAD_INTERVAL = 6
 
-INIT_ITER_AMOUNT = 7
-INC_EVERY = 3
-THRESHOLD_INC = 2
-
 
 class Posit:
     def __init__(self, account=default_account):
@@ -22,20 +18,7 @@ class Posit:
 
         self.surebets = Surebets()
 
-        threshold = 0
-        cur_iter = 0
-        last_inc_iter = 0
-        while self._add_new_surebets() > threshold:
-            if cur_iter == INIT_ITER_AMOUNT:
-                threshold += 3
-                last_inc_iter = cur_iter
-
-            if cur_iter > INIT_ITER_AMOUNT and cur_iter - last_inc_iter == INC_EVERY:
-                # Increasing the threshold
-                threshold += THRESHOLD_INC
-                last_inc_iter = cur_iter
-
-            cur_iter += 1
+        while self._add_new_surebets() != 0:
             sleep(LOAD_INTERVAL)  # wait for positive to auto refresh page
 
     def _add_new_surebets(self) -> int:  # returns amount of newly added surebets
