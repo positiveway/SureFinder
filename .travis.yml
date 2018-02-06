@@ -1,5 +1,11 @@
+sudo: false
 git:
   depth: 15
+cache:
+  pip: true
+  directories:
+  - /home/travis/Downloads/
+ 
 language: python
 python:
   - "3.6"
@@ -10,8 +16,7 @@ addons:
     packages:
       - xvfb
 before_install:
-  - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip
-  - sudo unzip chromedriver_linux64.zip -d /usr/bin
+  - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip -O temp.zip; unzip -o temp.zip -d /usr/bin
 script:
   - pytest --cov=surebet surebet/tests
 after_success:
