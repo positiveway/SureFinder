@@ -11,6 +11,7 @@ def _kill_all(process: str) -> None:
 
 class Selenium:
     def __init__(self, implicit_wait=60) -> None:
+        self.browser = Display(visible=0, size=(1920, 1080))
         self.browser = webdriver.Chrome()
         self.browser.implicitly_wait(implicit_wait)
 
