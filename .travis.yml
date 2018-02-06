@@ -18,6 +18,9 @@ addons:
 before_install:
   - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip -O temp.zip; unzip -o temp.zip -d $HOME/Downloads/
   - export PATH="$HOME/Downloads:$PATH"
+  - Xvfb :99 -ac -screen 0 1280x1024x24 &
+  - export DISPLAY=:99
+  - nice -n 10 x11vnc 2>&1 &
 script:
   - pytest --cov=surebet surebet/tests
 after_success:
