@@ -16,7 +16,6 @@ addons:
     packages:
       - xvfb
 before_install:
-  - mkdir -p $HOME/Downloads/
   - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip -O temp.zip; unzip -o temp.zip -d $HOME/Downloads/
   - export PATH="$HOME/Downloads:$PATH"
 script:
