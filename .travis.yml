@@ -1,5 +1,9 @@
 git:
   depth: 15
+cache:
+  pip: true
+  directories:
+  - /usr/bin
 language: python
 python:
   - "3.6"
