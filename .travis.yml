@@ -18,7 +18,7 @@ addons:
 before_install:
   - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip -O temp.zip; unzip -o temp.zip -d $HOME/Downloads/
   - export PATH="$HOME/Downloads:$PATH"
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=51623 http://localhost &
 script:
   - pytest --cov=surebet surebet/tests
 after_success:
