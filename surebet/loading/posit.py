@@ -1,11 +1,11 @@
 from json import load
-
 from os import path
 from random import choice, seed
-from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.support.select import Select
+
+from lxml import html
 
 from surebet.loading import *
+from surebet.parsing import xpath_with_check
 
 # TODO: replace by mock
 # temporary generates random account
@@ -15,36 +15,51 @@ with open(path.join(package_dir, "accounts.json")) as file:
 default_account = choice(accounts)
 
 name = "positivebet"
-url = "https://positivebet.com/en/user/login"
+login_url = "https://positivebet.com/en/user/login"
+index_url = "https://positivebet.com/en/bets/index"
 
-node = "#gridBets > table"
+xp_token = '//*[@id="login-form"]/input'
+
+token_name = "YII_CSRF_TOKEN"
+payload = {
+    "UserLogin[rememberMe]": ["0", "1"],
+    "yt0": '',
+}
+
+cookies = {
+    "ddlPerPage_value": "30",
+}
 
 
-def load(browser, account=default_account):
-    browser.get(url)
+def load(session, account=default_account):
+    payload.update({
+        "UserLogin[username]": account["login"],
+        "UserLogin[password]": account["pass"],
+    })
 
-    try:
-        browser.find_element_by_id("UserLogin_username").send_keys(account['login'])
-        browser.find_element_by_id("UserLogin_password").send_keys(account['pass'])
-        browser.find_element_by_id("UserLogin_rememberMe").click()
-        browser.find_element_by_name("yt0").click()
+    resp = session.get(login_url)
+    check_status(resp.status_code)
 
-        for i in range(2):
-            browser.find_element_by_link_text("Live bets").click()
+    payload[token_name] = _get_token(resp.text)
 
-        browser.find_element_by_name("yt1").click()
-        Select(browser.find_element_by_css_selector("#ddlPerPage")).select_by_value("30")
-    except NoSuchElementException:
-        handle_loading_err(browser, name)
+    resp = session.post(login_url, data=payload)
+    check_status(resp.status_code)
+
+    session.cookies.update(cookies)
 
     log_loaded(name)
 
 
-def load_events(browser):
-    try:
-        result = browser.find_element_by_css_selector(node).get_attribute("outerHTML")
-    except NoSuchElementException:
-        handle_loading_err(browser, name)
-    else:
-        log_loaded_events(name)
-        return result
+def _get_token(source):
+    doc = html.fromstring(source)
+
+    token_node = xpath_with_check(doc, xp_token)[0]
+    return token_node.get("value")
+
+
+def load_events(session):
+    resp = session.get(index_url)
+    check_status(resp.status_code)
+
+    log_loaded_events(name)
+    return resp.text

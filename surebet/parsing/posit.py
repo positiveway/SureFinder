@@ -6,7 +6,7 @@ from surebet.converting import format_spaces
 from surebet.handling.surebets import *
 from surebet.parsing import *
 
-xp_rows = '//table/tbody/tr[not(@id="")]'
+xp_rows = '//div[@id="gridBets"]/table/tbody/tr[not(@id="")]'
 none_factor = 0
 
 
@@ -20,6 +20,9 @@ def parse(source):
     doc = html.fromstring(source)
     for row in doc.xpath(xp_rows):
         cols = xpath_with_check(row, "./td")
+
+        if len(cols) < 5:
+            continue
 
         book_pair = _get_book_pair(cols[2])
         is_reversed = book_names.index(book_pair[0]) > book_names.index(book_pair[1])

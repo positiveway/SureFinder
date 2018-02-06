@@ -1,4 +1,5 @@
 from time import sleep
+from requests import Session
 
 from surebet import find_in_iter
 from surebet.handling.surebets import *
@@ -19,8 +20,8 @@ class Posit:
     def __init__(self, account=default_account):
         from surebet.loading.posit import load, name
 
-        self.selenium = SeleniumService().new_instance()
-        try_load(load, name, browser=self.selenium.browser, account=account)
+        self.session = Session()
+        try_load(load, name, session=self.session, account=account)
 
         self.surebets = Surebets()
 
@@ -43,7 +44,7 @@ class Posit:
         from surebet.loading.posit import load_events, name
         from surebet.parsing.posit import parse
 
-        sample = try_load(load_events, name, browser=self.selenium.browser)
+        sample = try_load(load_events, name, session=self.session)
         new_surebets = parse(sample)
 
         self._decrease_marks()
