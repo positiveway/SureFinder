@@ -51,3 +51,4 @@ def test_broken_structure():
         parse(html, Bookmaker(name))
 
     logging.info('PASS: broken structure')
+
