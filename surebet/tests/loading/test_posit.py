@@ -1,4 +1,5 @@
 import time
+from requests import Session
 
 from surebet.loading.posit import *
 from surebet.loading.selenium import SeleniumService
@@ -6,15 +7,15 @@ from surebet.tests.loading import check_result
 
 
 def test_loading():
-    selenium = SeleniumService().new_instance()
+    session = Session()
 
     print("loaded")
 
-    try_load(load, name, browser=selenium.browser)
+    try_load(load, name, session=session)
     for i in range(4):
         print("load events: ({})".format(i))
 
-        result = try_load(load_events, name, browser=selenium.browser)
+        result = try_load(load_events, name, session=session)
         check_result(result)
 
         time.sleep(1)
