@@ -1,0 +1,437 @@
+[
+  {
+    "basket": [],
+    "book1": "fonbet",
+    "book2": "marat",
+    "hockey": [
+      {
+        "parts": [
+          {
+            "part": 0,
+            "surebets": [
+              {
+                "profit": 1.0,
+                "w1": {
+                  "cond": 1.5,
+                  "factor": 2.9,
+                  "name": "ind_total2",
+                  "suffix": "U"
+                },
+                "w2": {
+                  "cond": 1.5,
+                  "factor": 1.55,
+                  "name": "ind_total2",
+                  "suffix": "O"
+                }
+              }
+            ]
+          }
+        ],
+        "teams1": [
+          "Toros",
+          "Buran Voronezh"
+        ],
+        "teams2": [
+          "Toros",
+          "Buran Voronezh"
+        ]
+      }
+    ],
+    "soccer": [],
+    "tennis": [],
+    "volley": [
+      {
+        "parts": [
+          {
+            "part": 0,
+            "surebets": [
+              {
+                "profit": 4.62,
+                "w1": {
+                  "cond": -4.5,
+                  "factor": 2.02,
+                  "name": "hand",
+                  "suffix": "2"
+                },
+                "w2": {
+                  "cond": 4.5,
+                  "factor": 2.18,
+                  "name": "hand",
+                  "suffix": "1"
+                }
+              },
+              {
+                "profit": 5.3,
+                "w1": {
+                  "cond": -5.5,
+                  "factor": 2.25,
+                  "name": "hand",
+                  "suffix": "2"
+                },
+                "w2": {
+                  "cond": 5.5,
+                  "factor": 1.99,
+                  "name": "hand",
+                  "suffix": "1"
+                }
+              }
+            ]
+          },
+          {
+            "part": 2,
+            "surebets": [
+              {
+                "profit": 10.5,
+                "w1": {
+                  "cond": 46.5,
+                  "factor": 2.02,
+                  "name": "total",
+                  "suffix": "O"
+                },
+                "w2": {
+                  "cond": 46.5,
+                  "factor": 2.5,
+                  "name": "total",
+                  "suffix": "U"
+                }
+              },
+              {
+                "profit": 7.04,
+                "w1": {
+                  "cond": 47.5,
+                  "factor": 2.9,
+                  "name": "total",
+                  "suffix": "O"
+                },
+                "w2": {
+                  "cond": 47.5,
+                  "factor": 1.71,
+                  "name": "total",
+                  "suffix": "U"
+                }
+              },
+              {
+                "profit": 9.58,
+                "w1": {
+                  "cond": 45.5,
+                  "factor": 1.55,
+                  "name": "total",
+                  "suffix": "O"
+                },
+                "w2": {
+                  "cond": 45.5,
+                  "factor": 3.86,
+                  "name": "total",
+                  "suffix": "U"
+                }
+              },
+              {
+                "profit": 6.95,
+                "w1": {
+                  "cond": 44.5,
+                  "factor": 1.3,
+                  "name": "total",
+                  "suffix": "O"
+                },
+                "w2": {
+                  "cond": 44.5,
+                  "factor": 6.2,
+                  "name": "total",
+                  "suffix": "U"
+                }
+              },
+              {
+                "profit": 15.67,
+                "w1": {
+                  "cond": 22.5,
+                  "factor": 2.6,
+                  "name": "ind_total2",
+                  "suffix": "O"
+                },
+                "w2": {
+                  "cond": 22.5,
+                  "factor": 2.18,
+                  "name": "ind_total2",
+                  "suffix": "U"
+                }
+              },
+              {
+                "profit": 15.38,
+                "w1": {
+                  "cond": 3.5,
+                  "factor": 1.95,
+                  "name": "hand",
+                  "suffix": "2"
+                },
+                "w2": {
+                  "cond": -3.5,
+                  "factor": 3.0,
+                  "name": "hand",
+                  "suffix": "1"
+                }
+              },
+              {
+                "profit": 12.76,
+                "w1": {
+                  "cond": 4.5,
+                  "factor": 1.55,
+                  "name": "hand",
+                  "suffix": "2"
+                },
+                "w2": {
+                  "cond": -4.5,
+                  "factor": 4.4,
+                  "name": "hand",
+                  "suffix": "1"
+                }
+              }
+            ]
+          }
+        ],
+        "teams1": [
+          "Gazprom-Ugra",
+          "Lokomotiv Novosibirsk"
+        ],
+        "teams2": [
+          "Gazprom-Yugra",
+          "Lokomotiv Novosibirsk"
+        ]
+      }
+    ]
+  },
+  {
+    "basket": [],
+    "book1": "fonbet",
+    "book2": "olimp",
+    "hockey": [],
+    "soccer": [],
+    "tennis": [],
+    "volley": []
+  },
+  {
+    "basket": [],
+    "book1": "marat",
+    "book2": "olimp",
+    "hockey": [],
+    "soccer": [
+      {
+        "parts": [
+          {
+            "part": 0,
+            "surebets": [
+              {
+                "profit": 4.32,
+                "w1": {
+                  "cond": 1.0,
+                  "factor": 1.59,
+                  "name": "total",
+                  "suffix": "O"
+                },
+                "w2": {
+                  "cond": 1.0,
+                  "factor": 3.05,
+                  "name": "total",
+                  "suffix": "U"
+                }
+              },
+              {
+                "profit": 2.34,
+                "w1": {
+                  "cond": 1.5,
+                  "factor": 2.375,
+                  "name": "total",
+                  "suffix": "O"
+                },
+                "w2": {
+                  "cond": 1.5,
+                  "factor": 1.8,
+                  "name": "total",
+                  "suffix": "U"
+                }
+              },
+              {
+                "profit": 2.06,
+                "w1": {
+                  "cond": -1.0,
+                  "factor": 2.92,
+                  "name": "hand",
+                  "suffix": "2"
+                },
+                "w2": {
+                  "cond": 1.0,
+                  "factor": 1.57,
+                  "name": "hand",
+                  "suffix": "1"
+                }
+              }
+            ]
+          }
+        ],
+        "teams1": [
+          "Belasitsa Petrich",
+          "Kariana Erden"
+        ],
+        "teams2": [
+          "Belasitsa Petrich",
+          "Kariana Erden"
+        ]
+      }
+    ],
+    "tennis": [],
+    "volley": [
+      {
+        "parts": [
+          {
+            "part": 0,
+            "surebets": [
+              {
+                "profit": 1.5,
+                "w1": {
+                  "cond": 4.5,
+                  "factor": 2.18,
+                  "name": "hand",
+                  "suffix": "1"
+                },
+                "w2": {
+                  "cond": -4.5,
+                  "factor": 1.9,
+                  "name": "hand",
+                  "suffix": "2"
+                }
+              }
+            ]
+          },
+          {
+            "part": 2,
+            "surebets": [
+              {
+                "profit": 8.9,
+                "w1": {
+                  "factor": 1.48,
+                  "name": "o1"
+                },
+                "w2": {
+                  "factor": 4.25,
+                  "name": "o2"
+                }
+              },
+              {
+                "profit": 10.4,
+                "w1": {
+                  "cond": 45.5,
+                  "factor": 3.86,
+                  "name": "total",
+                  "suffix": "U"
+                },
+                "w2": {
+                  "cond": 45.5,
+                  "factor": 1.57,
+                  "name": "total",
+                  "suffix": "O"
+                }
+              },
+              {
+                "profit": 10.0,
+                "w1": {
+                  "cond": 46.5,
+                  "factor": 2.5,
+                  "name": "total",
+                  "suffix": "U"
+                },
+                "w2": {
+                  "cond": 46.5,
+                  "factor": 2.0,
+                  "name": "total",
+                  "suffix": "O"
+                }
+              },
+              {
+                "profit": 6.68,
+                "w1": {
+                  "cond": 47.5,
+                  "factor": 1.71,
+                  "name": "total",
+                  "suffix": "U"
+                },
+                "w2": {
+                  "cond": 47.5,
+                  "factor": 2.87,
+                  "name": "total",
+                  "suffix": "O"
+                }
+              },
+              {
+                "profit": 0.23,
+                "w1": {
+                  "cond": 48.5,
+                  "factor": 1.26,
+                  "name": "total",
+                  "suffix": "U"
+                },
+                "w2": {
+                  "cond": 48.5,
+                  "factor": 4.9,
+                  "name": "total",
+                  "suffix": "O"
+                }
+              },
+              {
+                "profit": 12.76,
+                "w1": {
+                  "cond": -4.5,
+                  "factor": 4.4,
+                  "name": "hand",
+                  "suffix": "1"
+                },
+                "w2": {
+                  "cond": 4.5,
+                  "factor": 1.55,
+                  "name": "hand",
+                  "suffix": "2"
+                }
+              },
+              {
+                "profit": 14.04,
+                "w1": {
+                  "cond": -3.5,
+                  "factor": 3.0,
+                  "name": "hand",
+                  "suffix": "1"
+                },
+                "w2": {
+                  "cond": 3.5,
+                  "factor": 1.9,
+                  "name": "hand",
+                  "suffix": "2"
+                }
+              },
+              {
+                "profit": 12.46,
+                "w1": {
+                  "cond": -2.5,
+                  "factor": 2.18,
+                  "name": "hand",
+                  "suffix": "1"
+                },
+                "w2": {
+                  "cond": 2.5,
+                  "factor": 2.4,
+                  "name": "hand",
+                  "suffix": "2"
+                }
+              }
+            ]
+          }
+        ],
+        "teams1": [
+          "Gazprom-Yugra",
+          "Lokomotiv Novosibirsk"
+        ],
+        "teams2": [
+          "Gazprom-Yugra",
+          "Lokomotiv Novosibirsk"
+        ]
+      }
+    ]
+  }
+]
