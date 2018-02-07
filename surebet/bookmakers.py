@@ -46,7 +46,7 @@ class Posit:
         from surebet.parsing.posit import parse
 
         sample = try_load(load_events, name, session=self.session)
-        new_surebets = try_parse(parse, name, source=sample)
+        new_surebets = try_parse(parse, sample, name)
 
         self._decrease_marks()
         new_added = self._merge_surebets(new_surebets)
@@ -113,7 +113,7 @@ class Fonbet:
         from surebet.parsing.fonbet import parse
 
         sample = try_load(load_events, name, browser=self.selenium.browser)
-        try_parse(parse, name, source=sample, bookmaker=bookmaker)
+        try_parse(parse, sample, name, bookmaker=bookmaker)
 
 
 class Marat:
@@ -122,7 +122,7 @@ class Marat:
         from surebet.parsing.marat import parse
 
         sample = try_load(load_events, name)
-        try_parse(parse, name, source=sample, bookmaker=bookmaker)
+        try_parse(parse, sample, name, bookmaker=bookmaker)
 
 
 class Olimp:
@@ -131,4 +131,4 @@ class Olimp:
         from surebet.parsing.olimp import parse
 
         sample = try_load(load_events, name)
-        try_parse(parse, name, source=sample, bookmaker=bookmaker)
+        try_parse(parse, sample, name, bookmaker=bookmaker)

@@ -7,9 +7,9 @@ from surebet import project_dir
 from surebet.json_funcs import obj_dumps
 
 
-def try_parse(parse_func, site_name, **kwargs):
+def try_parse(parse_func, source, site_name, **kwargs):
     try:
-        result = parse_func(**kwargs)
+        result = parse_func(source, **kwargs)
     except Exception as err:
         if not isinstance(err, KeyboardInterrupt):  # if that wasn't a forced stopping of a program
             filename = os.path.join(project_dir, "error-parsing-{}".format(site_name))
@@ -18,14 +18,13 @@ def try_parse(parse_func, site_name, **kwargs):
 
             # saving parsing sample
             filename = os.path.join(project_dir, "error-parsing-{}-sample".format(site_name))
-            sample = kwargs.get("source")
 
-            if not isinstance(sample, str):  # if sample actually is loaded json struct
-                sample = obj_dumps(sample)
+            if not isinstance(source, str):  # if sample is not html
+                source = obj_dumps(source)
                 filename += ".json"
 
             with open(filename, "w") as out:
-                out.write(sample)
+                out.write(source)
         raise
     return result
 
