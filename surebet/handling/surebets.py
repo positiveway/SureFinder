@@ -22,6 +22,9 @@ class Wager:
     def _not_empty(self):
         return self.name
 
+    def __str__(self):
+        return "{}: {}".format(self.name, self.factor)
+
     def __eq__(self, other):
         return self.name == other.name
 
@@ -40,6 +43,10 @@ class CondWager(Wager):
 
     def _not_empty(self):
         return super()._not_empty() and self.cond and self.suffix
+
+    def __str__(self):
+        return "{name}{suffix}({cond}): {factor}".format(name=self.name, suffix=self.suffix,
+                                                         cond=self.cond, factor=self.factor)
 
     def __eq__(self, other):
         return super().__eq__(other) and self.suffix == other.suffix and self.cond == other.cond

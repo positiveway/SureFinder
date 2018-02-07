@@ -5,11 +5,10 @@ import pytest
 from os import path
 
 from surebet.json_funcs import obj_dumps, json_dumps
-from surebet.parsing import ParseException
+from surebet.parsing import try_parse, ParseException
 from surebet.parsing.bets import Bookmaker
 from surebet.parsing.olimp import parse
 from surebet.tests.parsing import package_dir
-
 
 name = 'olimp'
 resource_dir = path.join(package_dir, name)
@@ -24,7 +23,7 @@ def test_samples():
         filename = abs_path('sample{}.json'.format(num))
         with open(filename) as file:
             sample = json.load(file)
-        parse(sample, Bookmaker(name))
+        try_parse(parse, sample, name, bookmaker=Bookmaker(name))
         logging.info('PASS: sample{}'.format(num))
 
 
@@ -36,7 +35,7 @@ def test_known_result():
         handled_data = json.load(file)
 
     olimp = Bookmaker(name)
-    parse(raw_data, olimp)
+    try_parse(parse, raw_data, name, bookmaker=olimp)
     olimp.format()
 
     assert obj_dumps(olimp) == json_dumps(handled_data)
