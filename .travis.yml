@@ -1,7 +1,11 @@
 git:
   depth: 15
 language: python
-cache: pip
+cache:
+  pip: true
+  directories:
+  - $HOME/Downloads/
+
 python:
   - "3.6"
 # Do not move from the root dir. requirements.txt is here
@@ -11,8 +15,7 @@ addons:
     packages:
       - xvfb
 before_install:
-  - wget https://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip
-  - sudo unzip chromedriver_linux64.zip -d /usr/bin
+  - ./chrome_install.sh
 script:
   - pytest --cov=surebet surebet/tests
 after_success:
