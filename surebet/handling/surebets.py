@@ -1,6 +1,8 @@
 from collections import Iterable
 from itertools import combinations
+from timeit import default_timer
 
+from surebet import find_in_iter
 from surebet.ancestors import *
 
 book_names = ["fonbet", "marat", "olimp"]
@@ -69,6 +71,21 @@ class Surebet(BetLevel):
 
     def __eq__(self, other):
         return self.w1 == other.w1 and self.w2 == other.w2
+
+
+class TimedSurebet(Surebet):
+    """Holds parameter start to define when surebet is appeared"""
+
+    def __init__(self, surebet: Surebet):
+        """
+        :param start: indicates when surebet is appeared
+        """
+        super().__init__(surebet.w1, surebet.w2, surebet.profit)
+
+        self.start = default_timer()
+
+    def get_duration(self):
+        return round(default_timer() - self.start, 2)
 
 
 class MarkedSurebet(Surebet):
@@ -168,3 +185,34 @@ class Surebets:
     def format(self):
         for book_surebets in self.books_surebets:
             book_surebets.format()
+
+    def set_timestamps(self, old_surebets):
+        """Checks what surebets present in old_surebets, and restores their time mark"""
+
+        for book in self.books_surebets:
+            old_book = find_in_iter(old_surebets.books_surebets, book)
+
+            for sport_name, sport in book.attrs_dict().items():
+                old_sport = getattr(old_book, sport_name)
+
+                for event in sport:
+                    old_event = find_in_iter(old_sport, event)
+                    if not old_event:
+                        old_event = EventSurebets(event.teams1, event.teams2)
+                        old_sport.append(old_event)
+
+                    for part in event.parts:
+                        old_part = find_in_iter(old_event.parts, part)
+                        if not old_part:
+                            old_part = PartSurebets([], part.part)
+                            old_event.parts.append(old_part)
+
+                        for idx, surebet in enumerate(part.surebets):
+                            surebet = TimedSurebet(surebet)
+
+                            old_surebet = find_in_iter(old_part.surebets, surebet)
+                            if old_surebet:
+                                # assign start time from old surebet if found
+                                surebet.start = old_surebet.start
+
+                            part.surebets[idx] = surebet
