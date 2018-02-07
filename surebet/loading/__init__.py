@@ -15,10 +15,11 @@ class LoadException(Exception):
 def try_load(load_func, site_name, **kwargs):
     try:
         result = load_func(**kwargs)
-    except LoadException:
-        filename = os.path.join(project_dir, "error-loading-{}".format(site_name))
-        with open(filename, "w") as out:
-            out.write(format_exc())
+    except Exception as err:
+        if not isinstance(err, KeyboardInterrupt):  # if that wasn't a forced stopping of a program
+            filename = os.path.join(project_dir, "error-loading-{}".format(site_name))
+            with open(filename, "w") as out:
+                out.write(format_exc())
         raise
     return result
 

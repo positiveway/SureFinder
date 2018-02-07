@@ -5,7 +5,7 @@ import pytest
 from os import path
 
 from surebet.json_funcs import obj_dumps, json_dumps
-from surebet.parsing import ParseException
+from surebet.parsing import try_parse, ParseException
 from surebet.parsing.bets import Bookmaker
 from surebet.parsing.fonbet import parse
 from surebet.tests.parsing import package_dir, read_html
@@ -22,7 +22,7 @@ def test_samples():
     for num in range(3):
         filename = abs_path('sample{}.html'.format(num))
         html = read_html(filename)
-        parse(html, Bookmaker(name))
+        try_parse(parse, html, name, bookmaker=Bookmaker(name))
         logging.info('PASS: sample{}'.format(num))
 
 
@@ -35,7 +35,7 @@ def test_known_result():
     html = read_html(filename)
 
     fonbet = Bookmaker(name)
-    parse(html, fonbet)
+    try_parse(parse, html, name, bookmaker=fonbet)
     fonbet.format()
 
     assert obj_dumps(fonbet) == json_dumps(known_res)
@@ -51,4 +51,3 @@ def test_broken_structure():
         parse(html, Bookmaker(name))
 
     logging.info('PASS: broken structure')
-
