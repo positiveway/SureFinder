@@ -1,10 +1,7 @@
 git:
   depth: 15
-cache:
-  pip: true
-  directories:
-  - /usr/bin
 language: python
+cache: pip
 python:
   - "3.6"
 # Do not move from the root dir. requirements.txt is here
