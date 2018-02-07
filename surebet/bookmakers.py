@@ -4,6 +4,7 @@ from requests import Session
 from surebet import find_in_iter
 from surebet.handling.surebets import *
 from surebet.loading import try_load
+from surebet.parsing import try_parse
 from surebet.loading.posit import default_account
 from surebet.loading.selenium import SeleniumService
 
@@ -45,7 +46,7 @@ class Posit:
         from surebet.parsing.posit import parse
 
         sample = try_load(load_events, name, session=self.session)
-        new_surebets = parse(sample)
+        new_surebets = try_parse(parse, name, source=sample)
 
         self._decrease_marks()
         new_added = self._merge_surebets(new_surebets)
@@ -112,7 +113,7 @@ class Fonbet:
         from surebet.parsing.fonbet import parse
 
         sample = try_load(load_events, name, browser=self.selenium.browser)
-        parse(sample, bookmaker)
+        try_parse(parse, name, source=sample, bookmaker=bookmaker)
 
 
 class Marat:
@@ -121,7 +122,7 @@ class Marat:
         from surebet.parsing.marat import parse
 
         sample = try_load(load_events, name)
-        parse(sample, bookmaker)
+        try_parse(parse, name, source=sample, bookmaker=bookmaker)
 
 
 class Olimp:
@@ -130,4 +131,4 @@ class Olimp:
         from surebet.parsing.olimp import parse
 
         sample = try_load(load_events, name)
-        parse(sample, bookmaker)
+        try_parse(parse, name, source=sample, bookmaker=bookmaker)

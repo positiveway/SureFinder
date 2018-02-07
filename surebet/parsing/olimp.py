@@ -113,7 +113,7 @@ def is_valid_team_names(first_team, second_team):
     return not (CORNERS_STR in first_team and CORNERS_STR in second_team)
 
 
-def parse(json, bookmaker):
+def parse(source, bookmaker):
     bookmaker_sports = {
         'soccer': bookmaker.soccer,
         'hockey': bookmaker.hockey,
@@ -122,7 +122,7 @@ def parse(json, bookmaker):
         'volley': bookmaker.volley,
     }
 
-    for sport_name, events in json.items():
+    for sport_name, events in source.items():
         for event in events:
             first_team = event['c1']
             second_team = event['c2']

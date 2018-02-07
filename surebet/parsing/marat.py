@@ -48,11 +48,11 @@ def get_separator(event_name):
     return " @ " if "@" in event_name else " - "
 
 
-def parse(site_info, bookmaker):
-    sport_tree = get_sport_tree(site_info["sport_tree"])
-    closed_events_bets = get_closed_events_bets(site_info["add_info"])
+def parse(source, bookmaker):
+    sport_tree = get_sport_tree(source["sport_tree"])
+    closed_events_bets = get_closed_events_bets(source["add_info"])
 
-    for event_html in site_info["events"]:
+    for event_html in source["events"]:
         event_doc = html.fromstring(event_html)
 
         event_id = xpath_with_check(event_doc, xp_event_id)[0].get("data-tree-id")
