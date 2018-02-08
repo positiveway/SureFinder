@@ -1,6 +1,7 @@
 from re import search
 
 import os
+import logging
 from traceback import format_exc
 
 from surebet import project_dir
@@ -12,6 +13,8 @@ def try_parse(parse_func, source, site_name, **kwargs):
         result = parse_func(source, **kwargs)
     except Exception as err:
         if not isinstance(err, KeyboardInterrupt):  # if that wasn't a forced stopping of a program
+            logging.info("error occurred in parsing({}): {}".format(site_name, str(err)))
+
             filename = os.path.join(project_dir, "error-parsing-{}".format(site_name))
             with open(filename, "w") as out:
                 out.write(format_exc())

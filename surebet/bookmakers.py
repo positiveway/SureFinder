@@ -1,4 +1,5 @@
 from time import sleep
+from timeit import default_timer
 from requests import Session
 
 from surebet import find_in_iter
@@ -16,13 +17,21 @@ THRESHOLD_INIT = 3
 INC_EVERY = 3
 THRESHOLD_INC = 2
 
+HANDLE_ERRORS = True
+
+MIN = 60
+FORBIDDEN_INTERVAL = 30 * MIN
+
+MAX_ERR_CNT = 5
+
 
 class Posit:
     def __init__(self, account=default_account):
-        from surebet.loading.posit import load, name
+        self.err_handler = ErrorHandler()
 
         self.session = Session()
-        try_load(load, name, session=self.session, account=account)
+        self.account = account
+        self.load()
 
         self.surebets = Surebets()
 
@@ -41,18 +50,34 @@ class Posit:
             cur_iter += 1
             sleep(LOAD_INTERVAL)  # wait for positive to auto refresh page
 
-    def _add_new_surebets(self) -> int:  # returns amount of newly added surebets
-        from surebet.loading.posit import load_events, name
-        from surebet.parsing.posit import parse
+    def load(self):
+        from surebet.loading.posit import load, name
 
-        sample = try_load(load_events, name, session=self.session)
-        new_surebets = try_parse(parse, sample, name)
+        @self.err_handler.handle_error
+        def _load():
+            try_load(load, name, session=self.session, account=self.account)
+
+        return _load()
+
+    def _add_new_surebets(self) -> int:  # returns amount of newly added surebets
+        new_surebets = self.get_new_surebets()
 
         self._decrease_marks()
         new_added = self._merge_surebets(new_surebets)
         self.surebets.format()
 
         return new_added
+
+    def get_new_surebets(self):
+        from surebet.loading.posit import load_events, name
+        from surebet.parsing.posit import parse
+
+        @self.err_handler.handle_error
+        def _get_new_surebets():
+            sample = try_load(load_events, name, session=self.session)
+            return try_parse(parse, sample, name)
+
+        return _get_new_surebets()
 
     def _decrease_marks(self):
         for book in self.surebets.books_surebets:
@@ -67,6 +92,9 @@ class Posit:
 
     def _merge_surebets(self, new_surebets) -> int:  # returns amount of newly added surebets
         new_added = 0
+
+        if new_surebets is None:
+            return new_added
 
         for new_book in new_surebets.books_surebets:
             book = find_in_iter(self.surebets.books_surebets, new_book)
@@ -103,32 +131,94 @@ class Posit:
 
 class Fonbet:
     def __init__(self):
-        from surebet.loading.fonbet import load, name
+        self.err_handler = ErrorHandler()
 
         self.selenium = SeleniumService().new_instance()
-        try_load(load, name, browser=self.selenium.browser)
+        self.load()
+
+    def load(self):
+        from surebet.loading.fonbet import load, name
+
+        @self.err_handler.handle_error
+        def _load():
+            try_load(load, name, browser=self.selenium.browser)
+
+        return _load()
 
     def load_events(self, bookmaker):
         from surebet.loading.fonbet import load_events, name
         from surebet.parsing.fonbet import parse
 
-        sample = try_load(load_events, name, browser=self.selenium.browser)
-        try_parse(parse, sample, name, bookmaker=bookmaker)
+        @self.err_handler.handle_error
+        def _load_events():
+            sample = try_load(load_events, name, browser=self.selenium.browser)
+            try_parse(parse, sample, name, bookmaker=bookmaker)
+
+        return _load_events()
 
 
 class Marat:
+    def __init__(self):
+        self.err_handler = ErrorHandler()
+
     def load_events(self, bookmaker):
         from surebet.loading.marat import load_events, name
         from surebet.parsing.marat import parse
 
-        sample = try_load(load_events, name)
-        try_parse(parse, sample, name, bookmaker=bookmaker)
+        @self.err_handler.handle_error
+        def _load_events():
+            sample = try_load(load_events, name)
+            try_parse(parse, sample, name, bookmaker=bookmaker)
+
+        return _load_events()
 
 
 class Olimp:
+    def __init__(self):
+        self.err_handler = ErrorHandler()
+
     def load_events(self, bookmaker):
         from surebet.loading.olimp import load_events, name
         from surebet.parsing.olimp import parse
 
-        sample = try_load(load_events, name)
-        try_parse(parse, sample, name, bookmaker=bookmaker)
+        @self.err_handler.handle_error
+        def _load_events():
+            sample = try_load(load_events, name)
+            try_parse(parse, sample, name, bookmaker=bookmaker)
+
+        return _load_events()
+
+
+class ErrorHandler:
+    def __init__(self):
+        self.error_cnt = 0
+        self.first_occurred = 0
+
+    def handle_error(self, func):
+        def wrapper():
+            result = None
+            try:
+                result = func()
+            except Exception as err:
+                raise_error = True
+
+                # if we need to handle error and that wasn't a forced stopping of a program
+                if HANDLE_ERRORS and not isinstance(err, KeyboardInterrupt):
+                    raise_error = False
+
+                    # if first error and current error occurred within forbidden interval
+                    if default_timer() - self.first_occurred < FORBIDDEN_INTERVAL:
+                        if self.error_cnt > MAX_ERR_CNT:
+                            raise_error = True
+                        else:
+                            self.error_cnt += 1
+                    else:
+                        # refresh counter and measure time of first occurrence
+                        self.error_cnt = 1
+                        self.first_occurred = default_timer()
+
+                if raise_error:
+                    raise
+            return result
+
+        return wrapper
