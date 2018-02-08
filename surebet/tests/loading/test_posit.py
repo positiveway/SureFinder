@@ -1,15 +1,21 @@
 import time
+import pickle
+import json
+
+from unittest.mock import patch
 from requests import Session
 
+from surebet.json_funcs import json_dumps, obj_dumps
 from surebet.loading.posit import *
 from surebet.loading.selenium import SeleniumService
 from surebet.tests.loading import check_result
 from surebet.bookmakers import Posit
 
-from os import path
-from unittest.mock import patch
-import pickle
 import logging
+from os import path
+
+
+resource_dir = path.join(path.dirname(__file__), "posit")
 
 
 def test_loading():
@@ -31,23 +37,43 @@ def test_loading():
     logging.info("PASS: loading")
 
 
-def test_load_events():
-    with open(path.join(path.dirname(__file__), "posit", "sample.pkl"), "rb") as file_samples:
-        samples = pickle.load(file_samples)
-    iter_samples = iter(sorted(samples.keys()))
+def mock_load_events(sample):
+    iter_samples = iter(sorted(sample.keys()))
 
-    def get_next_sample(load_func, site_name, **kwargs):  # it's called instead of try_load
+    def get_next_html(load_func, site_name, **kwargs):  # it's called instead of try_load
         try:
             next_index = next(iter_samples)
         except StopIteration:
             raise AssertionError("Sample requests overflow") from StopIteration
-        logging.info("PASS: requested sample {}".format(next_index))
-        return samples[next_index]
 
-    with patch('surebet.bookmakers.sleep') as mock_sleep:
-        with patch('surebet.bookmakers.try_load') as mock_try_load:
-            mock_try_load.side_effect = get_next_sample
+        return sample[next_index]
+
+    with patch("surebet.bookmakers.sleep") as mock_sleep:
+        with patch("surebet.bookmakers.try_load") as mock_try_load:
+            mock_try_load.side_effect = get_next_html
             posit = Posit()
-            posit.load_events()
+            surebets_posit = posit.load_events()
 
-    logging.info("PASS: load_events")
+    return surebets_posit
+
+
+def test_sample():
+    for i in range(1):
+        with open(path.join(resource_dir, "sample{}.pkl".format(i)), "rb") as file_sample:
+            sample = pickle.load(file_sample)
+        mock_load_events(sample)
+
+    logging.info("PASS: samples")
+
+
+def test_known_result():
+    with open(path.join(resource_dir, "known.pkl"), "rb") as file_known:
+        sample_known = pickle.load(file_known)
+    surebets_posit = mock_load_events(sample_known)
+
+    with open(path.join(resource_dir, "knownResult.json")) as file_known_result:
+        surebets_known = json.load(file_known_result)
+
+    assert obj_dumps(surebets_posit) == json_dumps(surebets_known)
+
+    logging.info("PASS: known result")
