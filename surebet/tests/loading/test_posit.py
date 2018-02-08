@@ -8,14 +8,13 @@ from requests import Session
 from surebet.json_funcs import json_dumps, obj_dumps
 from surebet.loading.posit import *
 from surebet.loading.selenium import SeleniumService
-from surebet.tests.loading import check_result
+from surebet.tests.loading import check_result, package_dir
 from surebet.bookmakers import Posit
 
 import logging
 from os import path
 
-
-resource_dir = path.join(path.dirname(__file__), "posit")
+resource_dir = path.join(package_dir, 'posit')
 
 
 def test_loading():
@@ -58,9 +57,11 @@ def mock_load_events(sample):
 
 
 def test_sample():
-    for i in range(1):
-        with open(path.join(resource_dir, "sample{}.pkl".format(i)), "rb") as file_sample:
+    for sample_num in range(3):
+        filename = path.join(resource_dir, "sample{}.pkl".format(sample_num))
+        with open(filename, "rb") as file_sample:
             sample = pickle.load(file_sample)
+
         mock_load_events(sample)
 
     logging.info("PASS: samples")

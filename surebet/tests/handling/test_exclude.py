@@ -3,10 +3,11 @@ import pickle
 import json
 from os import path
 
+from surebet.tests.handling import package_dir
 from surebet.json_funcs import json_dumps, obj_dumps
 from surebet.handling.excluding import exclude_posit
 
-resource_dir = path.join(path.dirname(__file__), "excluding")
+resource_dir = path.join(package_dir, "excluding")
 
 
 def read_sample(filename):
@@ -16,8 +17,10 @@ def read_sample(filename):
 
 
 def test_sample():
-    for i in range(3):
-        exclude_posit(*read_sample('sample{}.pkl'.format(i)))
+    for sample_num in range(3):
+        filename = 'sample{}.pkl'.format(sample_num)
+        surebets_other, surebets_posit = read_sample(filename)
+        exclude_posit(surebets_other, surebets_posit)
 
     logging.info("PASS: samples")
 
