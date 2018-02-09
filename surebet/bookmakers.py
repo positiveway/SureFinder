@@ -1,8 +1,6 @@
 from time import sleep
-from timeit import default_timer
 from requests import Session
 
-from surebet import find_in_iter
 from surebet.handling.surebets import *
 from surebet.loading import try_load
 from surebet.parsing import try_parse
@@ -17,8 +15,7 @@ THRESHOLD_INIT = 3
 INC_EVERY = 3
 THRESHOLD_INC = 2
 
-MIN = 60
-FORBIDDEN_INTERVAL = 30 * MIN
+FORBIDDEN_INTERVAL = 30 * 60  # in seconds
 
 MAX_ERR_CNT = 5
 
