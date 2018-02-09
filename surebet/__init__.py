@@ -19,3 +19,8 @@ def find_in_iter(iterable, el):
         return iterable[iterable.index(el)]
     except ValueError:
         return None
+
+
+def reverse_enum(iterable):
+    for idx in range(len(iterable) - 1, -1, -1):
+        yield idx, iterable[idx]
