@@ -5,7 +5,7 @@ from unittest.mock import patch
 from requests import Session
 
 from surebet.tests import SurebetsJSONDecoder
-from surebet.json_funcs import json_dumps, obj_dumps
+from surebet.json_funcs import json_dumps, obj_dumps, obj_dump
 from surebet.loading.posit import *
 from surebet.tests.loading import check_result, package_dir
 from surebet.bookmakers import Posit
@@ -77,17 +77,19 @@ def test_known_result():
     logging.info("PASS: known result")
 
 
-def mock_posit():
+@patch('surebet.bookmakers.sleep')
+def mock_posit(mock_sleep):
     with patch("surebet.bookmakers.try_load") as mock_try_load:
         mock_try_load.return_value = ""  # needed for first try_load call in Posit's constructor
-        with patch('surebet.bookmakers.Posit._add_new_surebets') as mock_add:
-            mock_add.return_value = 0
+        with patch('surebet.bookmakers.Posit._add_new_surebets') as mock_add_new:
+            mock_add_new.return_value = 0
             result = Posit()
 
     return result
 
 
-def mock_decrease_marks(posit):
+@patch('surebet.bookmakers.sleep')
+def mock_decrease_marks(posit, mock_sleep):
     filename = path.join(resource_dir, 'knownDecreaseLoads.json')
     with open(filename) as file_loads:
         list_loads = json.load(file_loads)
@@ -95,16 +97,12 @@ def mock_decrease_marks(posit):
     iter_loads = iter(list_loads)
 
     def load_next_html(load_func, site_name, **kwargs):  # it's called instead of try_load
-        try:
-            sample_next = next(iter_loads)
-        except StopIteration:
-            raise AssertionError("Sample requests overflow") from StopIteration
-
-        return sample_next
+        return next(iter_loads)
 
     with patch("surebet.bookmakers.try_load") as mock_try_load:
-        mock_try_load.side_effect = load_next_html()
+        mock_try_load.side_effect = load_next_html
         for load_idx in range(len(list_loads)):
+            print('загрузка номер {}'.format(load_idx))
             posit.load_events()
 
 

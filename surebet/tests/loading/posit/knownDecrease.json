@@ -1,0 +1,520 @@
+{
+  "books_surebets": [
+    {
+      "basket": [],
+      "book1": "fonbet",
+      "book2": "marat",
+      "hockey": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 14,
+                  "profit": null,
+                  "w1": {
+                    "cond": 1.5,
+                    "factor": 0,
+                    "name": "ind_total2",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 1.5,
+                    "factor": 0,
+                    "name": "ind_total2",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Mogo",
+            "HS Riga"
+          ],
+          "teams2": [
+            "MOGO",
+            "HS Riga"
+          ]
+        }
+      ],
+      "soccer": [],
+      "tennis": [
+        {
+          "parts": [
+            {
+              "part": 2,
+              "surebets": [
+                {
+                  "mark": 13,
+                  "profit": null,
+                  "w1": {
+                    "cond": -3.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": 3.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            },
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 14,
+                  "profit": null,
+                  "w1": {
+                    "cond": 15.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 15.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "mark": 14,
+                  "profit": null,
+                  "w1": {
+                    "cond": 3.5,
+                    "factor": 0,
+                    "name": "ind_total1",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 3.5,
+                    "factor": 0,
+                    "name": "ind_total1",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Cakarevic S",
+            "Melnikova M"
+          ],
+          "teams2": [
+            "Cakarevic, Sara",
+            "Melnikova, Marina"
+          ]
+        }
+      ],
+      "volley": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 11,
+                  "profit": null,
+                  "w1": {
+                    "cond": 25.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": -24.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            },
+            {
+              "part": 3,
+              "surebets": [
+                {
+                  "mark": 12,
+                  "profit": null,
+                  "w1": {
+                    "cond": 7.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": -7.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                },
+                {
+                  "mark": 12,
+                  "profit": null,
+                  "w1": {
+                    "cond": 6.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": -6.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                },
+                {
+                  "mark": 13,
+                  "profit": null,
+                  "w1": {
+                    "cond": 42.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 42.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Volley Club Cesena U18",
+            "Spem 2016 Faenza U18"
+          ],
+          "teams2": [
+            "Cesena U-18",
+            "Spem 2016 Faenza U-18"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 2,
+              "surebets": [
+                {
+                  "mark": 13,
+                  "profit": null,
+                  "w1": {
+                    "cond": 46.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 46.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Tuscania Volley U18 (w)",
+            "Civitavecchia U18 (w)"
+          ],
+          "teams2": [
+            "Tuscania U-18",
+            "Civitavecchia U-18"
+          ]
+        }
+      ]
+    },
+    {
+      "basket": [],
+      "book1": "fonbet",
+      "book2": "olimp",
+      "hockey": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 15,
+                  "profit": null,
+                  "w1": {
+                    "factor": 0,
+                    "name": "o2"
+                  },
+                  "w2": {
+                    "factor": 0,
+                    "name": "o1"
+                  }
+                },
+                {
+                  "mark": 14,
+                  "profit": null,
+                  "w1": {
+                    "factor": 0,
+                    "name": "o2"
+                  },
+                  "w2": {
+                    "cond": 0.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Punks Vilnius",
+            "Kauno Tigrai"
+          ],
+          "teams2": [
+            "Hockey Punks Vilnius",
+            "Kauno Tigrai"
+          ]
+        }
+      ],
+      "soccer": [],
+      "tennis": [
+        {
+          "parts": [
+            {
+              "part": 2,
+              "surebets": [
+                {
+                  "mark": 14,
+                  "profit": null,
+                  "w1": {
+                    "cond": 3.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": -3.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                },
+                {
+                  "mark": 14,
+                  "profit": null,
+                  "w1": {
+                    "cond": 9.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 9.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            },
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 14,
+                  "profit": null,
+                  "w1": {
+                    "cond": 15.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 15.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Pouille L",
+            "Taberner C"
+          ],
+          "teams2": [
+            "Taberner \u0421.",
+            "Pouille L."
+          ]
+        }
+      ],
+      "volley": []
+    },
+    {
+      "basket": [
+        {
+          "parts": [
+            {
+              "part": 3,
+              "surebets": [
+                {
+                  "mark": 13,
+                  "profit": null,
+                  "w1": {
+                    "cond": 36.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 36.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Braunschweig",
+            "Skyliners"
+          ],
+          "teams2": [
+            "Basketball L\u00f6wen Braunschweig",
+            "Fraport Skyliners"
+          ]
+        }
+      ],
+      "book1": "marat",
+      "book2": "olimp",
+      "hockey": [],
+      "soccer": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 13,
+                  "profit": null,
+                  "w1": {
+                    "cond": -2.0,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": 2.0,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Al Mokawloon Al Arab",
+            "Al Ahly Cairo"
+          ],
+          "teams2": [
+            "Al Moqawloon Al Arab",
+            "Al Ahly Cairo"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 10,
+                  "profit": null,
+                  "w1": {
+                    "cond": 1.0,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -1.0,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                },
+                {
+                  "mark": 13,
+                  "profit": null,
+                  "w1": {
+                    "cond": 0.75,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -0.75,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                },
+                {
+                  "mark": 13,
+                  "profit": null,
+                  "w1": {
+                    "cond": 4.0,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 4.0,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "mark": 13,
+                  "profit": null,
+                  "w1": {
+                    "cond": 1.25,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -1.25,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Al-Hilal Riyadh",
+            "Al-Nasr Riyadh"
+          ],
+          "teams2": [
+            "Al-Hilal",
+            "Al-Nasr"
+          ]
+        }
+      ],
+      "tennis": [],
+      "volley": []
+    }
+  ]
+}
