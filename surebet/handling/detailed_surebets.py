@@ -12,6 +12,7 @@ class DetailedSurebet:
     Contain all information about surebet: bookmakers between which surebet is occurred,
     teams for first and second event, part of event and wagers, profit, lifetime of surebet
     """
+
     def __init__(self, books: BookSurebets, sport: str, events: EventSurebets, part: PartSurebets,
                  surebet: TimedSurebet):
         """
@@ -46,9 +47,9 @@ def convert_to_detailed(surebets: Surebets) -> list:
     """Convert surebets to list of DetailedSurebet, filter that list and sort"""
     detailed_surebets = _convert_to_detailed(surebets)
 
-    detailed_surebets = list(_filter(detailed_surebets))
+    detailed_surebets = _filter(detailed_surebets)
 
-    detailed_surebets.sort(key=cmp_to_key(_detailed_cmp), reverse=True)
+    _sort_detailed(detailed_surebets)
 
     return detailed_surebets
 
@@ -72,6 +73,10 @@ def _convert_to_detailed(surebets: Surebets) -> list:
                     for surebet in part.surebets:
                         detailed_surebets.append(DetailedSurebet(book, sport_name, event, part, surebet))
     return detailed_surebets
+
+
+def _sort_detailed(detailed_surebets):
+    detailed_surebets.sort(key=cmp_to_key(_detailed_cmp), reverse=True)
 
 
 def _detailed_cmp(first: DetailedSurebet, second: DetailedSurebet):
