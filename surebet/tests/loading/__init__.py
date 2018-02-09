@@ -1,4 +1,8 @@
+import os
+
 from surebet.loading import LoadException
+
+package_dir = os.path.dirname(__file__)
 
 
 def check_result(result, min_size=0):
