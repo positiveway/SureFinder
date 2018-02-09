@@ -194,9 +194,8 @@ class ErrorHandler:
 
     def handle_error(self, func):
         def wrapper():
-            result = None
             try:
-                result = func()
+                return func()
             except Exception as err:
                 # if it wasn't a forced stop of a program
                 if not isinstance(err, KeyboardInterrupt):
@@ -212,6 +211,7 @@ class ErrorHandler:
                         self.first_occurred = default_timer()
                 else:
                     raise
-            return result
+
+            return None
 
         return wrapper
