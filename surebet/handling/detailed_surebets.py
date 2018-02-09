@@ -12,7 +12,6 @@ class DetailedSurebet:
     Contain all information about surebet: bookmakers between which surebet is occurred,
     teams for first and second event, part of event and wagers, profit, lifetime of surebet
     """
-
     def __init__(self, books: BookSurebets, sport: str, events: EventSurebets, part: PartSurebets,
                  surebet: TimedSurebet):
         """
@@ -43,7 +42,7 @@ class DetailedSurebet:
         return str_form
 
 
-def convert_to_detailed(surebets: Surebets):
+def convert_to_detailed(surebets: Surebets) -> list:
     """Convert surebets to list of DetailedSurebet, filter that list and sort"""
     detailed_surebets = _convert_to_detailed(surebets)
 
@@ -54,16 +53,16 @@ def convert_to_detailed(surebets: Surebets):
     return detailed_surebets
 
 
-def _filter(detailed_surebets):
+def _filter(detailed_surebets) -> list:
     """Filter detailed_surebets by profit's lower and upper limits and by lifetime's lower limit"""
 
-    def filter_key(item):
+    def predicate(item):
         return MIN_PROFIT <= item.profit <= MAX_PROFIT and item.lifetime >= MIN_LIFETIME
 
-    return list(filter(filter_key, detailed_surebets))
+    return list(filter(predicate, detailed_surebets))
 
 
-def _convert_to_detailed(surebets: Surebets):
+def _convert_to_detailed(surebets: Surebets) -> list:
     """Construct objects of class DetailedSurebet and put them in list detailed_surebets"""
     detailed_surebets = []
     for book in surebets.books_surebets:
