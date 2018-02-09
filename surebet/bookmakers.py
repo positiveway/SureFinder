@@ -198,24 +198,19 @@ class ErrorHandler:
             try:
                 result = func()
             except Exception as err:
-                raise_error = True
-
                 # if it wasn't a forced stop of a program
                 if not isinstance(err, KeyboardInterrupt):
-                    raise_error = False
-
                     # if first error and current error occurred within forbidden interval
                     if default_timer() - self.first_occurred < FORBIDDEN_INTERVAL:
                         if self.error_cnt > MAX_ERR_CNT:
-                            raise_error = True
+                            raise
                         else:
                             self.error_cnt += 1
                     else:
                         # refresh counter and measure time of first occurrence
                         self.error_cnt = 1
                         self.first_occurred = default_timer()
-
-                if raise_error:
+                else:
                     raise
             return result
 
