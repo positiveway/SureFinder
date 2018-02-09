@@ -6,11 +6,12 @@ def _del_equal(found_obj, posit_obj) -> None:
     for attr, found_iter in found_obj.__dict__.items():
         if isinstance(found_iter, list):
             posit_iter = getattr(posit_obj, attr)
-            for found_el in list(found_iter):
+            for idx_found_el in range(len(found_iter) - 1, -1, -1):
+                found_el = found_iter[idx_found_el]
                 posit_el = find_in_iter(posit_iter, found_el)
                 if posit_el:
                     if isinstance(found_el, Surebet):
-                        found_iter.remove(found_el)
+                        del found_iter[idx_found_el]
                     # object can contain lists that should not be handled by algorithm
                     # e.g. teams is list of strings, srt is primitive type without __dict__ method
                     elif hasattr(found_el, '__dict__'):

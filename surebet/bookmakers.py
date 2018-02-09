@@ -79,11 +79,12 @@ class Posit:
             for sport in book.attrs_dict().values():
                 for event in sport:
                     for part in event.parts:
-                        for surebet in part.surebets:
+                        for idx_surebet in range(len(part.surebets) - 1, -1, -1):
+                            surebet = part.surebets[idx_surebet]
                             surebet.dec_mark()
 
                             if surebet.is_mark_empty():
-                                part.surebets.remove(surebet)
+                                del part.surebets[idx_surebet]
 
     def _merge_surebets(self, new_surebets) -> int:  # returns amount of newly added surebets
         new_added = 0
