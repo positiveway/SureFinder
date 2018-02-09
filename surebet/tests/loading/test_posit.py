@@ -6,7 +6,6 @@ from requests import Session
 
 from surebet.json_funcs import json_dumps, obj_dumps
 from surebet.loading.posit import *
-from surebet.loading.selenium import SeleniumService
 from surebet.tests.loading import check_result, package_dir
 from surebet.bookmakers import Posit
 
@@ -29,8 +28,6 @@ def test_loading():
         check_result(result)
 
         time.sleep(1)
-
-    SeleniumService.quit()
 
     logging.info("PASS: loading")
 

@@ -75,10 +75,10 @@ class TimedSurebet(Surebet):
     def __init__(self, surebet: Surebet):
         super().__init__(surebet.w1, surebet.w2, surebet.profit)
 
-        self.start = default_timer()  # indicates when surebet is appeared
+        self.start_time = default_timer()  # indicates when surebet is appeared
 
-    def get_duration(self):
-        return round(default_timer() - self.start, 2)
+    def get_lifetime(self):
+        return round(default_timer() - self.start_time, 2)
 
 
 class MarkedSurebet(Surebet):
@@ -194,6 +194,6 @@ class Surebets:
                             old_surebet = find_in_iter(old_part.surebets, surebet)
                             if old_surebet:
                                 # assign start time from old surebet if found
-                                surebet.start = old_surebet.start
+                                surebet.start_time = old_surebet.start_time
 
                             part.surebets[idx] = surebet
