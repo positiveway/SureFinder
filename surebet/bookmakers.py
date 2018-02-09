@@ -17,8 +17,6 @@ THRESHOLD_INIT = 3
 INC_EVERY = 3
 THRESHOLD_INC = 2
 
-HANDLE_ERRORS = False
-
 MIN = 60
 FORBIDDEN_INTERVAL = 30 * MIN
 
@@ -202,8 +200,8 @@ class ErrorHandler:
             except Exception as err:
                 raise_error = True
 
-                # if we need to handle error and that wasn't a forced stopping of a program
-                if HANDLE_ERRORS and not isinstance(err, KeyboardInterrupt):
+                # if it wasn't a forced stop of a program
+                if not isinstance(err, KeyboardInterrupt):
                     raise_error = False
 
                     # if first error and current error occurred within forbidden interval
