@@ -199,7 +199,7 @@ class ErrorHandler:
                 if not isinstance(err, KeyboardInterrupt):
                     # if first error and current error occurred within forbidden interval
                     if default_timer() - self.first_occurred < FORBIDDEN_INTERVAL:
-                        if self.error_cnt > MAX_ERR_CNT:
+                        if self.error_cnt >= MAX_ERR_CNT:
                             raise
                         else:
                             self.error_cnt += 1
