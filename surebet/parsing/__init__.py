@@ -12,7 +12,7 @@ def try_parse(parse_func, source, site_name, **kwargs):
     try:
         result = parse_func(source, **kwargs)
     except Exception as err:
-        if not isinstance(err, KeyboardInterrupt):  # if that wasn't a forced stopping of a program
+        if not isinstance(err, KeyboardInterrupt):  # if it wasn't a forced stop of a program
             logging.info("error occurred in parsing({}): {}".format(site_name, str(err)))
 
             filename = os.path.join(project_dir, "error-parsing-{}".format(site_name))
