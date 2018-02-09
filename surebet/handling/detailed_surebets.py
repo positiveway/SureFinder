@@ -6,8 +6,6 @@ MAX_PROFIT = 10
 
 MIN_LIFETIME = 10
 
-TEAMS_SEPARATOR = " vs "
-
 
 class DetailedSurebet:
     """
@@ -32,14 +30,16 @@ class DetailedSurebet:
         self.lifetime = surebet.get_lifetime()
 
     def __str__(self):
-        event_name1 = TEAMS_SEPARATOR.join(self.teams1)
-        event_name2 = TEAMS_SEPARATOR.join(self.teams2)
-        str_form = "profit: {profit:<8} | {sport:<6} | {book1:<6} | {ev_name1:<60} | part #{part} | {w1}\n".format(
-            profit=self.profit, book1=self.book1, sport=self.sport, ev_name1=event_name1, part=self.part,
-            w1=self.w1)
-        str_form += "lifetime: {time:<6} | {sport:<6} | {book2:<6} | {ev_name2:<60} | part #{part} | {w2}\n".format(
-            time=self.lifetime, book2=self.book2, sport=self.sport, ev_name2=event_name2, part=self.part,
-            w2=self.w2)
+        teams_sep = " vs "
+        event_name1 = teams_sep.join(self.teams1)
+        event_name2 = teams_sep.join(self.teams2)
+
+        common_pattern = "{sport:<6} | {book:<6} | {ev_name:<60} | part #{part} | {wager}"
+
+        str_form = "profit: {profit:<8} | ".format(profit=self.profit) + common_pattern.format(
+            sport=self.sport, book=self.book1, ev_name=event_name1, part=self.part, wager=self.w1) + "\n"
+        str_form += "lifetime: {time:<6} | ".format(time=self.lifetime) + common_pattern.format(
+            sport=self.sport, book=self.book2, ev_name=event_name2, part=self.part, wager=self.w2)
         return str_form
 
 
@@ -56,8 +56,11 @@ def convert_to_detailed(surebets: Surebets):
 
 def _filter(detailed_surebets):
     """Filter detailed_surebets by profit's lower and upper limits and by lifetime's lower limit"""
-    return filter(lambda item: MIN_PROFIT <= item.profit <= MAX_PROFIT and MIN_LIFETIME <= item.lifetime,
-                  detailed_surebets)
+
+    def filter_key(item):
+        return MIN_PROFIT <= item.profit <= MAX_PROFIT and item.lifetime >= MIN_LIFETIME
+
+    return list(filter(filter_key, detailed_surebets))
 
 
 def _convert_to_detailed(surebets: Surebets):
@@ -75,9 +78,7 @@ def _convert_to_detailed(surebets: Surebets):
 def _detailed_cmp(first: DetailedSurebet, second: DetailedSurebet):
     """Custom comparator to sort detailed_surebets firstly by profit casted to int and secondly by lifetime"""
     first_profit, second_profit = int(first.profit), int(second.profit)
-    if first_profit < second_profit:
-        return -1
-    elif first_profit == second_profit:
-        return first.lifetime - second.lifetime
+    if first_profit != second_profit:
+        return first_profit - second_profit
     else:
-        return 1
+        return first.lifetime - second.lifetime

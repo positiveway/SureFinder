@@ -29,6 +29,8 @@ def start_scanning():
         old_surebets = surebets
 
         detailed_surebets = convert_to_detailed(surebets)
+        for detailed_surebet in detailed_surebets:
+            print(detailed_surebet)
 
     SeleniumService.quit()
 
