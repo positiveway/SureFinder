@@ -1,6 +1,7 @@
 from time import sleep
 from requests import Session
 
+from surebet import reverse_enum
 from surebet.handling.surebets import *
 from surebet.loading import try_load
 from surebet.parsing import try_parse
@@ -79,12 +80,11 @@ class Posit:
             for sport in book.attrs_dict().values():
                 for event in sport:
                     for part in event.parts:
-                        for idx_surebet in range(len(part.surebets) - 1, -1, -1):
-                            surebet = part.surebets[idx_surebet]
+                        for idx, surebet in reverse_enum(part.surebets):
                             surebet.dec_mark()
 
                             if surebet.is_mark_empty():
-                                del part.surebets[idx_surebet]
+                                del part.surebets[idx]
 
     def _merge_surebets(self, new_surebets) -> int:  # returns amount of newly added surebets
         new_added = 0
@@ -199,7 +199,7 @@ class ErrorHandler:
                 if not isinstance(err, KeyboardInterrupt):
                     # if first error and current error occurred within forbidden interval
                     if default_timer() - self.first_occurred < FORBIDDEN_INTERVAL:
-                        if self.error_cnt >= MAX_ERR_CNT:
+                        if self.error_cnt > MAX_ERR_CNT:
                             raise
                         else:
                             self.error_cnt += 1
