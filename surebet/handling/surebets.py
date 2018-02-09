@@ -179,6 +179,8 @@ class Surebets:
                 for event in sport:
                     old_event = find_in_iter(old_sport, event)
                     if not old_event:
+                        # Create new one at every alg stage to simplify code writing.
+                        # One handler at the end of the function
                         old_event = EventSurebets(event.teams1, event.teams2)
                         old_sport.append(old_event)
 
@@ -186,7 +188,6 @@ class Surebets:
                         old_part = find_in_iter(old_event.parts, part)
                         if not old_part:
                             old_part = PartSurebets([], part.part)
-                            old_event.parts.append(old_part)
 
                         for idx, surebet in enumerate(part.surebets):
                             surebet = TimedSurebet(surebet)
