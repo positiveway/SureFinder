@@ -1,6 +1,8 @@
 from collections import Iterable
 from itertools import combinations
+from timeit import default_timer
 
+from surebet import find_in_iter
 from surebet.ancestors import *
 
 book_names = ["fonbet", "marat", "olimp"]
@@ -10,7 +12,6 @@ HOLDING_LIMIT = 15
 
 class Wager:
     """Base info about bet."""
-
     def __init__(self, name: str, factor: float):
         """
         :param name: name of bet (for instance: O1X, O12)
@@ -31,7 +32,6 @@ class Wager:
 
 class CondWager(Wager):
     """Class for bets with condition, that is Handicap or Total."""
-
     def __init__(self, name: str, factor: float, suffix: str, cond: float):
         """
         :param suffix: suffix for wager (e.g.: Hand1, "1" - suffix; TotalU, "U" - suffix)
@@ -53,8 +53,7 @@ class CondWager(Wager):
 
 
 class Surebet(BetLevel):
-    """Contains 2 wagers and profit between them."""
-
+    """Contain 2 wagers and profit between them."""
     def __init__(self, w1: Wager, w2: Wager, profit: float = None):
         """
         :param w1, w2: first and second wagers of surebet
@@ -71,6 +70,17 @@ class Surebet(BetLevel):
         return self.w1 == other.w1 and self.w2 == other.w2
 
 
+class TimedSurebet(Surebet):
+    """Hold parameter start to define when surebet is appeared"""
+    def __init__(self, surebet: Surebet):
+        super().__init__(surebet.w1, surebet.w2, surebet.profit)
+
+        self.start_time = default_timer()  # indicates when surebet is appeared
+
+    def get_lifetime(self):
+        return round(default_timer() - self.start_time, 2)
+
+
 class MarkedSurebet(Surebet):
     """
     Specialized class for handling "Positive" buffer. Contains mark
@@ -79,13 +89,9 @@ class MarkedSurebet(Surebet):
     surebet can be considered as gone, that is
     it's disappeared from positivebet pool.
     """
-
     def __init__(self, w1: Wager, w2: Wager, profit: float = None):
-        """
-        :param mark: indicates whether surebet is actual or not
-        """
         super().__init__(w1, w2, profit)
-        self.mark = HOLDING_LIMIT
+        self.mark = HOLDING_LIMIT  # indicates whether surebet is actual or not
 
     def restore_mark(self):
         self.mark = HOLDING_LIMIT
@@ -98,8 +104,7 @@ class MarkedSurebet(Surebet):
 
 
 class PartSurebets(PartLevel):
-    """Contains surebets for specific part of event. Defines number of part."""
-
+    """Contain surebets for specific part of event. Defines number of part."""
     def __init__(self, surebets: list, part: int):
         """
         :param surebets: list of surebets (class Surebet/MarkedSurebet)
@@ -119,12 +124,11 @@ class EventSurebets(EventLevel):
     (e.g: period for hockey, set for tennis etc.)
     So this class contains surebets for each common part of event's pair.
     """
-
     def __init__(self, teams1: Iterable, teams2: Iterable):
         """
         :params teams1, teams2: lists of teams for first and second event
-        :param parts: list of surebets for certain parts of event's pair (class PartSurebets)
         """
+        # parts: list of surebets for certain parts of event's pair (class PartSurebets)
         super().__init__([])
         self.teams1, self.teams2 = teams1, teams2
 
@@ -140,13 +144,12 @@ class EventSurebets(EventLevel):
 
 class BookSurebets(BookLevel):
     """Surebets for 2 bookmakers (e.g Olimp, Fonbet)."""
-
     def __init__(self, book1: str, book2: str):
         """
         :param book1, book2: bookmakers names
-        :params soccer, tennis, hockey, basket, volley: lists of surebets for certain sports, each consists of surebets
-            for certain events (EventSurebets)
         """
+        # soccer, tennis, hockey, basket, volley: lists of surebets for certain sports, each consists of surebets
+        # for certain events (EventSurebets)
         super().__init__()
         self.book1, self.book2 = book1, book2
 
@@ -156,15 +159,42 @@ class BookSurebets(BookLevel):
 
 class Surebets:
     """Pairs of BookSurebets in alphabetical order."""
-
     def __init__(self):
-        """
-        :param books_surebets: list of surebets for every pair of bookmakers (BookSurebets)
-        """
-        self.books_surebets = []
+        self.books_surebets = []  # list of surebets for every pair of bookmakers (BookSurebets)
         for book1_name, book2_name in combinations(book_names, 2):
             self.books_surebets.append(BookSurebets(book1_name, book2_name))
 
     def format(self):
         for book_surebets in self.books_surebets:
             book_surebets.format()
+
+    def set_timestamps(self, old_surebets):
+        """Check what surebets present in old_surebets, and restores their time mark"""
+        for book in self.books_surebets:
+            old_book = find_in_iter(old_surebets.books_surebets, book)
+
+            for sport_name, sport in book.attrs_dict().items():
+                old_sport = getattr(old_book, sport_name)
+
+                for event in sport:
+                    old_event = find_in_iter(old_sport, event)
+                    if not old_event:
+                        # Create new one at every alg stage to simplify code writing.
+                        # One handler at the end of the function
+                        old_event = EventSurebets(event.teams1, event.teams2)
+                        old_sport.append(old_event)
+
+                    for part in event.parts:
+                        old_part = find_in_iter(old_event.parts, part)
+                        if not old_part:
+                            old_part = PartSurebets([], part.part)
+
+                        for idx, surebet in enumerate(part.surebets):
+                            surebet = TimedSurebet(surebet)
+
+                            old_surebet = find_in_iter(old_part.surebets, surebet)
+                            if old_surebet:
+                                # assign start time from old surebet if found
+                                surebet.start_time = old_surebet.start_time
+
+                            part.surebets[idx] = surebet
