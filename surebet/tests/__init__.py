@@ -63,6 +63,8 @@ class SurebetsJSONDecoder(json.JSONDecoder):
                                    dict_marked_surebet['w2'],
                                    dict_marked_surebet['profit'])
             result.mark = dict_marked_surebet['mark']
+            if 'start_time' in dict_marked_surebet:
+                result = TimedSurebet(result)
         else:
             result = Surebet(dict_marked_surebet['w1'],
                              dict_marked_surebet['w2'],
