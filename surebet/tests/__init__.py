@@ -25,8 +25,12 @@ class SurebetsJSONDecoder(json.JSONDecoder):
             raise json.JSONDecodeError('Unknown json structure')
 
     def parse_obj(self, dict_obj, parse_func):
+        """
+        This intermediate function is needed for attributes that were added during runtime or didn't specialized
+        in classes' constructors. It is also possible to add here some error-handling code
+        """
         result = parse_func(dict_obj)
-        self.parse_other_attrs(result, dict_obj)  # added this intermediate function for special cases that might be
+        self.parse_other_attrs(result, dict_obj)
         return result
 
     @staticmethod
@@ -58,17 +62,15 @@ class SurebetsJSONDecoder(json.JSONDecoder):
 
     @staticmethod
     def parse_surebet(dict_marked_surebet):
+        tuple_init = (dict_marked_surebet['w1'], dict_marked_surebet['w2'], dict_marked_surebet['profit'])
         if 'mark' in dict_marked_surebet:
-            result = MarkedSurebet(dict_marked_surebet['w1'],
-                                   dict_marked_surebet['w2'],
-                                   dict_marked_surebet['profit'])
+            result = MarkedSurebet(*tuple_init)
             result.mark = dict_marked_surebet['mark']
-            if 'start_time' in dict_marked_surebet:
-                result = TimedSurebet(result)
+        elif 'start_time' in dict_marked_surebet:
+            result = TimedSurebet(Surebet(*tuple_init))
+            result.start_time = dict_marked_surebet['start_time']
         else:
-            result = Surebet(dict_marked_surebet['w1'],
-                             dict_marked_surebet['w2'],
-                             dict_marked_surebet['profit'])
+            result = Surebet(*tuple_init)
         return result
 
     @staticmethod

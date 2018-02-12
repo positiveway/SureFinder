@@ -33,7 +33,8 @@ def test_loading():
     logging.info("PASS: loading")
 
 
-def mock_load_events(sample):
+@patch('surebet.bookmakers.sleep')
+def mock_load_events(sample, mock_sleep):
     iter_sample = iter(sample)
 
     def get_next_html(load_func, site_name, **kwargs):  # it's called instead of try_load
@@ -44,11 +45,10 @@ def mock_load_events(sample):
 
         return sample_next
 
-    with patch("surebet.bookmakers.sleep") as mock_sleep:
-        with patch("surebet.bookmakers.try_load") as mock_try_load:
-            mock_try_load.side_effect = get_next_html
-            posit = Posit()
-            surebets_posit = posit.load_events()
+    with patch("surebet.bookmakers.try_load") as mock_try_load:
+        mock_try_load.side_effect = get_next_html
+        posit = Posit()
+        surebets_posit = posit.load_events()
 
     return surebets_posit
 
@@ -102,7 +102,6 @@ def mock_decrease_marks(posit, mock_sleep):
     with patch("surebet.bookmakers.try_load") as mock_try_load:
         mock_try_load.side_effect = load_next_html
         for load_idx in range(len(list_loads)):
-            print('загрузка номер {}'.format(load_idx))
             posit.load_events()
 
 
@@ -118,3 +117,5 @@ def test_decrease_known():
         surebets_known = json.load(file_known_result)
 
     assert obj_dumps(posit.surebets) == json_dumps(surebets_known)
+
+    logging.info("PASS: decrease and restore")
