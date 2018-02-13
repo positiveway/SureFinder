@@ -1,15 +1,46 @@
-import surebet.tests.parsing as tester
+import json
+import logging
 
-name = "posit"
+import pytest
+from os import path
+
+from surebet.json_funcs import obj_dumps, json_dumps
+from surebet.parsing import try_parse, ParseException
+from surebet.parsing.posit import parse
+from surebet.tests.parsing import abs_path, read_html, read_json
+
+name = 'posit'
 
 
 def test_samples():
-    tester.test_samples(name, 'html')
+    for num in range(3):
+        filename = abs_path(name, 'sample{}.html'.format(num))
+        html = read_html(filename)
+
+        try_parse(parse, html, name)
+        logging.info('PASS: sample{}'.format(num))
 
 
 def test_known_result():
-    tester.test_known_result(name, 'knownRes.html', 'knownRes.json')
+    filename = abs_path(name, 'knownResultIn.html')
+    html = read_html(filename)
+
+    filename = abs_path(name, 'knownResultOut.json')
+    known_result = read_json(filename)
+
+    surebets = try_parse(parse, html, name)
+
+    assert obj_dumps(surebets) == json_dumps(known_result)
+
+    logging.info('PASS: known result')
 
 
 def test_broken_structure():
-    tester.test_broken_structure(name, 'brokenStruct.html')
+    filename = abs_path(name, 'brokenStructure.html')
+    html = read_html(filename)
+
+    with pytest.raises(ParseException, message='Expecting ParseException'):
+        parse(html)
+
+    logging.info('PASS: broken structure')
+
