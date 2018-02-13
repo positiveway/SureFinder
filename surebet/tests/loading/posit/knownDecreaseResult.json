@@ -1,0 +1,1048 @@
+{
+  "books_surebets": [
+    {
+      "basket": [
+        {
+          "parts": [
+            {
+              "part": 3,
+              "surebets": [
+                {
+                  "mark": 2,
+                  "profit": null,
+                  "w1": {
+                    "cond": 18.5,
+                    "factor": 0,
+                    "name": "ind_total2",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 19.0,
+                    "factor": 0,
+                    "name": "ind_total2",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Heidelberg",
+            "Gladiators Trier"
+          ],
+          "teams2": [
+            "Heidelberg",
+            "Trier"
+          ]
+        }
+      ],
+      "book1": "fonbet",
+      "book2": "marat",
+      "hockey": [],
+      "soccer": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 3,
+                  "profit": null,
+                  "w1": {
+                    "cond": -1.0,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 1.0,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "La Nucia",
+            "Recambios Colon"
+          ],
+          "teams2": [
+            "La Nucia",
+            "Recambios Colon"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 3,
+                  "profit": null,
+                  "w1": {
+                    "factor": 0,
+                    "name": "o2"
+                  },
+                  "w2": {
+                    "factor": 0,
+                    "name": "o1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "MuSa Pori",
+            "PS Kemi"
+          ],
+          "teams2": [
+            "MuSa",
+            "PS Kemi"
+          ]
+        }
+      ],
+      "tennis": [
+        {
+          "parts": [
+            {
+              "part": 1,
+              "surebets": [
+                {
+                  "mark": 8,
+                  "profit": null,
+                  "w1": {
+                    "cond": 8.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 8.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            },
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 11,
+                  "profit": null,
+                  "w1": {
+                    "cond": 19.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 19.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "mark": 11,
+                  "profit": null,
+                  "w1": {
+                    "cond": 18.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 18.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Lee Duck Hee",
+            "Prashanth N. V-S"
+          ],
+          "teams2": [
+            "Prashanth, N. Vijay Sundar",
+            "Lee, Duck Hee"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 1,
+              "surebets": [
+                {
+                  "mark": 15,
+                  "profit": null,
+                  "w1": {
+                    "cond": -3.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 3.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            },
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 15,
+                  "profit": null,
+                  "w1": {
+                    "cond": -6.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 6.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Catarina L",
+            "Sinha N K"
+          ],
+          "teams2": [
+            "Catarina, Lucas",
+            "Sinha, Nitin Kumar"
+          ]
+        }
+      ],
+      "volley": [
+        {
+          "parts": [
+            {
+              "part": 3,
+              "surebets": [
+                {
+                  "mark": 6,
+                  "profit": null,
+                  "w1": {
+                    "cond": 46.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 46.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "mark": 6,
+                  "profit": null,
+                  "w1": {
+                    "cond": 45.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 45.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Falkenberg",
+            "Tierp"
+          ],
+          "teams2": [
+            "Falkenberg",
+            "Tierp"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 1,
+              "surebets": [
+                {
+                  "mark": 6,
+                  "profit": null,
+                  "w1": {
+                    "cond": -3.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 3.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                },
+                {
+                  "mark": 6,
+                  "profit": null,
+                  "w1": {
+                    "cond": 24.5,
+                    "factor": 0,
+                    "name": "ind_total2",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 24.5,
+                    "factor": 0,
+                    "name": "ind_total2",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Monza",
+            "Verona"
+          ],
+          "teams2": [
+            "Monza",
+            "Verona"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 2,
+                  "profit": null,
+                  "w1": {
+                    "cond": 80.5,
+                    "factor": 0,
+                    "name": "ind_total1",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 82.5,
+                    "factor": 0,
+                    "name": "ind_total1",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "mark": 3,
+                  "profit": null,
+                  "w1": {
+                    "cond": 80.5,
+                    "factor": 0,
+                    "name": "ind_total1",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 81.5,
+                    "factor": 0,
+                    "name": "ind_total1",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "COP Nitra",
+            "HIT Trnava (w)"
+          ],
+          "teams2": [
+            "COP Nitra",
+            "UCM Trnava"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 4,
+              "surebets": [
+                {
+                  "mark": 3,
+                  "profit": null,
+                  "w1": {
+                    "factor": 0,
+                    "name": "o1"
+                  },
+                  "w2": {
+                    "factor": 0,
+                    "name": "o2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Kecskemet",
+            "Vegyesz Kazincbarc."
+          ],
+          "teams2": [
+            "Kecskemet",
+            "Vegyesz Kazincbarcika"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 14,
+                  "profit": null,
+                  "w1": {
+                    "factor": 0,
+                    "name": "o2"
+                  },
+                  "w2": {
+                    "factor": 0,
+                    "name": "o1"
+                  }
+                },
+                {
+                  "mark": 9,
+                  "profit": null,
+                  "w1": {
+                    "cond": 6.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": -4.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            },
+            {
+              "part": 3,
+              "surebets": [
+                {
+                  "mark": 11,
+                  "profit": null,
+                  "w1": {
+                    "cond": 45.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 45.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Univ. Nizhnevartovsk-youth",
+            "Lokomotiv-CIVS-youth"
+          ],
+          "teams2": [
+            "Universitet Nizhnevartovsk",
+            "Lokomotiv-TSIVS"
+          ]
+        }
+      ]
+    },
+    {
+      "basket": [],
+      "book1": "fonbet",
+      "book2": "olimp",
+      "hockey": [],
+      "soccer": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 13,
+                  "profit": null,
+                  "w1": {
+                    "cond": 1.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": -1.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Nosta Novotroick",
+            "Krylya Sovetov-2"
+          ],
+          "teams2": [
+            "Nosta",
+            "Krylia Sovetov II"
+          ]
+        }
+      ],
+      "tennis": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 10,
+                  "profit": null,
+                  "w1": {
+                    "cond": -6.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 6.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Lee Duck Hee",
+            "Prashanth N. V-S"
+          ],
+          "teams2": [
+            "Prashanth V.-S.",
+            "Lee D.H."
+          ]
+        }
+      ],
+      "volley": [
+        {
+          "parts": [
+            {
+              "part": 1,
+              "surebets": [
+                {
+                  "mark": 1,
+                  "profit": null,
+                  "w1": {
+                    "cond": 9.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": -9.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Castelo da Maia (w)",
+            "Boavista (w)"
+          ],
+          "teams2": [
+            "Kashtelu Maya",
+            "Boavista"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 3,
+              "surebets": [
+                {
+                  "mark": 13,
+                  "profit": null,
+                  "w1": {
+                    "cond": 45.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 45.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Univ. Nizhnevartovsk-youth",
+            "Lokomotiv-CIVS-youth"
+          ],
+          "teams2": [
+            "Universitet Nizhnevartovsk",
+            "Lokomotiv CIVS"
+          ]
+        }
+      ]
+    },
+    {
+      "basket": [],
+      "book1": "marat",
+      "book2": "olimp",
+      "hockey": [],
+      "soccer": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 6,
+                  "profit": null,
+                  "w1": {
+                    "cond": -1.0,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 1.0,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Nantes",
+            "Lille"
+          ],
+          "teams2": [
+            "Nantes",
+            "OSC Lille"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 13,
+                  "profit": null,
+                  "w1": {
+                    "cond": 1.75,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": -1.75,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Nosta",
+            "Krylia Sovetov-2"
+          ],
+          "teams2": [
+            "Nosta",
+            "Krylia Sovetov II"
+          ]
+        }
+      ],
+      "tennis": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 3,
+                  "profit": null,
+                  "w1": {
+                    "cond": -2.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 2.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Dutra Silva, Rogerio",
+            "Clezar, Guilherme"
+          ],
+          "teams2": [
+            "Dutra Silva R.",
+            "Clezar G."
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 8,
+                  "profit": null,
+                  "w1": {
+                    "cond": 19.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 19.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "mark": 11,
+                  "profit": null,
+                  "w1": {
+                    "cond": -6.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": 6.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                },
+                {
+                  "mark": 8,
+                  "profit": null,
+                  "w1": {
+                    "cond": 20.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 20.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "mark": 10,
+                  "profit": null,
+                  "w1": {
+                    "cond": -5.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": 5.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                },
+                {
+                  "mark": 14,
+                  "profit": null,
+                  "w1": {
+                    "cond": 17.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 17.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Prashanth, N. Vijay Sundar",
+            "Lee, Duck Hee"
+          ],
+          "teams2": [
+            "Prashanth V.-S.",
+            "Lee D.H."
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 11,
+                  "profit": null,
+                  "w1": {
+                    "cond": 3.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -3.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                },
+                {
+                  "mark": 14,
+                  "profit": null,
+                  "w1": {
+                    "factor": 0,
+                    "name": "o2"
+                  },
+                  "w2": {
+                    "factor": 0,
+                    "name": "o1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Wongteanchai, Varunya",
+            "Ushijima, Risa"
+          ],
+          "teams2": [
+            "Wongteanchai V.",
+            "Ushijima R."
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 2,
+              "surebets": [
+                {
+                  "mark": 14,
+                  "profit": null,
+                  "w1": {
+                    "factor": 0,
+                    "name": "o1"
+                  },
+                  "w2": {
+                    "factor": 0,
+                    "name": "o2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "J.Kang/M.Ozeki",
+            "N.Hanatani/R.Ueda"
+          ],
+          "teams2": [
+            "Kang J.-Q./Ozeki M.",
+            "Hanatani N./Ueda R."
+          ]
+        }
+      ],
+      "volley": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "mark": 3,
+                  "profit": null,
+                  "w1": {
+                    "factor": 0,
+                    "name": "o2"
+                  },
+                  "w2": {
+                    "factor": 0,
+                    "name": "o1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Sora",
+            "Milano"
+          ],
+          "teams2": [
+            "Sora",
+            "Milano"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 1,
+              "surebets": [
+                {
+                  "mark": 6,
+                  "profit": null,
+                  "w1": {
+                    "cond": 43.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 43.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Ravenna",
+            "Latina"
+          ],
+          "teams2": [
+            "Marcegaglia Ravenna",
+            "Andreoli Latina"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 1,
+              "surebets": [
+                {
+                  "mark": 2,
+                  "profit": null,
+                  "w1": {
+                    "cond": 39.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 39.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Castelo Maia",
+            "Boavista"
+          ],
+          "teams2": [
+            "Kashtelu Maya",
+            "Boavista"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 3,
+              "surebets": [
+                {
+                  "mark": 13,
+                  "profit": null,
+                  "w1": {
+                    "cond": 45.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 45.5,
+                    "factor": 0,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "mark": 13,
+                  "profit": null,
+                  "w1": {
+                    "cond": -3.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": 3.5,
+                    "factor": 0,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Universitet Nizhnevartovsk",
+            "Lokomotiv-TSIVS"
+          ],
+          "teams2": [
+            "Universitet Nizhnevartovsk",
+            "Lokomotiv CIVS"
+          ]
+        }
+      ]
+    }
+  ]
+}
