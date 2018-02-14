@@ -33,7 +33,7 @@ def _check_surebet(factor1, factor2):
 
 
 def _get_profit(factor1, factor2):
-    profit = (1 - (1 / factor1 + 1 / factor2)) * 100
+    profit = (1 / (1 / factor1 + 1 / factor2) - 1) * 100
     return round(profit, 2)
 
 
