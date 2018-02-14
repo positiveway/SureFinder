@@ -4,7 +4,7 @@ from surebet.handling.surebets import *
 MIN_PROFIT = 2.5
 MAX_PROFIT = 10
 
-MIN_LIFETIME = 10
+MIN_LIFETIME = 5
 
 
 class DetailedSurebet:
@@ -14,7 +14,7 @@ class DetailedSurebet:
     """
 
     def __init__(self, books: BookSurebets, sport: str, events: EventSurebets, part: PartSurebets,
-                 surebet: TimedSurebet):
+                 surebet: TimedSurebet) -> None:
         """
         :param books: bookmakers between which surebet is occurred
         :param sport: name of sport
@@ -54,10 +54,10 @@ def convert_to_detailed(surebets: Surebets) -> list:
     return detailed_surebets
 
 
-def _filter(detailed_surebets) -> list:
+def _filter(detailed_surebets: list) -> list:
     """Filter detailed_surebets by profit's lower and upper limits and by lifetime's lower limit"""
 
-    def predicate(item):
+    def predicate(item) -> bool:
         return MIN_PROFIT <= item.profit <= MAX_PROFIT and item.lifetime >= MIN_LIFETIME
 
     return list(filter(predicate, detailed_surebets))
@@ -75,7 +75,7 @@ def _convert_to_detailed(surebets: Surebets) -> list:
     return detailed_surebets
 
 
-def _sort_detailed(detailed_surebets):
+def _sort_detailed(detailed_surebets: list) -> None:
     detailed_surebets.sort(key=cmp_to_key(_detailed_cmp), reverse=True)
 
 
