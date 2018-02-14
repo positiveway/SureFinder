@@ -19,9 +19,9 @@ def compress_multiple_spaces(team):
     return ' '.join(team.split())
 
 
-def remove_dots(string):
+def remove_dots(name):
     # '.dkjjl.. .YUW. a.4' => 'dkjjl YUW a 4'
-    return compress_multiple_spaces(string.replace('.', ' ')).strip()
+    return compress_multiple_spaces(name.replace('.', ' ')).strip()
 
 
 def convert_marat_pair_team_player(player):
@@ -55,7 +55,6 @@ def convert_olimp(olimp):
     for event in olimp.tennis:
         event.team1 = delete_spaces_around_slash(remove_dots(compress_firstname(event.team1)))
         event.team2 = delete_spaces_around_slash(remove_dots(compress_firstname(event.team2)))
-    return olimp
 
 
 def convert_marat(marat):
@@ -67,4 +66,3 @@ def convert_marat(marat):
     for event in marat.tennis:
         event.team1 = convert_marat_pair_team(compress_firstname(event.team1))
         event.team2 = convert_marat_pair_team(compress_firstname(event.team2))
-    return marat

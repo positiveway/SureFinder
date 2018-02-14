@@ -7,6 +7,7 @@ from surebet.loading import try_load
 from surebet.parsing import try_parse
 from surebet.loading.posit import default_account
 from surebet.loading.selenium import SeleniumService
+from surebet.converting.convert_names import convert_olimp, convert_marat
 
 LOAD_INTERVAL = 6
 
@@ -165,6 +166,7 @@ class Marat:
         def _load_events():
             sample = try_load(load_events, name)
             try_parse(parse, sample, name, bookmaker=bookmaker)
+            convert_marat(bookmaker)
 
         return _load_events()
 
@@ -181,6 +183,7 @@ class Olimp:
         def _load_events():
             sample = try_load(load_events, name)
             try_parse(parse, sample, name, bookmaker=bookmaker)
+            convert_olimp(bookmaker)
 
         return _load_events()
 
