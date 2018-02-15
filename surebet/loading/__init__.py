@@ -7,6 +7,11 @@ from surebet import project_dir
 
 package_dir = os.path.dirname(__file__)
 
+browser_headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/63.0.3239.132 Safari/537.36",
+}
+
 
 class LoadException(Exception):
     pass

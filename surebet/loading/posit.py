@@ -19,8 +19,8 @@ login_url = "https://positivebet.com/en/user/login"
 index_url = "https://positivebet.com/en/bets/index"
 
 xp_token = '//*[@id="login-form"]/input'
-
 token_name = "YII_CSRF_TOKEN"
+
 payload = {
     "UserLogin[rememberMe]": ["0", "1"],
     "yt0": '',
@@ -36,6 +36,8 @@ def load(session, account=default_account):
         "UserLogin[username]": account["login"],
         "UserLogin[password]": account["pass"],
     })
+
+    session.headers.update(browser_headers)
 
     resp = session.get(login_url)
     check_status(resp.status_code)

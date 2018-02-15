@@ -18,6 +18,10 @@ base_form_data = {
     "lang_id": "2",
 }
 
+base_headers = {
+    "User-Agent": "okhttp/3.8.0",
+}
+
 sports_by_id = {
     1: "soccer",
     5: "basket",
@@ -42,7 +46,10 @@ def get_sport_tree():
         "time_shift": "0",
     })
 
-    r = requests.post(req_url, headers=get_xtoken(form_data), data=form_data)
+    headers = base_headers.copy()
+    headers.update(get_xtoken(form_data))
+
+    r = requests.post(req_url, headers=headers, data=form_data)
     check_status(r.status_code)
     response = r.json()
 
@@ -67,7 +74,10 @@ async def get_event_details(event_id, sport_id, session):
         "id": event_id,
     })
 
-    resp = await async_post(session, req_url, headers=get_xtoken(form_data), data=form_data, allow_not_found=True)
+    headers = base_headers.copy()
+    headers.update(get_xtoken(form_data))
+
+    resp = await async_post(session, req_url, headers=headers, data=form_data, allow_not_found=True)
 
     details = resp["data"] if resp else None
     return {"sport_id": sport_id, "details": details}
