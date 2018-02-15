@@ -5,6 +5,7 @@ import aiohttp
 import re
 import requests
 
+from surebet.loading import browser_headers
 from surebet.loading import log_loaded_events, check_status
 from surebet.loading.async import async_post, async_get
 
@@ -18,14 +19,9 @@ sport_names = ["Basketball", "Football", "Ice Hockey", "Tennis", "Volleyball"]
 
 details_url = "https://www.marathonbet.co.uk/en/livemarkets.htm?treeId={}"
 
-base_headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
-                  "Chrome/63.0.3239.132 Safari/537.36",
-}
-
 
 def load_events():
-    r = requests.get(url, headers=base_headers)
+    r = requests.get(url, headers=browser_headers)
     check_status(r.status_code)
 
     site_html = r.text
@@ -79,7 +75,7 @@ def process_sport_tree(raw_sport_tree):
 async def get_event_details(event_id, session):
     req_url = details_url.format(event_id)
 
-    headers = base_headers.copy()
+    headers = browser_headers.copy()
     headers.update({"Content-Type": "application/x-www-form-urlencoded"})
     resp = await async_post(session, req_url, headers=headers, allow_empty=True)
 
