@@ -1,6 +1,6 @@
 from surebet.bookmakers import Posit, Fonbet, Marat, Olimp
 from surebet.handling.detailed_surebets import convert_to_detailed
-from surebet.handling.excluding import exclude_posit
+from surebet.handling.excluding import exclude_posit, exclude_unpopular
 from surebet.handling.searching import find_surebets
 from surebet.handling.surebets import Surebets
 from surebet.loading.selenium import SeleniumService
@@ -28,6 +28,8 @@ def start_scanning(iter_num):
         surebets = find_surebets(bookmakers)
 
         exclude_posit(surebets, posit_surebets)
+
+        exclude_unpopular(surebets)
 
         surebets.set_timestamps(old_surebets)
         old_surebets = surebets
