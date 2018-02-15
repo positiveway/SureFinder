@@ -5,10 +5,12 @@ result_bets = {
     "o2": "o1x",
     "ox": "o12",
 }
+result_bets.update({val: key for key, val in result_bets.items()})  # add reversed bets
 
 result_bets_without_draw = {
     "o1": "o2"
 }
+result_bets_without_draw.update({val: key for key, val in result_bets_without_draw.items()})  # add reversed bets
 
 
 def calc_surebets(bets1, bets2, with_draw=True):
