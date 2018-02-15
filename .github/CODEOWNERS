@@ -5,7 +5,7 @@
 # these owners  will be requested for
 # review when someone opens a pull request.
 
-* @korovkinand @marshygeek
+* @marshygeek @korovkinand
 
 # Order is important; the last matching pattern takes the most
 # precedence
@@ -14,7 +14,18 @@
 /surebet/loading/async.py @korovkinand
 /surebet/loading/selenium.py @korovkinand
 
-/surebet/parsing/olimp.py @nikinsta
+/.travis.yml @iamsre
+
+/surebet/tests/parsing/olimp @nikinsta
+/surebet/tests/parsing/__init__.py @nikinsta
+/surebet/tests/parsing/test_sites.py @nikinsta
+/surebet/tests/parsing/test_posit.py @nikinsta
 
 /surebet/tests/handling @marshygeek
+/surebet/tests/handling/test_exclude.py @Raashi
+/surebet/tests/handling/excluding @Raashi
 
+/surebet/tests/loading/posit @Raashi
+/surebet/tests/loading/test_posit.py @Raashi
+
+/surebet/converting/convert_names.py @nikinsta
