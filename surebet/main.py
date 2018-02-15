@@ -7,14 +7,18 @@ from surebet.loading.selenium import SeleniumService
 from surebet.parsing.bets import Bookmakers
 
 
-def start_scanning():
+def start_scanning(iter_num):
+    print("Scanner is started")
+
     posit = Posit()
     fonbet = Fonbet()
     marat = Marat()
     olimp = Olimp()
 
     old_surebets = Surebets()
-    for i in range(3):
+    for i in range(iter_num):
+        print("ITERATION #{}".format(i))
+
         bookmakers = Bookmakers()
         fonbet.load_events(bookmakers.fonbet)
         marat.load_events(bookmakers.marat)
@@ -32,8 +36,10 @@ def start_scanning():
         for detailed_surebet in detailed_surebets:
             print(detailed_surebet)
 
+        print()
+
     SeleniumService.quit()
 
 
 if __name__ == "__main__":
-    start_scanning()
+    start_scanning(10)
