@@ -19,13 +19,17 @@ login_url = "https://positivebet.com/en/user/login"
 index_url = "https://positivebet.com/en/bets/index"
 
 xp_token = '//*[@id="login-form"]/input'
-
 token_name = "YII_CSRF_TOKEN"
+
 payload = {
     "UserLogin[rememberMe]": ["0", "1"],
     "yt0": '',
 }
 
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/63.0.3239.132 Safari/537.36",
+}
 cookies = {
     "ddlPerPage_value": "30",
 }
@@ -36,6 +40,8 @@ def load(session, account=default_account):
         "UserLogin[username]": account["login"],
         "UserLogin[password]": account["pass"],
     })
+
+    session.headers.update(headers)
 
     resp = session.get(login_url)
     check_status(resp.status_code)
