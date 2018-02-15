@@ -29,7 +29,7 @@ def test_known_result():
     surebets = read_sample("known.pkl")
     exclude_unpopular(surebets)
 
-    with open(path.join(resource_dir, "knownResult.json"), "r") as file_result:
+    with open(path.join(resource_dir, "knownResult.json")) as file_result:
         surebets_result = json.load(file_result)
 
     assert obj_dumps(surebets) == json_dumps(surebets_result)

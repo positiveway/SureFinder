@@ -29,7 +29,7 @@ def test_known_result():
     surebets_other, surebets_posit = read_sample("known.pkl")
     exclude_posit(surebets_other, surebets_posit)
 
-    with open(path.join(resource_dir, "knownResult.json"), "r") as file_result:
+    with open(path.join(resource_dir, "knownResult.json")) as file_result:
         surebets_result = json.load(file_result)
 
     assert obj_dumps(surebets_other) == json_dumps(surebets_result)
