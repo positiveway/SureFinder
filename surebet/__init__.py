@@ -5,7 +5,7 @@ import os
 project_dir = os.path.dirname(__file__)
 
 # setup default logging level
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.ERROR)
 
 
 def find_by_predicate(iterable, predicate):
