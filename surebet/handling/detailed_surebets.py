@@ -34,14 +34,14 @@ class DetailedSurebet:
         event_name1 = teams_sep.join(self.teams1)
         event_name2 = teams_sep.join(self.teams2)
 
-        common_pattern = "{book:<6} | {ev_name:<60} | {wager}"
+        common_pattern = "{book:<6} | {ev_name:<60} | {wager}\n"
 
         str_form = "profit: {profit:<5} | lifetime: {time:<6} | {sport:<6} | part: {part}\n".format(
             profit=self.profit, time=self.lifetime, sport=self.sport, part=self.part)
 
-        second_line = common_pattern.format(book=self.book1, ev_name=event_name1, wager=self.w1) + "\n"
+        second_line = common_pattern.format(book=self.book1, ev_name=event_name1, wager=self.w1)
         str_form += second_line
-        str_form += common_pattern.format(book=self.book2, ev_name=event_name2, wager=self.w2) + "\n"
+        str_form += common_pattern.format(book=self.book2, ev_name=event_name2, wager=self.w2)
         str_form += "-" * len(second_line)
 
         return str_form
