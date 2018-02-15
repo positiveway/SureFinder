@@ -2,7 +2,7 @@ from fuzzywuzzy import fuzz
 
 from surebet.handling import MatchedEventPair
 
-MIN_RATIO = 60
+MIN_RATIO = 70
 
 
 def match_events(events1, events2):
