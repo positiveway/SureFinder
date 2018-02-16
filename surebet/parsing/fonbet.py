@@ -14,6 +14,22 @@ tr_event_details = "trEventDetails"
 hand_ids = [0, 1, 3]
 total_ids = [0, 1, 2]
 
+outcome_bets_ids = {
+    "o1": 921,
+    "ox": 922,
+    "o2": 923,
+    "o1x": 924,
+    "o12": 1571,
+    "ox2": 925,
+}
+
+cond_bets_ids = {
+    "hand1": 927,
+    "hand2": 928,
+    "totalo": 930,
+    "totalu": 931,
+}
+
 
 class RowInfo:
     def __init__(self, ev_class, node):

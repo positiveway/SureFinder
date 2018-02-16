@@ -1,4 +1,5 @@
 from surebet.handling.surebets import *
+from surebet.parsing.bets import FonbetPartBets, FonbetCondBet
 
 result_bets = {
     "o1": "ox2",
@@ -16,16 +17,30 @@ result_bets_without_draw.update({val: key for key, val in result_bets_without_dr
 def calc_surebets(bets1, bets2, with_draw=True):
     surebets = []
 
+    wagers_classes = []
+    wagers_kwargs = []
+    for bets in (bets1, bets2):
+        kwargs = {}
+        if isinstance(bets, FonbetPartBets):
+            wagers_classes.append(FonbetWager)
+
+            fonbet_info = FonbetInfo(bets.event_id, bets.score)
+            kwargs["fonbet_info"] = fonbet_info
+        else:
+            wagers_classes.append(Wager)
+
+        wagers_kwargs.append(kwargs)
+
     opposite_bets = result_bets if with_draw else result_bets_without_draw
     for bet_name in opposite_bets.keys():
-        factor1 = getattr(bets1, bet_name)
-        factor2 = getattr(bets2, opposite_bets[bet_name])
-        if _check_surebet(factor1, factor2):
-            w1 = Wager(bet_name, factor1)
-            w2 = Wager(opposite_bets[bet_name], factor2)
-            surebets.append(Surebet(w1, w2, _get_profit(factor1, factor2)))
+        bet1 = getattr(bets1, bet_name)
+        bet2 = getattr(bets2, opposite_bets[bet_name])
+        if _check_surebet(bet1, bet2):
+            w1 = wagers_classes[0](bet_name, bet1, **wagers_kwargs[0])
+            w2 = wagers_classes[1](opposite_bets[bet_name], bet2, **wagers_kwargs[1])
+            surebets.append(Surebet(w1, w2, _get_profit(bet1, bet2)))
 
-    surebets.extend(_handle_cond_bets(bets1, bets2))
+    surebets.extend(_handle_cond_bets(bets1, bets2, wagers_kwargs))
 
     return surebets
 
@@ -39,7 +54,7 @@ def _get_profit(factor1, factor2):
     return round(profit, 2)
 
 
-def _calc_cond_surebet(bet_name, cond_bet1, cond_bet2, bets_reversed):
+def _calc_cond_surebet(bet_name, cond_bet1, cond_bet2, bets_reversed, wagers_kwargs):
     # calculate suffixes (O/U for total or 1/2 for hand)
     first_suffix = _get_bet_suffix(bet_name, 0)
     second_suffix = _get_bet_suffix(bet_name, 1)
@@ -51,11 +66,29 @@ def _calc_cond_surebet(bet_name, cond_bet1, cond_bet2, bets_reversed):
     if bets_reversed:
         cond_bet1, cond_bet2 = cond_bet2, cond_bet1
 
-    w1 = CondWager(bet_name, cond_bet1.v1, first_suffix, cond)
-    w2 = CondWager(bet_name, cond_bet2.v2, second_suffix, opposite_cond)
+        wagers_kwargs[0], wagers_kwargs[1] = wagers_kwargs[1], wagers_kwargs[0]
+
+    wager_classes = []
+    for idx, cond_bet in enumerate((cond_bet1, cond_bet2)):
+        if isinstance(cond_bet, FonbetCondBet):
+            wager_classes.append(FonbetCondWager)
+
+            factor_id_attr = {
+                0: "v1_id",
+                1: "v2_id",
+            }[idx]
+
+            wagers_kwargs[idx]["fonbet_info"].factor_id = getattr(cond_bet, factor_id_attr)
+        else:
+            wager_classes.append(CondWager)
+
+    w1 = wager_classes[0](bet_name, cond_bet1.v1, first_suffix, cond, **wagers_kwargs[0])
+    w2 = wager_classes[1](bet_name, cond_bet2.v2, second_suffix, opposite_cond, **wagers_kwargs[1])
 
     if bets_reversed:
         w1, w2 = w2, w1
+
+        wagers_kwargs[0], wagers_kwargs[1] = wagers_kwargs[1], wagers_kwargs[0]
 
     return Surebet(w1, w2, _get_profit(cond_bet1.v1, cond_bet2.v2))
 
@@ -68,7 +101,7 @@ def _get_bet_suffix(bet_name, val_num):
     return suffix
 
 
-def _handle_cond_bets(bets1, bets2):
+def _handle_cond_bets(bets1, bets2, wagers_kwargs):
     surebets = []
     for bet_name in ("total", "ind_total1", "ind_total2", "hand"):
         cond_bets2_map = {cond_bet.cond: cond_bet for cond_bet in getattr(bets2, bet_name)}
@@ -82,6 +115,6 @@ def _handle_cond_bets(bets1, bets2):
                     bets_reversed = True
 
                 if bets_reversed is not None:
-                    cond_surebet = _calc_cond_surebet(bet_name, cond_bet1, cond_bet2, bets_reversed)
+                    cond_surebet = _calc_cond_surebet(bet_name, cond_bet1, cond_bet2, bets_reversed, wagers_kwargs)
                     surebets.append(cond_surebet)
     return surebets

@@ -4,6 +4,7 @@ from timeit import default_timer
 
 from surebet import find_in_iter
 from surebet.ancestors import *
+from surebet.parsing.bets import FonbetBet
 
 book_names = ["fonbet", "marat", "olimp"]
 
@@ -31,6 +32,19 @@ class Wager:
         return self.name == other.name
 
 
+class FonbetInfo:
+    def __init__(self, event_id: int, score: str, factor_id: int = None) -> None:
+        self.event_id = event_id
+        self.score = score
+        self.factor_id = factor_id
+
+
+class FonbetWager(Wager):
+    def __init__(self, name: str, bet: FonbetBet, fonbet_info: FonbetInfo) -> None:
+        super().__init__(name, bet.factor)
+        self.fonbet_info = FonbetInfo(fonbet_info.event_id, fonbet_info.score, bet.factor_id)
+
+
 class CondWager(Wager):
     """Class for bets with condition, that is Handicap or Total."""
 
@@ -52,6 +66,12 @@ class CondWager(Wager):
 
     def __eq__(self, other):
         return super().__eq__(other) and self.suffix == other.suffix and self.cond == other.cond
+
+
+class FonbetCondWager(CondWager):
+    def __init__(self, name: str, factor: float, suffix: str, cond: float, fonbet_info: FonbetInfo) -> None:
+        super().__init__(name, factor, suffix, cond)
+        self.fonbet_info = FonbetInfo(fonbet_info.event_id, fonbet_info.score, fonbet_info.factor_id)
 
 
 class Surebet(BetLevel):

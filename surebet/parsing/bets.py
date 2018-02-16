@@ -2,6 +2,15 @@ from surebet.ancestors import *
 from surebet.converting import format_spaces
 
 
+class FonbetBet(BetLevel):
+    def __init__(self, factor: float, factor_id: int) -> None:
+        self.factor = factor
+        self.factor_id = factor_id
+
+    def _not_empty(self):
+        return self.factor
+
+
 class CondBet(BetLevel):
     def __init__(self, cond, v1, v2) -> None:
         self.cond = cond
@@ -12,11 +21,25 @@ class CondBet(BetLevel):
         return self.v1 or self.v2
 
 
+class FonbetCondBet(CondBet):
+    def __init__(self, cond, v1, v2, v1_id, v2_id) -> None:
+        super().__init__(cond, v1, v2)
+        self.v1_id = v1_id
+        self.v2_id = v2_id
+
+
 class PartBets(PartLevel):
     def __init__(self) -> None:
         super().__init__()
         self.o1, self.ox, self.o2, self.o1x, self.o12, self.ox2, = (0.0 for i in range(6))
         self.total, self.ind_total1, self.ind_total2, self.hand = ([] for i in range(4))
+
+
+class FonbetPartBets(PartBets):
+    def __init__(self) -> None:
+        super().__init__()
+        self.score = ""
+        self.event_id = 0
 
 
 class Event(EventLevel):
@@ -43,4 +66,3 @@ class Bookmakers:
     def format(self):
         for bookmaker in self.__dict__.values():
             bookmaker.format()
-
