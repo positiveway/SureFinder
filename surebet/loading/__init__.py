@@ -33,7 +33,6 @@ def try_load(load_func, site_name, **kwargs):
 
 def check_status(status_code):
     if status_code != 200:
-        print(status_code)
         raise LoadException("Site is not responding, status code: {}".format(status_code))
 
 
