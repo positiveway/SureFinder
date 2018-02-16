@@ -77,7 +77,7 @@ async def get_event_details(event_id, sport_id, session):
     headers = base_headers.copy()
     headers.update(get_xtoken(form_data))
 
-    resp = await async_post(session, req_url, headers=headers, data=form_data, allow_not_found=True)
+    resp = await async_post(session, req_url, headers=headers, data=form_data, allow_not_found=True, allow_blocked=True)
 
     details = resp["data"] if resp else None
     return {"sport_id": sport_id, "details": details}

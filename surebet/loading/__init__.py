@@ -22,7 +22,7 @@ def try_load(load_func, site_name, **kwargs):
         result = load_func(**kwargs)
     except Exception as err:
         if not isinstance(err, KeyboardInterrupt):  # if it wasn't a forced stop of a program
-            logging.info("error occurred in loading({}): {}".format(site_name, str(err)))
+            logging.error("error occurred in loading({}): {}".format(site_name, str(err)))
 
             filename = os.path.join(project_dir, "error-loading-{}".format(site_name))
             with open(filename, "w") as out:
