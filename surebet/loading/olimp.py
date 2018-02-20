@@ -13,10 +13,14 @@ base_url = "http://191.101.165.203:10600/api/{}"
 
 secret_key = "b2c59ba4-7702-4b12-bef5-0908391851d9"
 
-base_form_data = {
+base_payload = {
     "platforma": "ANDROID1",
     "lang_id": "2",
+    "time_shift": "0",
 }
+
+live_payload = base_payload.copy()
+live_payload["live"] = "1"
 
 base_headers = {
     "User-Agent": "okhttp/3.8.0",
@@ -31,8 +35,8 @@ sports_by_id = {
 }
 
 
-def get_xtoken(form_data):
-    sorted_values = [str(form_data[key]) for key in sorted(form_data.keys())]
+def get_xtoken(payload):
+    sorted_values = [str(payload[key]) for key in sorted(payload.keys())]
     to_encode = ";".join(sorted_values + [secret_key])
     return {"X-TOKEN": md5(to_encode.encode()).hexdigest()}
 
@@ -40,16 +44,10 @@ def get_xtoken(form_data):
 def get_sport_tree():
     req_url = base_url.format("slice")
 
-    form_data = base_form_data.copy()
-    form_data.update({
-        "live": "1",
-        "time_shift": "0",
-    })
-
     headers = base_headers.copy()
-    headers.update(get_xtoken(form_data))
+    headers.update(get_xtoken(live_payload))
 
-    r = requests.post(req_url, headers=headers, data=form_data)
+    r = requests.post(req_url, headers=headers, data=live_payload)
     check_status(r.status_code)
     response = r.json()
 
@@ -66,18 +64,16 @@ def get_sport_tree():
 async def get_event_details(event_id, sport_id, session):
     req_url = base_url.format("stakes")
 
-    form_data = base_form_data.copy()
-    form_data.update({
-        "live": "1",
-        "time_shift": "0",
+    payload = live_payload.copy()
+    payload.update({
         "sport_id": sport_id,
         "id": event_id,
     })
 
     headers = base_headers.copy()
-    headers.update(get_xtoken(form_data))
+    headers.update(get_xtoken(payload))
 
-    resp = await async_post(session, req_url, headers=headers, data=form_data, allow_not_found=True, allow_blocked=True)
+    resp = await async_post(session, req_url, headers=headers, data=payload, allow_not_found=True, allow_blocked=True)
 
     details = resp["data"] if resp else None
     return {"sport_id": sport_id, "details": details}

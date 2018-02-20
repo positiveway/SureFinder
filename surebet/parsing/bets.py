@@ -42,6 +42,12 @@ class FonbetPartBets(PartBets):
         self.event_id = 0
 
 
+class OlimpPartBets(PartBets):
+    def __init__(self) -> None:
+        super().__init__()
+        self.sport_id = 0
+
+
 class Event(EventLevel):
     def __init__(self, team1, team2, parts) -> None:
         super().__init__(parts)
