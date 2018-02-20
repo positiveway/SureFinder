@@ -1,3 +1,5 @@
+from threading import Thread, Lock
+
 from surebet.bookmakers import Posit, Fonbet, Marat, Olimp
 from surebet.handling.detailed_surebets import convert_to_detailed
 from surebet.handling.excluding import exclude_posit, exclude_unpopular
@@ -5,19 +7,35 @@ from surebet.handling.searching import find_surebets
 from surebet.handling.surebets import Surebets
 from surebet.loading.selenium import SeleniumService
 from surebet.parsing.bets import Bookmakers
+from surebet.json_funcs import obj_dumps
 
 
-def start_scanning(iter_num):
-    print("Scanner is started")
+class JsonSurebets:
+    def __init__(self):
+        self._detailed_surebets = None
+        self.lock = Lock()
 
+    @property
+    def detailed_surebets(self):
+        with self.lock:
+            return obj_dumps(self._detailed_surebets)
+
+    @detailed_surebets.setter
+    def detailed_surebets(self, detailed_surebets):
+        with self.lock:
+            self._detailed_surebets = detailed_surebets
+
+
+def start_scanning(iter_num=None):
     posit = Posit()
     fonbet = Fonbet()
     marat = Marat()
     olimp = Olimp()
 
     old_surebets = Surebets()
-    for i in range(iter_num):
-        print("ITERATION #{}".format(i))
+
+    def make_iteration():
+        nonlocal old_surebets
 
         bookmakers = Bookmakers()
         fonbet.load_events(bookmakers.fonbet)
@@ -34,14 +52,40 @@ def start_scanning(iter_num):
         surebets.set_timestamps(old_surebets)
         old_surebets = surebets
 
-        detailed_surebets = convert_to_detailed(surebets)
+        return convert_to_detailed(surebets)
+
+    if iter_num is None:
+        while True:
+            yield make_iteration()
+    else:
+        for i in range(iter_num):
+            yield make_iteration()
+
+    SeleniumService.quit()
+
+
+def main(iter_num):
+    from surebet.ui.server import run_server
+
+    json_surebets = JsonSurebets()
+
+    server = Thread(target=run_server, args=(json_surebets,))
+    server.start()
+
+    print("Scanner is started")
+
+    for idx, detailed_surebets in enumerate(start_scanning(iter_num)):
+        json_surebets.detailed_surebets = detailed_surebets
+
+        print("ITERATION #{}".format(idx))
+
         for detailed_surebet in detailed_surebets:
             print(detailed_surebet)
 
         print()
 
-    SeleniumService.quit()
+    server.join()
 
 
 if __name__ == "__main__":
-    start_scanning(10)
+    main(10)

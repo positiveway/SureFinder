@@ -10,6 +10,8 @@ book_names = ["fonbet", "marat", "olimp"]
 
 HOLDING_LIMIT = 15
 
+MAX_ID = 1000000
+
 
 class Wager:
     """Base info about bet."""
@@ -96,10 +98,15 @@ class Surebet(BetLevel):
 class TimedSurebet(Surebet):
     """Hold parameter start to define when surebet is appeared"""
 
+    id_counter = 0  # needed to generate unique ids
+
     def __init__(self, surebet: Surebet) -> None:
         super().__init__(surebet.w1, surebet.w2, surebet.profit)
 
         self.start_time = default_timer()  # indicates when surebet is appeared
+        self.id = TimedSurebet.id_counter  # id of surebet
+
+        TimedSurebet.id_counter = (TimedSurebet.id_counter + 1) % MAX_ID
 
     def get_lifetime(self) -> int:
         return round(default_timer() - self.start_time, 2)
@@ -223,7 +230,8 @@ class Surebets:
 
                             old_surebet = find_in_iter(old_part.surebets, surebet)
                             if old_surebet:
-                                # assign start time from old surebet if found
+                                # assign start time and id from old surebet if found
                                 surebet.start_time = old_surebet.start_time
+                                surebet.id = old_surebet.id
 
                             part.surebets[idx] = surebet
