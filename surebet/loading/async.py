@@ -10,11 +10,13 @@ async def _async_req(method, handler, url, **kwargs):
     data = kwargs.get('data', None)
     allow_empty = kwargs.get('allow_empty', False)
     allow_not_found = kwargs.get('allow_not_found', False)
+    allow_blocked = kwargs.get('allow_blocked', False)
     timeout = kwargs.get('timeout', TIMEOUT)
 
     with async_timeout.timeout(timeout):
         async with method(url, data=data, headers=headers) as response:
-            if (allow_empty and response.status == 204) or (allow_not_found and response.status == 404):
+            if (allow_empty and response.status == 204) or (allow_not_found and response.status == 404) \
+                    or (allow_blocked and response.status == 500):
                 return None
 
             try:
