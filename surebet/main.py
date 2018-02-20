@@ -64,7 +64,7 @@ def start_scanning(iter_num=None):
     SeleniumService.quit()
 
 
-def main():
+def main(iter_num):
     from surebet.ui.server import run_server
 
     json_surebets = JsonSurebets()
@@ -74,7 +74,7 @@ def main():
 
     print("Scanner is started")
 
-    for idx, detailed_surebets in enumerate(start_scanning(10)):
+    for idx, detailed_surebets in enumerate(start_scanning(iter_num)):
         json_surebets.detailed_surebets = detailed_surebets
 
         print("ITERATION #{}".format(idx))
@@ -88,4 +88,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(10)
