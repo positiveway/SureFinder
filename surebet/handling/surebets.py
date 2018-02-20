@@ -4,7 +4,7 @@ from timeit import default_timer
 
 from surebet import find_in_iter
 from surebet.ancestors import *
-from surebet.parsing.bets import FonbetBet
+from surebet.parsing.bets import CustomBet
 
 book_names = ["fonbet", "marat", "olimp"]
 
@@ -35,14 +35,23 @@ class Wager:
 
 
 class FonbetInfo:
+    """Hold information for placing bet on fonbet site"""
+
     def __init__(self, event_id: int, score: str, factor_id: int = None) -> None:
+        """
+        :param score: current score of event's part
+        :param factor_id: id of bet's factor
+        """
         self.event_id = event_id
         self.score = score
         self.factor_id = factor_id
 
 
 class FonbetWager(Wager):
-    def __init__(self, name: str, bet: FonbetBet, fonbet_info: FonbetInfo) -> None:
+    def __init__(self, name: str, bet: CustomBet, fonbet_info: FonbetInfo) -> None:
+        """
+        :param fonbet_info: information for placing bet (class FonbetInfo)
+        """
         super().__init__(name, bet.factor)
         self.fonbet_info = FonbetInfo(fonbet_info.event_id, fonbet_info.score, bet.factor_id)
 
@@ -72,6 +81,9 @@ class CondWager(Wager):
 
 class FonbetCondWager(CondWager):
     def __init__(self, name: str, factor: float, suffix: str, cond: float, fonbet_info: FonbetInfo) -> None:
+        """
+        :param fonbet_info: information for placing bet (class FonbetInfo)
+        """
         super().__init__(name, factor, suffix, cond)
         self.fonbet_info = FonbetInfo(fonbet_info.event_id, fonbet_info.score, fonbet_info.factor_id)
 

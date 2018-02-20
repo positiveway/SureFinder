@@ -1,5 +1,5 @@
 from surebet.handling.surebets import *
-from surebet.parsing.bets import FonbetPartBets, FonbetCondBet
+from surebet.parsing.bets import FonbetPartBets
 
 result_bets = {
     "o1": "ox2",
@@ -17,19 +17,14 @@ result_bets_without_draw.update({val: key for key, val in result_bets_without_dr
 def calc_surebets(bets1, bets2, with_draw=True):
     surebets = []
 
-    wagers_classes = []
-    wagers_kwargs = []
-    for bets in (bets1, bets2):
-        kwargs = {}
+    wagers_classes = [Wager for _ in range(2)]
+    wagers_kwargs = [{} for _ in range(2)]
+    for idx, bets in enumerate((bets1, bets2)):
         if isinstance(bets, FonbetPartBets):
-            wagers_classes.append(FonbetWager)
+            wagers_classes[idx] = FonbetWager
 
             fonbet_info = FonbetInfo(bets.event_id, bets.score)
-            kwargs["fonbet_info"] = fonbet_info
-        else:
-            wagers_classes.append(Wager)
-
-        wagers_kwargs.append(kwargs)
+            wagers_kwargs[idx] = {"fonbet_info": fonbet_info}
 
     opposite_bets = result_bets if with_draw else result_bets_without_draw
     for bet_name in opposite_bets.keys():
@@ -68,19 +63,16 @@ def _calc_cond_surebet(bet_name, cond_bet1, cond_bet2, bets_reversed, wagers_kwa
 
         wagers_kwargs[0], wagers_kwargs[1] = wagers_kwargs[1], wagers_kwargs[0]
 
-    wager_classes = []
+    wager_classes = [CondWager for _ in range(2)]
     for idx, cond_bet in enumerate((cond_bet1, cond_bet2)):
-        if isinstance(cond_bet, FonbetCondBet):
-            wager_classes.append(FonbetCondWager)
-
-            factor_id_attr = {
-                0: "v1_id",
-                1: "v2_id",
-            }[idx]
+        factor_id_attr = {
+            0: "v1_id",
+            1: "v2_id",
+        }[idx]
+        if "fonbet_info" in wagers_kwargs[idx]:
+            wager_classes[idx] = FonbetCondWager
 
             wagers_kwargs[idx]["fonbet_info"].factor_id = getattr(cond_bet, factor_id_attr)
-        else:
-            wager_classes.append(CondWager)
 
     w1 = wager_classes[0](bet_name, cond_bet1.v1, first_suffix, cond, **wagers_kwargs[0])
     w2 = wager_classes[1](bet_name, cond_bet2.v2, second_suffix, opposite_cond, **wagers_kwargs[1])

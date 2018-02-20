@@ -2,7 +2,7 @@ from surebet.ancestors import *
 from surebet.converting import format_spaces
 
 
-class FonbetBet(BetLevel):
+class CustomBet(BetLevel):
     def __init__(self, factor: float, factor_id: int) -> None:
         self.factor = factor
         self.factor_id = factor_id
@@ -21,7 +21,7 @@ class CondBet(BetLevel):
         return self.v1 or self.v2
 
 
-class FonbetCondBet(CondBet):
+class CustomCondBet(CondBet):
     def __init__(self, cond, v1, v2, v1_id, v2_id) -> None:
         super().__init__(cond, v1, v2)
         self.v1_id = v1_id
