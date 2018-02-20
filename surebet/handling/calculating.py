@@ -30,10 +30,18 @@ def calc_surebets(bets1, bets2, with_draw=True):
     for bet_name in opposite_bets.keys():
         bet1 = getattr(bets1, bet_name)
         bet2 = getattr(bets2, opposite_bets[bet_name])
-        if _check_surebet(bet1, bet2):
+
+        factors = [0.0 for _ in range(2)]
+        for idx, bet in enumerate((bet1, bet2)):
+            if isinstance(bet, float):
+                factors[idx] = bet
+            else:
+                factors[idx] = bet.factor
+
+        if _check_surebet(*factors):
             w1 = wagers_classes[0](bet_name, bet1, **wagers_kwargs[0])
             w2 = wagers_classes[1](opposite_bets[bet_name], bet2, **wagers_kwargs[1])
-            surebets.append(Surebet(w1, w2, _get_profit(bet1, bet2)))
+            surebets.append(Surebet(w1, w2, _get_profit(*factors)))
 
     surebets.extend(_handle_cond_bets(bets1, bets2, wagers_kwargs))
 

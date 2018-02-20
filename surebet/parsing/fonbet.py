@@ -5,6 +5,8 @@ from surebet.parsing.bets import *
 
 table_rows = '//table[@id="lineTable"]/tbody/tr'
 ev_name = './/td[contains(@class, "eventCellName")]/div[contains(@id, "event")]'
+SCORE = './td[contains(@class, "eventCellName")]/div[contains(@class, "eventDataWrapper")]/div[contains(@class, ' \
+        '"eventScore")] '
 grid = './/div[@class="detailsDIV"]/table'
 
 tr_event = "trEvent"
@@ -13,22 +15,6 @@ tr_event_details = "trEventDetails"
 
 hand_ids = [0, 1, 3]
 total_ids = [0, 1, 2]
-
-outcome_bets_ids = {
-    "o1": 921,
-    "ox": 922,
-    "o2": 923,
-    "o1x": 924,
-    "o12": 1571,
-    "ox2": 925,
-}
-
-cond_bets_ids = {
-    "hand1": 927,
-    "hand2": 928,
-    "totalo": 930,
-    "totalu": 931,
-}
 
 
 class RowInfo:
@@ -160,14 +146,21 @@ def parse_event_details(node):
 
 
 def handle_row(row_node):
-    bets = PartBets()
+    score_node = xpath_with_check(row_node, SCORE)[0]
+    full_score = get_text(score_node).partition(" ")[0]
+    score = full_score.partition(" ")[0]  # first part of score is needed
+
+    attr = row_node.get("id")
+    event_id = attr.strip()[5:]
+
+    bets = FonbetPartBets(score, event_id)
 
     col_nodes = xpath_with_check(row_node, './/td')
 
     for idx, bet in enumerate(['o1', 'ox', 'o2', 'o1x', 'o12', 'ox2']):
         text = col_nodes[idx + 3].text
         if text:
-            set_exist_attr(bets, bet, parse_factor(text))
+            set_exist_attr(bets, bet, CustomBet(parse_factor(text)))
 
     hand = handle_cond_bet(col_nodes[9:13], hand_ids)
     bets.hand.append(hand)
@@ -191,4 +184,10 @@ def handle_cond_bet(nodes, ids):
     if len(factors) != 3:
         return None
 
-    return CondBet(*factors)
+    factor_ids = []
+    for id in ids[1:]:  # skip first node (stands for bet condition)
+        attr = nodes[id].get("id")
+        factor_id = attr.partition("f")[2]
+        factor_ids.append(factor_id)
+
+    return CustomCondBet(*factors, *factor_ids)

@@ -3,7 +3,7 @@ from surebet.converting import format_spaces
 
 
 class CustomBet(BetLevel):
-    def __init__(self, factor: float, factor_id: int) -> None:
+    def __init__(self, factor: float, factor_id: str = "") -> None:
         self.factor = factor
         self.factor_id = factor_id
 
@@ -36,10 +36,17 @@ class PartBets(PartLevel):
 
 
 class FonbetPartBets(PartBets):
-    def __init__(self) -> None:
+    def __init__(self, score, event_id) -> None:
         super().__init__()
-        self.score = ""
-        self.event_id = 0
+        self.score = score
+        self.event_id = event_id
+
+    def _not_empty(self) -> bool:
+        self._del_empty()
+
+        skip_attrs = ["part", "event_id", "score"]
+        attrs = [attr for attr, val in self.__dict__.items() if attr not in skip_attrs and val]
+        return bool(attrs)
 
 
 class Event(EventLevel):
