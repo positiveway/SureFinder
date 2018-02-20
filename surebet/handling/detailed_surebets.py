@@ -28,6 +28,7 @@ class DetailedSurebet:
         self.w1, self.w2 = surebet.w1, surebet.w2
         self.profit = surebet.profit
         self.lifetime = surebet.get_lifetime()
+        self.id = surebet.id
 
     def __str__(self):
         teams_sep = " vs "
