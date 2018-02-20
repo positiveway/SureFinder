@@ -33,7 +33,10 @@ def start_scanning(iter_num=None):
     olimp = Olimp()
 
     old_surebets = Surebets()
-    for i in range(iter_num):
+
+    def make_iteration():
+        nonlocal old_surebets
+
         bookmakers = Bookmakers()
         fonbet.load_events(bookmakers.fonbet)
         marat.load_events(bookmakers.marat)
@@ -49,7 +52,14 @@ def start_scanning(iter_num=None):
         surebets.set_timestamps(old_surebets)
         old_surebets = surebets
 
-        yield convert_to_detailed(surebets)
+        return convert_to_detailed(surebets)
+
+    if iter_num is None:
+        while True:
+            yield make_iteration()
+    else:
+        for i in range(iter_num):
+            yield make_iteration()
 
     SeleniumService.quit()
 
@@ -64,7 +74,7 @@ def main():
 
     print("Scanner is started")
 
-    for idx, detailed_surebets in enumerate(start_scanning(100)):
+    for idx, detailed_surebets in enumerate(start_scanning(10)):
         json_surebets.detailed_surebets = detailed_surebets
 
         print("ITERATION #{}".format(idx))
