@@ -5,15 +5,11 @@ from hashlib import sha512
 from json import dumps
 
 from surebet.loading import *
+from surebet.handling.surebets import FonbetCondWager
 
-common_url = "https://clientsapi-003.ccf4ab51771cacd46d.com/session/{}"
-
-login = 4052045
-password = "VCqA1CkK"
-
-base_payload = {
-    "clientId": login,
-    "sysId": 1,
+default_account = {
+    "login": 4052045,
+    "password": "VCqA1CkK",
 }
 
 
@@ -24,108 +20,132 @@ def get_dumped_payload(payload):
     return dumped
 
 
-def _init():
-    url = common_url.format("login")
-
-    payload = base_payload.copy()
-    payload["random"] = str(random()) + " :))"
-    payload["sign"] = "secret password"
-
-    msg = get_dumped_payload(payload)
-    sign = hmac.new(key=password.encode(), msg=msg.encode(), digestmod=sha512).hexdigest()
-    payload["sign"] = sign
-
-    data = get_dumped_payload(payload)
-    resp = requests.post(url, headers=browser_headers, data=data)
+def get_urls():
+    url = "https://www.fonbet.com/urls.json?{}".format(random())
+    resp = requests.get(url, headers=browser_headers)
     check_status(resp.status_code)
-    res = resp.json()
-    if "fsid" not in res:
-        logging.info(res)
-        raise LoadException("key 'fsid' not found in response")
 
-    base_payload["fsid"] = res["fsid"]
+    return resp.json()
 
 
-_init()
+def get_common_url():
+    urls = get_urls()
 
-amount = 30
-event_id = 9653011
-factor_id = 928
-value = 1.3
-param = 150
-score = "0:0"
+    client_url = urls["clients-api"][0]
+
+    return "https:{url}/session/".format(url=client_url) + "{}"
 
 
-def place_bet():
-    url = common_url.format("coupon/register")
-    payload = base_payload.copy()
-    payload.update({
-        "requestId": get_request_id(),
-        "coupon": {
-            "flexBet": "up",
-            "flexParam": False,
-            "bets": [{
-                "num": 1,
-                "event": event_id,
-                "factor": factor_id,
-                "value": value,
-                "param": param,
-                "score": score,
-            }]
+class FonbetBot:
+    """Use to place bets on fonbet site."""
+
+    def __init__(self, account: dict = default_account) -> None:
+        self.common_url = get_common_url()
+
+        self.base_payload = {
+            "sysId": 1,
         }
-    })
 
-    check_in_bounds(payload)
-    payload["coupon"]["amount"] = amount
+        self.sign_in(account)
 
-    resp = requests.post(url, headers=browser_headers, json=payload)
-    check_status(resp.status_code)
+    def sign_in(self, account: dict) -> None:
+        """Sign in to fonbet, remember session id and client id."""
+        url = self.common_url.format("login")
 
-    print(resp.text)
+        self.base_payload["clientId"] = account["login"]
 
-    get_result(payload)
+        payload = self.base_payload.copy()
+        payload["random"] = str(random()) + " :))"
+        payload["sign"] = "secret password"
 
+        msg = get_dumped_payload(payload)
+        sign = hmac.new(key=account["password"].encode(), msg=msg.encode(), digestmod=sha512).hexdigest()
+        payload["sign"] = sign
 
-def get_request_id():
-    url = common_url.format("coupon/requestId")
+        data = get_dumped_payload(payload)
+        resp = requests.post(url, headers=browser_headers, data=data)
+        check_status(resp.status_code)
+        res = resp.json()
+        if "fsid" not in res:
+            logging.error(res)
+            raise LoadException("key 'fsid' not found in response")
 
-    resp = requests.post(url, headers=browser_headers, json=base_payload)
-    check_status(resp.status_code)
-    res = resp.json()
-    if "requestId" not in res:
-        logging.info(res)
-        raise LoadException("key 'requestId' not found in response")
+        self.base_payload["fsid"] = res["fsid"]
 
-    return res["requestId"]
+    def place_bet(self, amount: int, wager) -> None:
+        """
+        :param amount: amount of money to be placed (RUB)
+        :param wager: defines on which wager bet is to be placed (FonbetWager or FonbetCondWager)
+        """
+        fonbet_info = wager.fonbet_info
 
+        url = self.common_url.format("coupon/register")
+        payload = self.base_payload.copy()
+        payload.update({
+            "requestId": self._get_request_id(),
+            "coupon": {
+                "flexBet": "up",
+                "flexParam": False,
+                "bets": [{
+                    "num": 1,
+                    "event": fonbet_info.event_id,
+                    "factor": fonbet_info.factor_id,
+                    "value": wager.factor,
+                    "score": fonbet_info.score,
+                }]
+            }
+        })
 
-def check_in_bounds(payload):
-    url = common_url.format("coupon/getMinMax")
-    payload["coupon"]["amount"] = 0
+        if isinstance(wager, FonbetCondWager):  # if wager has condition and it should be in payload
+            payload["coupon"]["bets"][0]["param"] = int(wager.cond * 100)
 
-    resp = requests.post(url, headers=browser_headers, json=payload)
-    check_status(resp.status_code)
-    res = resp.json()
-    if "min" not in res:
-        logging.info(res)
-        raise LoadException("key 'min' not found in response")
+        self._check_in_bounds(payload, amount)
+        payload["coupon"]["amount"] = amount
 
-    min_amount, max_amount = res["min"] // 100, res["max"] // 100
-    if not (min_amount <= amount <= max_amount):
-        logging.info(res)
-        raise LoadException("amount is not in bounds")
+        resp = requests.post(url, headers=browser_headers, json=payload)
+        check_status(resp.status_code)
 
+        self._check_result(payload)
 
-def get_result(payload):
-    url = common_url.format("coupon/result")
-    del payload["coupon"]
+    def _get_request_id(self) -> int:
+        """request_id is generated every time we placing bet"""
+        url = self.common_url.format("coupon/requestId")
 
-    resp = requests.post(url, headers=browser_headers, json=payload)
-    check_status(resp.status_code)
-    res = resp.json()
-    # there's situations where "temporary unknown result" means successful response
-    if "temporary unknown result" not in resp.text and ("coupon" not in res or res["coupon"]["resultCode"] != 0):
-        logging.info(res)
-        raise LoadException("response came with an error")
+        resp = requests.post(url, headers=browser_headers, json=self.base_payload)
+        check_status(resp.status_code)
+        res = resp.json()
+        if "requestId" not in res:
+            logging.error(res)
+            raise LoadException("key 'requestId' not found in response")
 
-    print(resp.text)
+        return res["requestId"]
+
+    def _check_in_bounds(self, payload: dict, amount: int) -> None:
+        """Check if amount is in allowed bounds"""
+        url = self.common_url.format("coupon/getMinMax")
+        payload["coupon"]["amount"] = 0
+
+        resp = requests.post(url, headers=browser_headers, json=payload)
+        check_status(resp.status_code)
+        res = resp.json()
+        if "min" not in res:
+            logging.info(res)
+            raise LoadException("key 'min' not found in response")
+
+        min_amount, max_amount = res["min"] // 100, res["max"] // 100
+        if not (min_amount <= amount <= max_amount):
+            logging.error(res)
+            raise LoadException("amount is not in bounds")
+
+    def _check_result(self, payload: dict) -> None:
+        """Check if bet is placed successfully"""
+        url = self.common_url.format("coupon/result")
+        del payload["coupon"]
+
+        resp = requests.post(url, headers=browser_headers, json=payload)
+        check_status(resp.status_code)
+        res = resp.json()
+        # there's situations where "temporary unknown result" means successful response
+        if "temporary unknown result" not in resp.text and ("coupon" not in res or res["coupon"]["resultCode"] != 0):
+            logging.error(res)
+            raise LoadException("response came with an error")

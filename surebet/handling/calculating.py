@@ -1,5 +1,5 @@
 from surebet.handling.surebets import *
-from surebet.parsing.bets import FonbetPartBets
+from surebet.parsing.bets import FonbetPartBets, CustomBet
 
 result_bets = {
     "o1": "ox2",
@@ -33,10 +33,10 @@ def calc_surebets(bets1, bets2, with_draw=True):
 
         factors = [0.0 for _ in range(2)]
         for idx, bet in enumerate((bet1, bet2)):
-            if isinstance(bet, float):
-                factors[idx] = bet
-            else:
+            if isinstance(bet, CustomBet):
                 factors[idx] = bet.factor
+            else:
+                factors[idx] = bet
 
         if _check_surebet(*factors):
             w1 = wagers_classes[0](bet_name, bet1, **wagers_kwargs[0])
