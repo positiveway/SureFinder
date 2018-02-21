@@ -7,7 +7,7 @@ from json import dumps
 from surebet.loading import *
 from surebet.handling.surebets import FonbetCondWager
 
-default_account = {
+DEFAULT_ACCOUNT = {
     "login": 4052045,
     "password": "VCqA1CkK",
 }
@@ -39,7 +39,7 @@ def get_common_url():
 class FonbetBot:
     """Use to place bets on fonbet site."""
 
-    def __init__(self, account: dict = default_account) -> None:
+    def __init__(self, account: dict = DEFAULT_ACCOUNT) -> None:
         self.common_url = get_common_url()
 
         self.base_payload = {
