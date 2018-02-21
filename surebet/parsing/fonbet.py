@@ -212,17 +212,16 @@ def parse_json(line, bookmaker):
     for sport in bookmaker.attrs_dict():
         for obj_event in getattr(bookmaker, sport):
             for part in obj_event.parts:
-                if isinstance(part, FonbetPartBets):
-                    if int(part.event_id) in events_to_factors:
-                        parts_to_check.append(part)
+                if int(part.event_id) in events_to_factors:
+                    parts_to_check.append(part)
 
     for part in parts_to_check:
-        bet_types = [(b, getattr(part, b)) for b in ['hand', 'total'] if b in part.__dict__]
+        bet_types = [(bet_type, getattr(part, bet_type)) for bet_type in ['hand', 'total']]
         for bet_name, bet_list in bet_types:
             for bet in bet_list:
                 handle_json_bet(bet_name, bet, events_to_factors[int(part.event_id)])
 
-        bet_types = [(b, getattr(part, b)) for b in ['o1', 'ox', 'o2', 'o1x', 'o12', 'ox2'] if b in part.__dict__]
+        bet_types = [(bet_type, getattr(part, bet_type)) for bet_type in ['o1', 'ox', 'o2', 'o1x', 'o12', 'ox2']]
         for bet_name, bet in bet_types:
             handle_json_bet(bet_name, bet, events_to_factors[int(part.event_id)])
 
@@ -238,8 +237,8 @@ def handle_json_bet(bet_name, bet, factors):
             bet.factor_id = get_factor(factors, FACTORS_DICT[bet_name])
 
 
-def get_factor(factors, factors_choose):
-    for factor in factors_choose:
+def get_factor(factors, factors_set):
+    for factor in factors_set:
         if factor in factors:
             return factor
     return ''

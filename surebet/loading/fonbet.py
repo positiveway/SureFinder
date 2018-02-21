@@ -26,7 +26,6 @@ for (cur_node = 0; cur_node < nodes.length; cur_node++) {
 }
 """
 
-URL_JSON = 'https://www.fonbet.com/urls.json?'
 URL_LINE = '/live/currentLine/en?'
 
 
@@ -59,13 +58,13 @@ def load_events(browser):
 
 def load_events_json():
     urls_line = get_urls()['line']
-    url_req_line = 'https://' + random.choice(urls_line)[2:] + URL_LINE + str(random.uniform(0, 1))
+    url_req_line = 'https://{}{}{}'.format(random.choice(urls_line)[2:], URL_LINE, str(random.random()))
 
     r_line = requests.get(url_req_line, headers=browser_headers)
     check_status(r_line.status_code)
 
     try:
-        result = json.loads(r_line.text)
+        result = r_line.json()
     except json.JSONDecodeError:
         raise LoadException('Loaded invalid json for {}'.format(name))
 
