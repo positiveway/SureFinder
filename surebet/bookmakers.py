@@ -143,13 +143,15 @@ class Fonbet:
         return _load()
 
     def load_events(self, bookmaker):
-        from surebet.loading.fonbet import load_events, name
-        from surebet.parsing.fonbet import parse
+        from surebet.loading.fonbet import load_events, load_events_json, name
+        from surebet.parsing.fonbet import parse, parse_json
 
         @self.err_handler.handle_error
         def _load_events():
             sample = try_load(load_events, name, browser=self.selenium.browser)
+            line = try_load(load_events_json, name)
             try_parse(parse, sample, name, bookmaker=bookmaker)
+            try_parse(parse_json, line, name, bookmaker=bookmaker)
 
         return _load_events()
 
