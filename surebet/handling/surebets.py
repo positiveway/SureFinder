@@ -47,6 +47,16 @@ class FonbetInfo:
         self.factor_id = factor_id
 
 
+class MaratInfo:
+    """Hold information for placing bet on marat site"""
+
+    def __init__(self, factor_id: int) -> None:
+        """
+        :param factor_id: id of bet's factor
+        """
+        self.factor_id = factor_id
+
+
 class FonbetWager(Wager):
     def __init__(self, name: str, bet: CustomBet, fonbet_info: FonbetInfo) -> None:
         """
@@ -54,6 +64,15 @@ class FonbetWager(Wager):
         """
         super().__init__(name, bet.factor)
         self.fonbet_info = FonbetInfo(fonbet_info.event_id, fonbet_info.score, bet.factor_id)
+
+
+class MaratWager(Wager):
+    def __init__(self, name: str, bet: CustomBet) -> None:
+        """
+        :param marat_info: information for placing bet (class MaratInfo)
+        """
+        super().__init__(name, bet.factor)
+        self.marat_info = MaratInfo(bet.factor_id)
 
 
 class CondWager(Wager):
@@ -86,6 +105,15 @@ class FonbetCondWager(CondWager):
         """
         super().__init__(name, factor, suffix, cond)
         self.fonbet_info = FonbetInfo(fonbet_info.event_id, fonbet_info.score, fonbet_info.factor_id)
+
+
+class MaratCondWager(CondWager):
+    def __init__(self, name: str, factor: float, suffix: str, cond: float, marat_info: MaratInfo) -> None:
+        """
+        :param marat_info: information for placing bet (class MaratInfo)
+        """
+        super().__init__(name, factor, suffix, cond)
+        self.marat_info = MaratInfo(marat_info.factor_id)
 
 
 class Surebet(BetLevel):

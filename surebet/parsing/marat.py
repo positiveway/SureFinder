@@ -40,6 +40,11 @@ def get_factor(elem):
     return parse_factor(elem.get("data-selection-price"))
 
 
+def get_factor_id(elem):
+    attr = elem.get("data-selection-key").strip()
+    return attr.replace("@", ",")
+
+
 def get_cond(elem):
     return float(elem[1:-1])
 
@@ -151,8 +156,8 @@ def handle_details(details, teams):
 
         handler_type = get_handler_type(detail_name)
         if handler_type == 0:
-            for bet_name, factor in result_bets_handler(detail, teams):
-                set_exist_attr(bets, bet_name, factor)
+            for bet_name, factor, factor_id in result_bets_handler(detail, teams):
+                set_exist_attr(bets, bet_name, CustomBet(factor, factor_id))
         elif handler_type == 1:
             cond_bet_type = get_cond_bet_type(detail_name, teams)
             cond_bets = cond_bet_handler(detail, cond_bet_type)
@@ -202,7 +207,7 @@ def result_bets_handler(detail, teams):
 
         factor_node = xpath_with_check(row_node, "./td/div[2]/span")[0]
         if factor_not_blocked(factor_node):
-            yield bet_name, get_factor(factor_node)
+            yield bet_name, get_factor(factor_node), get_factor_id(factor_node)
 
 
 def get_result_bet_name(row_name, team1, team2):
@@ -241,25 +246,31 @@ def cond_bet_handler(detail, cond_bet_type):
 
             factor_node = xpath_with_check(row_node, xp_row_factor.format(cur_col + 1))[0]
             if factor_not_blocked(factor_node):
-                columns[cur_col].append((cond, get_factor(factor_node)))
+                columns[cur_col].append((cond, get_factor(factor_node), get_factor_id(factor_node)))
 
     cond_bets = []
     for first_value in columns[0]:
         cond = first_value[0]
         v1 = first_value[1]
+        v1_id = first_value[2]
+
         v2 = None
+        v2_id = None
 
         cond_to_find = -cond if cond_bet_type == 0 else cond
         for second_value in columns[1]:
             if second_value[0] == cond_to_find:  # if found corresponding cond
                 v2 = second_value[1]
+                v2_id = second_value[2]
                 break
         if v2 is None:
             continue
 
         if cond_bet_type > 0:
             v1, v2 = v2, v1  # over and under have wrong order
-        cond_bets.append(CondBet(cond, v1, v2))
+            v1_id, v2_id = v2_id, v1_id
+
+        cond_bets.append(CustomCondBet(cond, v1, v2, v1_id, v2_id))
 
     return cond_bets
 
@@ -300,7 +311,7 @@ def handle_closed_events(events):
         for cur_bet in range(2):
             bet_node = event.xpath(xp_win_bet.format(cur_bet + 1))
             if bet_node and factor_not_blocked(bet_node[0]):
-                win_bets.append(get_factor(bet_node[0]))
+                win_bets.append(CustomBet(get_factor(bet_node[0]), get_factor_id(bet_node[0])))
         if not win_bets:
             continue
         if len(win_bets) == 1:
