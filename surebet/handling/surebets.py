@@ -57,6 +57,7 @@ class OlimpInfo:
         self.sport_id = sport_id
         self.factor_id = factor_id
 
+
 class MaratInfo:
     """Hold information for placing bet on marat site"""
 
@@ -84,8 +85,9 @@ class OlimpWager(Wager):
         super().__init__(name, bet.factor)
         self.olimp_info = OlimpInfo(olimp_info.sport_id, bet.factor_id)
 
+
 class MaratWager(Wager):
-    def __init__(self, name: str, bet: CustomBet) -> None:
+    def __init__(self, name: str, bet: IdBet) -> None:
         """
         :param marat_info: information for placing bet (class MaratInfo)
         """
@@ -132,6 +134,7 @@ class OlimpCondWager(CondWager):
         """
         super().__init__(name, factor, suffix, cond)
         self.fonbet_info = OlimpInfo(olimp_info.sport_id, olimp_info.factor_id)
+
 
 class MaratCondWager(CondWager):
     def __init__(self, name: str, factor: float, suffix: str, cond: float, marat_info: MaratInfo) -> None:
