@@ -32,7 +32,7 @@ class OlimpBot:
     def place_bet(self, amount: int, wager) -> None:
         """
         :param amount: amount of money to be placed (RUB)
-        :param wager: defines on which wager bet is to be placed (OlimpWager or OlimpCondWager)
+        :param wager: defines on which wager bet is to be placed (could be either OlimpWager or OlimpCondWager)
         """
         olimp_info = wager.olimp_info
 
