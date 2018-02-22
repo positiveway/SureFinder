@@ -49,6 +49,19 @@ class FonbetPartBets(PartBets):
         return bool(attrs)
 
 
+class OlimpPartBets(PartBets):
+    def __init__(self) -> None:
+        super().__init__()
+        self.sport_id = 0
+
+    def _not_empty(self) -> bool:
+        self._del_empty()
+
+        skip_attrs = ["part", "sport_id"]
+        attrs = [attr for attr, val in self.__dict__.items() if attr not in skip_attrs and val]
+        return bool(attrs)
+
+
 class Event(EventLevel):
     def __init__(self, team1, team2, parts) -> None:
         super().__init__(parts)

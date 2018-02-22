@@ -1,7 +1,7 @@
 from surebet.handling.calculating import calc_surebets
 from surebet.handling.matching import match_events
 from surebet.handling.surebets import *
-from surebet.parsing.bets import CondBet
+from surebet.parsing.bets import IdCondBet, CondBet
 
 opposite_bets = {
     "o1": "o2",
@@ -18,7 +18,10 @@ def _get_reversed_event(event):
         part.o1x, part.ox2 = part.ox2, part.o1x
 
         for hand_idx, hand in enumerate(part.hand):
-            part.hand[hand_idx] = CondBet(-hand.cond, hand.v2, hand.v1)
+            if isinstance(part.hand[hand_idx], IdCondBet):
+                part.hand[hand_idx] = IdCondBet(-hand.cond, hand.v2, hand.v1, hand.v2_id, hand.v1_id)
+            else:  # TODO: remove when MaratBetting is to be merged
+                part.hand[hand_idx] = CondBet(-hand.cond, hand.v2, hand.v1)
 
         part.ind_total1, part.ind_total2 = part.ind_total2, part.ind_total1
 

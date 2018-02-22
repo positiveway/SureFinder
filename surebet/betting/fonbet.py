@@ -75,7 +75,7 @@ class FonbetBot:
     def place_bet(self, amount: int, wager) -> None:
         """
         :param amount: amount of money to be placed (RUB)
-        :param wager: defines on which wager bet is to be placed (FonbetWager or FonbetCondWager)
+        :param wager: defines on which wager bet is to be placed (could be either FonbetWager or FonbetCondWager)
         """
         fonbet_info = wager.fonbet_info
 

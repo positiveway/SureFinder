@@ -1,5 +1,5 @@
 from surebet.handling.surebets import *
-from surebet.parsing.bets import FonbetPartBets, IdBet
+from surebet.parsing.bets import FonbetPartBets, IdBet, OlimpPartBets
 
 result_bets = {
     "o1": "ox2",
@@ -25,6 +25,11 @@ def calc_surebets(bets1, bets2, with_draw=True):
 
             fonbet_info = FonbetInfo(bets.event_id, bets.score)
             wager_kwargs = {"fonbet_info": fonbet_info}
+        elif isinstance(bets, OlimpPartBets):
+            wager_class = OlimpWager
+
+            olimp_info = OlimpInfo(bets.sport_id)
+            wager_kwargs = {"olimp_info": olimp_info}
         return wager_class, wager_kwargs
 
     w1_class, w1_kwargs = get_wager_params(bets1)
@@ -87,6 +92,9 @@ def _calc_cond_surebet(bet_name, cond_bet1, cond_bet2, bets_reversed, w1_kwargs,
         if "fonbet_info" in w_kwargs:
             w_class = FonbetCondWager
             w_kwargs["fonbet_info"].factor_id = getattr(cond_bet, factor_id_attr)
+        elif "olimp_info" in w_kwargs:
+            w_class = OlimpCondWager
+            w_kwargs["olimp_info"].factor_id = getattr(cond_bet, factor_id_attr)
 
         return w_class, w_kwargs
 
