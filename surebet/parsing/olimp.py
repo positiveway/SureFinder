@@ -40,7 +40,7 @@ class Total:
                     v1, v2 = v2, v1
                     v1_id, v2_id = v2_id, v1_id
                 self.clear()
-                return CustomCondBet(cond, v1, v2, v1_id, v2_id)
+                return IdCondBet(cond, v1, v2, v1_id, v2_id)
             else:  # error
                 self.fill(_id, _type, cond, coef, factor_id)
 
@@ -91,7 +91,7 @@ class Handicap:
                     cond1, v1, v2 = cond, coef, self.first_coef
                     v1_id, v2_id = factor_id, self.first_factor_id
                 self.clear()
-                return CustomCondBet(cond1, v1, v2, v1_id, v2_id)
+                return IdCondBet(cond1, v1, v2, v1_id, v2_id)
             else:  # error
                 self.fill(_id, team, cond, coef, factor_id)
 
@@ -169,7 +169,7 @@ def parse_main_bets(event_data, sport_name):
 
                 bet_type = bet['on']
                 if bet_type in PART_BETS_ATTR:
-                    set_exist_attr(main_bets, PART_BETS_ATTR[bet_type], CustomBet(float(bet['v']), factor_id))
+                    set_exist_attr(main_bets, PART_BETS_ATTR[bet_type], IdBet(float(bet['v']), factor_id))
                 elif bet_type in HANDICAP_TYPES:  # H1 and H2
                     add_handicap(bet, hand, main_bets)
                 elif bet_type == 'Тот':  # Tot
@@ -213,9 +213,9 @@ def parse_other_bets(event_data, sport_name, parts):
                 coef = float(bet['v'])
 
                 if bet_type[-1] == 'Н':
-                    quarter_bets.ox = CustomBet(coef, factor_id)
+                    quarter_bets.ox = IdBet(coef, factor_id)
                 elif bet_type[-2:] in PART_BETS_ATTR:  # П1 П2
-                    set_exist_attr(quarter_bets, PART_BETS_ATTR[bet_type[-2:]], CustomBet(coef, factor_id))
+                    set_exist_attr(quarter_bets, PART_BETS_ATTR[bet_type[-2:]], IdBet(coef, factor_id))
                 elif bet_type[-2:] in HANDICAP_TYPES:
                     add_handicap(bet, hand, quarter_bets)
                 elif bet_type[-3:] == 'Тот':
@@ -230,9 +230,9 @@ def parse_other_bets(event_data, sport_name, parts):
                 coef = float(bet['v'])
 
                 if bet_type[-1] == 'Н':
-                    period_bets.ox = CustomBet(coef, factor_id)
+                    period_bets.ox = IdBet(coef, factor_id)
                 elif bet_type[-2:] in PART_BETS_ATTR:  # П1 П2
-                    set_exist_attr(period_bets, PART_BETS_ATTR[bet_type[-2:]], CustomBet(coef, factor_id))
+                    set_exist_attr(period_bets, PART_BETS_ATTR[bet_type[-2:]], IdBet(coef, factor_id))
                 elif bet_type[-2:] in HANDICAP_TYPES:
                     add_handicap(bet, hand, period_bets)
                 elif bet_type[-3:] == 'Тот':
@@ -257,7 +257,7 @@ def parse_other_bets(event_data, sport_name, parts):
                     bet_type_parts = bet_type.split('_')  # 'С2_Ф1_-2.5' => ['С2', 'Ф1', '-2.5']
 
                     if bet_type[-2:] in PART_BETS_ATTR:
-                        set_exist_attr(set_bets, PART_BETS_ATTR[bet_type[-2:]], CustomBet(float(bet['v']), factor_id))
+                        set_exist_attr(set_bets, PART_BETS_ATTR[bet_type[-2:]], IdBet(float(bet['v']), factor_id))
                     elif 'Тот' in bet_type:  # total
                         add_total(bet, total, set_bets)
                     elif len(bet_type_parts) == 3 and ('Ф1' in bet_type or 'Ф2' in bet_type):  # handicap
@@ -274,7 +274,7 @@ def parse_other_bets(event_data, sport_name, parts):
                     set_bets = get_part_bets(parts, get_part(bet_type, 'П'))
 
                     if bet_type[-2:] in PART_BETS_ATTR:
-                        set_exist_attr(set_bets, PART_BETS_ATTR[bet_type[-2:]], CustomBet(float(bet['v']), factor_id))
+                        set_exist_attr(set_bets, PART_BETS_ATTR[bet_type[-2:]], IdBet(float(bet['v']), factor_id))
                     elif 'Тот' in bet_type:  # total
                         add_total(bet, total, set_bets)
                     elif bet_type[-2:] in HANDICAP_TYPES:  # handicap
@@ -290,9 +290,9 @@ def parse_other_bets(event_data, sport_name, parts):
                     coef = float(bet['v'])
 
                     if bet_type[-1] == 'Н':
-                        half_bets.ox = CustomBet(coef, factor_id)
+                        half_bets.ox = IdBet(coef, factor_id)
                     elif bet_type[-2:] in PART_BETS_ATTR:
-                        set_exist_attr(half_bets, PART_BETS_ATTR[bet_type[-2:]], CustomBet(coef, factor_id))
+                        set_exist_attr(half_bets, PART_BETS_ATTR[bet_type[-2:]], IdBet(coef, factor_id))
                     elif bet_type[-2:] in HANDICAP_TYPES:
                         add_handicap(bet, hand, half_bets)
                     elif 'Тот' in bet_type:

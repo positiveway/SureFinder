@@ -3,7 +3,7 @@ from surebet.loading import LoadException
 
 import logging
 
-default_account = {
+DEFAULT_ACCOUNT = {
     "login": "3959858",
     "passw": "O335673J",
 }
@@ -12,7 +12,7 @@ default_account = {
 class OlimpBot:
     """Use to place bets on olimp site."""
 
-    def __init__(self, account: dict = default_account) -> None:
+    def __init__(self, account: dict = DEFAULT_ACCOUNT) -> None:
         self.session_payload = base_payload.copy()
 
         self.sign_in(account)
