@@ -4,7 +4,7 @@ from timeit import default_timer
 
 from surebet import find_in_iter
 from surebet.ancestors import *
-from surebet.parsing.bets import CustomBet
+from surebet.parsing.bets import IdBet
 
 book_names = ["fonbet", "marat", "olimp"]
 
@@ -47,6 +47,16 @@ class FonbetInfo:
         self.factor_id = factor_id
 
 
+class OlimpInfo:
+    """Hold information for placing bet on olimp site"""
+
+    def __init__(self, sport_id: int, factor_id: int = None) -> None:
+        """
+        :param factor_id: id of bet's factor
+        """
+        self.sport_id = sport_id
+        self.factor_id = factor_id
+
 class MaratInfo:
     """Hold information for placing bet on marat site"""
 
@@ -58,13 +68,21 @@ class MaratInfo:
 
 
 class FonbetWager(Wager):
-    def __init__(self, name: str, bet: CustomBet, fonbet_info: FonbetInfo) -> None:
+    def __init__(self, name: str, bet: IdBet, fonbet_info: FonbetInfo) -> None:
         """
         :param fonbet_info: information for placing bet (class FonbetInfo)
         """
         super().__init__(name, bet.factor)
         self.fonbet_info = FonbetInfo(fonbet_info.event_id, fonbet_info.score, bet.factor_id)
 
+
+class OlimpWager(Wager):
+    def __init__(self, name: str, bet: IdBet, olimp_info: OlimpInfo) -> None:
+        """
+        :param olimp_info: information for placing bet (class OlimpInfo)
+        """
+        super().__init__(name, bet.factor)
+        self.olimp_info = OlimpInfo(olimp_info.sport_id, bet.factor_id)
 
 class MaratWager(Wager):
     def __init__(self, name: str, bet: CustomBet) -> None:
@@ -106,6 +124,14 @@ class FonbetCondWager(CondWager):
         super().__init__(name, factor, suffix, cond)
         self.fonbet_info = FonbetInfo(fonbet_info.event_id, fonbet_info.score, fonbet_info.factor_id)
 
+
+class OlimpCondWager(CondWager):
+    def __init__(self, name: str, factor: float, suffix: str, cond: float, olimp_info: OlimpInfo) -> None:
+        """
+        :param olimp_info: information for placing bet (class OlimpInfo)
+        """
+        super().__init__(name, factor, suffix, cond)
+        self.fonbet_info = OlimpInfo(olimp_info.sport_id, olimp_info.factor_id)
 
 class MaratCondWager(CondWager):
     def __init__(self, name: str, factor: float, suffix: str, cond: float, marat_info: MaratInfo) -> None:

@@ -2,7 +2,7 @@ from surebet.ancestors import *
 from surebet.converting import format_spaces
 
 
-class CustomBet(BetLevel):
+class IdBet(BetLevel):
     def __init__(self, factor: float, factor_id: str = "") -> None:
         self.factor = factor
         self.factor_id = factor_id
@@ -21,7 +21,7 @@ class CondBet(BetLevel):
         return self.v1 or self.v2
 
 
-class CustomCondBet(CondBet):
+class IdCondBet(CondBet):
     def __init__(self, cond, v1, v2, v1_id, v2_id) -> None:
         super().__init__(cond, v1, v2)
         self.v1_id = v1_id
@@ -45,6 +45,19 @@ class FonbetPartBets(PartBets):
         self._del_empty()
 
         skip_attrs = ["part", "event_id", "score"]
+        attrs = [attr for attr, val in self.__dict__.items() if attr not in skip_attrs and val]
+        return bool(attrs)
+
+
+class OlimpPartBets(PartBets):
+    def __init__(self) -> None:
+        super().__init__()
+        self.sport_id = 0
+
+    def _not_empty(self) -> bool:
+        self._del_empty()
+
+        skip_attrs = ["part", "sport_id"]
         attrs = [attr for attr, val in self.__dict__.items() if attr not in skip_attrs and val]
         return bool(attrs)
 
