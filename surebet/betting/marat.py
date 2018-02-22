@@ -28,17 +28,19 @@ class MaratBot:
     def sign_in(self, account: dict):
         url = COMMON_URL.format("login.htm")
 
-        captcha_code = self.get_captcha_code()
-
         form_data = {
             "login": account["login"],
             "login_password": account["pass"],
-            "captcha": captcha_code,
+            "captcha": self.get_captcha_code(),
             "loginUrl": "https://www.marathonbet.com:443/en/login.htm"
         }
 
         resp = self.session.post(url, data=form_data)
         check_status(resp.status_code)
+        res = resp.json()
+        if "loginResult" not in res or res["loginResult"] != "SUCCESS":
+            logging.error(res)
+            raise LoadException("failed to sign in")
 
     def get_captcha_code(self):
         url = COMMON_URL.format("captcha.htm")

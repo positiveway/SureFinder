@@ -50,7 +50,7 @@ class FonbetInfo:
 class OlimpInfo:
     """Hold information for placing bet on olimp site"""
 
-    def __init__(self, sport_id: int, factor_id: int = None) -> None:
+    def __init__(self, sport_id: int, factor_id: str = None) -> None:
         """
         :param factor_id: id of bet's factor
         """
@@ -61,7 +61,7 @@ class OlimpInfo:
 class MaratInfo:
     """Hold information for placing bet on marat site"""
 
-    def __init__(self, factor_id: int) -> None:
+    def __init__(self, factor_id: str) -> None:
         """
         :param factor_id: id of bet's factor
         """

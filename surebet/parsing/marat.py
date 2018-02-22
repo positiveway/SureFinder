@@ -157,7 +157,7 @@ def handle_details(details, teams):
         handler_type = get_handler_type(detail_name)
         if handler_type == 0:
             for bet_name, factor, factor_id in result_bets_handler(detail, teams):
-                set_exist_attr(bets, bet_name, CustomBet(factor, factor_id))
+                set_exist_attr(bets, bet_name, IdBet(factor, factor_id))
         elif handler_type == 1:
             cond_bet_type = get_cond_bet_type(detail_name, teams)
             cond_bets = cond_bet_handler(detail, cond_bet_type)
@@ -270,7 +270,7 @@ def cond_bet_handler(detail, cond_bet_type):
             v1, v2 = v2, v1  # over and under have wrong order
             v1_id, v2_id = v2_id, v1_id
 
-        cond_bets.append(CustomCondBet(cond, v1, v2, v1_id, v2_id))
+        cond_bets.append(IdCondBet(cond, v1, v2, v1_id, v2_id))
 
     return cond_bets
 
@@ -311,7 +311,7 @@ def handle_closed_events(events):
         for cur_bet in range(2):
             bet_node = event.xpath(xp_win_bet.format(cur_bet + 1))
             if bet_node and factor_not_blocked(bet_node[0]):
-                win_bets.append(CustomBet(get_factor(bet_node[0]), get_factor_id(bet_node[0])))
+                win_bets.append(IdBet(get_factor(bet_node[0]), get_factor_id(bet_node[0])))
         if not win_bets:
             continue
         if len(win_bets) == 1:
