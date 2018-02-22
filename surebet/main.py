@@ -64,7 +64,7 @@ def start_scanning(iter_num=None):
     SeleniumService.quit()
 
 
-def main(iter_num):
+def main(iter_num=None):
     from surebet.ui.server import run_server
 
     json_surebets = JsonSurebets()

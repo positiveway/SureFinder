@@ -5,6 +5,8 @@ from surebet.parsing.bets import *
 
 table_rows = '//table[@id="lineTable"]/tbody/tr'
 ev_name = './/td[contains(@class, "eventCellName")]/div[contains(@id, "event")]'
+SCORE = './td[contains(@class, "eventCellName")]/div[contains(@class, "eventDataWrapper")]/div[contains(@class, ' \
+        '"eventScore")] '
 grid = './/div[@class="detailsDIV"]/table'
 
 tr_event = "trEvent"
@@ -14,20 +16,21 @@ tr_event_details = "trEventDetails"
 hand_ids = [0, 1, 3]
 total_ids = [0, 1, 2]
 
-outcome_bets_ids = {
-    "o1": 921,
-    "ox": 922,
-    "o2": 923,
-    "o1x": 924,
-    "o12": 1571,
-    "ox2": 925,
-}
-
-cond_bets_ids = {
-    "hand1": 927,
-    "hand2": 928,
-    "totalo": 930,
-    "totalu": 931,
+FACTORS_DICT = {
+    'hand': {
+        1: [927, 937, 1845],
+        2: [928, 938, 1846]
+    },
+    'total': {
+        1: [930, 940, 1848],
+        2: [931, 941, 1849]
+    },
+    'o1': [921, 3150, 3144],
+    'o2': [923, 3151, 3145],
+    'o12': [1571],
+    'o1x': [924],
+    'ox2': [925],
+    'ox': [922, 3152]
 }
 
 
@@ -160,14 +163,21 @@ def parse_event_details(node):
 
 
 def handle_row(row_node):
-    bets = PartBets()
+    score_node = xpath_with_check(row_node, SCORE)[0]
+    full_score = get_text(score_node).partition(" ")[0]
+    score = full_score.partition(" ")[0]  # first part of score is needed
+
+    attr = row_node.get("id")
+    event_id = attr.strip()[5:]
+
+    bets = FonbetPartBets(score, event_id)
 
     col_nodes = xpath_with_check(row_node, './/td')
 
     for idx, bet in enumerate(['o1', 'ox', 'o2', 'o1x', 'o12', 'ox2']):
         text = col_nodes[idx + 3].text
         if text:
-            set_exist_attr(bets, bet, parse_factor(text))
+            set_exist_attr(bets, bet, IdBet(parse_factor(text)))
 
     hand = handle_cond_bet(col_nodes[9:13], hand_ids)
     bets.hand.append(hand)
@@ -191,4 +201,51 @@ def handle_cond_bet(nodes, ids):
     if len(factors) != 3:
         return None
 
-    return CondBet(*factors)
+    factor_ids = []
+    for id in ids[1:]:  # skip first node (stands for bet condition)
+        attr = nodes[id].get("id")
+        factor_id = attr.partition("f")[2]
+        factor_ids.append(factor_id)
+
+    return IdCondBet(*factors, *factor_ids)
+
+
+def parse_json(line, bookmaker):
+    events_to_factors = {event['id']: set() for event in line['events']}
+    for factor in line['customFactors']:
+        events_to_factors[factor['e']].add(factor['f'])
+
+    parts_to_check = []
+    for sport in bookmaker.attrs_dict():
+        for obj_event in getattr(bookmaker, sport):
+            for part in obj_event.parts:
+                if int(part.event_id) in events_to_factors:
+                    parts_to_check.append(part)
+
+    for part in parts_to_check:
+        bet_types = [(bet_type, getattr(part, bet_type)) for bet_type in ['hand', 'total']]
+        for bet_name, bet_list in bet_types:
+            for bet in bet_list:
+                handle_json_bet(bet_name, bet, events_to_factors[int(part.event_id)])
+
+        bet_types = [(bet_type, getattr(part, bet_type)) for bet_type in ['o1', 'ox', 'o2', 'o1x', 'o12', 'ox2']]
+        for bet_name, bet in bet_types:
+            handle_json_bet(bet_name, bet, events_to_factors[int(part.event_id)])
+
+
+def handle_json_bet(bet_name, bet, factors):
+    if isinstance(bet, IdCondBet):
+        if not bet.v1_id:
+            bet.v1_id = get_factor(factors, FACTORS_DICT[bet_name][1])
+        if not bet.v2_id:
+            bet.v2_id = get_factor(factors, FACTORS_DICT[bet_name][2])
+    elif isinstance(bet, IdBet):
+        if not bet.factor_id:
+            bet.factor_id = get_factor(factors, FACTORS_DICT[bet_name])
+
+
+def get_factor(factors, factors_set):
+    for factor in factors_set:
+        if factor in factors:
+            return factor
+    return ''
