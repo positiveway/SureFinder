@@ -16,15 +16,22 @@ tr_event_details = "trEventDetails"
 hand_ids = [0, 1, 3]
 total_ids = [0, 1, 2]
 
-FACTORS_DICT = {'hand': {1: [927, 937, 1845], 2: [928, 938, 1846]},
-                'total': {1: [930, 940, 1848], 2: [931, 941, 1849]},
-                'o1': [921, 3150, 3144],
-                'o2': [923, 3151, 3145],
-                'o12': [1571],
-                'o1x': [924],
-                'ox2': [925],
-                'ox': [922, 3152]
-                }
+FACTORS_DICT = {
+    'hand': {
+        1: [927, 937, 1845],
+        2: [928, 938, 1846]
+    },
+    'total': {
+        1: [930, 940, 1848],
+        2: [931, 941, 1849]
+    },
+    'o1': [921, 3150, 3144],
+    'o2': [923, 3151, 3145],
+    'o12': [1571],
+    'o1x': [924],
+    'ox2': [925],
+    'ox': [922, 3152]
+}
 
 
 class RowInfo:
@@ -170,7 +177,7 @@ def handle_row(row_node):
     for idx, bet in enumerate(['o1', 'ox', 'o2', 'o1x', 'o12', 'ox2']):
         text = col_nodes[idx + 3].text
         if text:
-            set_exist_attr(bets, bet, CustomBet(parse_factor(text)))
+            set_exist_attr(bets, bet, IdBet(parse_factor(text)))
 
     hand = handle_cond_bet(col_nodes[9:13], hand_ids)
     bets.hand.append(hand)
@@ -200,7 +207,7 @@ def handle_cond_bet(nodes, ids):
         factor_id = attr.partition("f")[2]
         factor_ids.append(factor_id)
 
-    return CustomCondBet(*factors, *factor_ids)
+    return IdCondBet(*factors, *factor_ids)
 
 
 def parse_json(line, bookmaker):
@@ -227,12 +234,12 @@ def parse_json(line, bookmaker):
 
 
 def handle_json_bet(bet_name, bet, factors):
-    if isinstance(bet, CustomCondBet):
+    if isinstance(bet, IdCondBet):
         if not bet.v1_id:
             bet.v1_id = get_factor(factors, FACTORS_DICT[bet_name][1])
         if not bet.v2_id:
             bet.v2_id = get_factor(factors, FACTORS_DICT[bet_name][2])
-    elif isinstance(bet, CustomBet):
+    elif isinstance(bet, IdBet):
         if not bet.factor_id:
             bet.factor_id = get_factor(factors, FACTORS_DICT[bet_name])
 

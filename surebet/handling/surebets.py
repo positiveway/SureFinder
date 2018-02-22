@@ -4,7 +4,7 @@ from timeit import default_timer
 
 from surebet import find_in_iter
 from surebet.ancestors import *
-from surebet.parsing.bets import CustomBet
+from surebet.parsing.bets import IdBet
 
 book_names = ["fonbet", "marat", "olimp"]
 
@@ -48,7 +48,7 @@ class FonbetInfo:
 
 
 class FonbetWager(Wager):
-    def __init__(self, name: str, bet: CustomBet, fonbet_info: FonbetInfo) -> None:
+    def __init__(self, name: str, bet: IdBet, fonbet_info: FonbetInfo) -> None:
         """
         :param fonbet_info: information for placing bet (class FonbetInfo)
         """
