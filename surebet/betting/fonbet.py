@@ -4,8 +4,11 @@ import hmac
 from hashlib import sha512
 from json import dumps
 
+from surebet.betting import get_session_with_proxy
 from surebet.loading import *
 from surebet.handling.surebets import FonbetCondWager
+
+name = "fonbet"
 
 DEFAULT_ACCOUNT = {
     "login": 4052045,
@@ -40,6 +43,8 @@ class FonbetBot:
     """Use to place bets on fonbet site."""
 
     def __init__(self, account: dict = DEFAULT_ACCOUNT) -> None:
+        self.session = get_session_with_proxy(name)
+
         self.common_url = get_common_url()
 
         self.base_payload = {
@@ -63,7 +68,7 @@ class FonbetBot:
         payload["sign"] = sign
 
         data = get_dumped_payload(payload)
-        resp = requests.post(url, headers=browser_headers, data=data)
+        resp = self.session.post(url, headers=browser_headers, data=data)
         check_status(resp.status_code)
         res = resp.json()
         if "fsid" not in res:
@@ -102,7 +107,7 @@ class FonbetBot:
         self._check_in_bounds(payload, amount)
         payload["coupon"]["amount"] = amount
 
-        resp = requests.post(url, headers=browser_headers, json=payload)
+        resp = self.session.post(url, headers=browser_headers, json=payload)
         check_status(resp.status_code)
 
         self._check_result(payload)
@@ -111,7 +116,7 @@ class FonbetBot:
         """request_id is generated every time we placing bet"""
         url = self.common_url.format("coupon/requestId")
 
-        resp = requests.post(url, headers=browser_headers, json=self.base_payload)
+        resp = self.session.post(url, headers=browser_headers, json=self.base_payload)
         check_status(resp.status_code)
         res = resp.json()
         if "requestId" not in res:
@@ -125,7 +130,7 @@ class FonbetBot:
         url = self.common_url.format("coupon/getMinMax")
         payload["coupon"]["amount"] = 0
 
-        resp = requests.post(url, headers=browser_headers, json=payload)
+        resp = self.session.post(url, headers=browser_headers, json=payload)
         check_status(resp.status_code)
         res = resp.json()
         if "min" not in res:
@@ -142,7 +147,7 @@ class FonbetBot:
         url = self.common_url.format("coupon/result")
         del payload["coupon"]
 
-        resp = requests.post(url, headers=browser_headers, json=payload)
+        resp = self.session.post(url, headers=browser_headers, json=payload)
         check_status(resp.status_code)
         res = resp.json()
         # there's situations where "temporary unknown result" means successful response
