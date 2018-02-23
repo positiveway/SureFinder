@@ -1,8 +1,13 @@
+import requests
+import random
+import json
+
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
+from surebet.betting.fonbet import get_urls
 from surebet.loading import *
 
 name = "fonbet"
@@ -20,6 +25,8 @@ for (cur_node = 0; cur_node < nodes.length; cur_node++) {
     nodes[cur_node].click()
 }
 """
+
+URL_LINE = '/live/currentLine/en?'
 
 
 def load(browser):
@@ -47,3 +54,19 @@ def load_events(browser):
     else:
         log_loaded_events(name)
         return result
+
+
+def load_events_json():
+    urls_line = get_urls()['line']
+    url_req_line = 'https://{}{}{}'.format(random.choice(urls_line)[2:], URL_LINE, str(random.random()))
+
+    r_line = requests.get(url_req_line, headers=browser_headers)
+    check_status(r_line.status_code)
+
+    try:
+        result = r_line.json()
+    except json.JSONDecodeError:
+        raise LoadException('Loaded invalid json for {}'.format(name))
+
+    log_loaded(name + ' line json')
+    return result
