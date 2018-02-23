@@ -1,7 +1,10 @@
 from surebet.loading.olimp import *
 from surebet.loading import LoadException
+from surebet.betting import get_session_with_proxy
 
 import logging
+
+name = "olimp"
 
 DEFAULT_ACCOUNT = {
     "login": "3959858",
@@ -13,6 +16,8 @@ class OlimpBot:
     """Use to place bets on olimp site."""
 
     def __init__(self, account: dict = DEFAULT_ACCOUNT) -> None:
+        self.session = get_session_with_proxy(name)
+
         self.session_payload = base_payload.copy()
 
         self.sign_in(account)
@@ -24,7 +29,7 @@ class OlimpBot:
         payload = base_payload.copy()
         payload.update(account)
 
-        resp = requests.post(req_url, headers=get_xtoken(payload), data=payload)
+        resp = self.session.post(req_url, headers=get_xtoken(payload), data=payload)
         check_status(resp.status_code)
 
         self.session_payload["session"] = resp.json()["data"]["session"]
@@ -50,7 +55,7 @@ class OlimpBot:
         headers = base_headers.copy()
         headers.update(get_xtoken(payload))
 
-        resp = requests.post(url, headers=headers, data=payload)
+        resp = self.session.post(url, headers=headers, data=payload)
         check_status(resp.status_code)
         res = resp.json()
         if "data" not in res or res["data"] != "Your bet is successfully accepted!":
