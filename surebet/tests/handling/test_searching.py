@@ -39,6 +39,3 @@ def test_searching():
     surebets_known = read_json(filename_pattern, 'surebets')
 
     assert obj_dumps(surebets) == json_dumps(surebets_known)
-
-
-test_searching()
