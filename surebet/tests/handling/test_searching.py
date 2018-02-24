@@ -9,25 +9,26 @@ from surebet.parsing.marat import parse as marat_parse
 from surebet.parsing.olimp import parse as olimp_parse
 from surebet.handling.searching import find_surebets
 
+FILENAME_PATTERN = path.join(package_dir, 'searching', '{}.{}')
 
-def read_html(filename, site_name):
-    with open(filename.format(site_name, 'html')) as f_html:
+
+def read_html(site_name):
+    with open(FILENAME_PATTERN.format(site_name, 'html')) as f_html:
         result = f_html.read()
     return result
 
 
-def read_json(filename, site_name):
-    with open(filename.format(site_name, 'json')) as f_json:
+def read_json(site_name):
+    with open(FILENAME_PATTERN.format(site_name, 'json')) as f_json:
         result = json.load(f_json)
     return result
 
 
 def test_searching():
-    filename_pattern = path.join(package_dir, 'searching', '{}.{}')
-    fonbet_html = read_html(filename_pattern, 'fonbet')
-    fonbet_json = read_json(filename_pattern, 'fonbet')
-    marat_json = read_json(filename_pattern, 'marat')
-    olimp_json = read_json(filename_pattern, 'olimp')
+    fonbet_html = read_html('fonbet')
+    fonbet_json = read_json('fonbet')
+    marat_json = read_json('marat')
+    olimp_json = read_json('olimp')
 
     bookmakers = Bookmakers()
     fonbet_parse(fonbet_html, bookmakers.fonbet)
@@ -36,6 +37,6 @@ def test_searching():
     olimp_parse(olimp_json, bookmakers.olimp)
 
     surebets = find_surebets(bookmakers)
-    surebets_known = read_json(filename_pattern, 'surebets')
+    surebets_known = read_json('surebets')
 
     assert obj_dumps(surebets) == json_dumps(surebets_known)
