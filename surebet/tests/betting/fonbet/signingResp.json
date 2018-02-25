@@ -1,0 +1,33 @@
+{
+  "attributes": {
+    "allowCopyCoupon": true,
+    "allowOneClickBet": true,
+    "allowTranslation": true,
+    "betBlocked": false,
+    "betToBetDelay": 0,
+    "blocked": false,
+    "liveBlocked": false,
+    "mobileBlocked": false,
+    "payBlocked": false,
+    "phoneBlocked": false,
+    "protected": false,
+    "testClient": false,
+    "totoBlocked": false,
+    "winClientBlocked": false
+  },
+  "clientId": 4052045,
+  "currency": {
+    "currency": "RUB",
+    "fracSize": 0,
+    "rate": 1
+  },
+  "fsid": "5geiQm1banahlLIQrNpBBi81",
+  "lang": "ENG",
+  "limitGroup": 1,
+  "registration": {
+    "gender": "male",
+    "name": "Magomedov Nadyr"
+  },
+  "result": "session created",
+  "saldo": 160
+}
