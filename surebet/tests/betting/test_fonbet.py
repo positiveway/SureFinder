@@ -1,24 +1,9 @@
 import logging
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
-from surebet.loading.fonbet import name
 import surebet.betting.fonbet
-from surebet.tests.betting import read_json
-
-
-class MockResponse(MagicMock):
-    def __init__(self, resp):
-        super().__init__()
-        self.status_code = 200
-        self.json = MagicMock()
-        self.json.return_value = resp
-
-
-class MockSession(MagicMock):
-    def __init__(self, resp):
-        super().__init__()
-        self.post = MagicMock()
-        self.post.return_value = MockResponse(resp)
+from surebet.loading.fonbet import name
+from surebet.tests.betting import *
 
 
 @patch('surebet.betting.fonbet.get_session_with_proxy')
@@ -32,18 +17,17 @@ def mock_signing(data, resp, mock_random, mock_url, mock_proxy):
     mock_url.return_value = url_login
     mock_session = MockSession(resp)
     mock_proxy.return_value = mock_session
+
     fonbet_bot = surebet.betting.fonbet.FonbetBot()
 
-    # check gathered data
+    # assert gathered data
     assert 'data' in mock_session.post.call_args[1]
-    data_called = eval(mock_session.post.call_args[1]['data'])
-    for key, value in data_called.items():
-        assert key in data and value == data[key]
-    # check response correctness
-    assert fonbet_bot.base_payload['fsid'] == '5geiQm1banahlLIQrNpBBi81'
+    assert_dicts_equal(data, eval(mock_session.post.call_args[1]['data']))
+    # assert response correctness
+    assert fonbet_bot.base_payload['fsid'] == resp['fsid']
 
 
-def test_sign_in():
+def test_signing():
     data = read_json(name, 'signingData')
     resp = read_json(name, 'signingResp')
     mock_signing(data, resp)
@@ -51,5 +35,5 @@ def test_sign_in():
     logging.info('PASS: signing')
 
 
-def test_place_bet():
+def test_placing():
     pass

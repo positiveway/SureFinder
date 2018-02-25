@@ -1,0 +1,44 @@
+{
+  "data": {
+    "a": 1,
+    "act16": [
+      "RU",
+      "KZ",
+      "UA",
+      "BY",
+      "KG"
+    ],
+    "b": 0,
+    "b2": 0,
+    "b3": 0,
+    "b4": 0,
+    "bonuses": [],
+    "cntr": "RU",
+    "cps": "",
+    "cs": 0,
+    "cur": "RUB",
+    "curid": 3,
+    "decimals": 0,
+    "e": "3959858@olimp.com",
+    "fn": "-",
+    "l": "3959858",
+    "ln": "-",
+    "messages": "",
+    "pa": 1,
+    "s": 110,
+    "session": "76e426a93ec9dca1070098f3992aaa37",
+    "t": "79020412147",
+    "user_srv": 0,
+    "v1": 0,
+    "v2": 0,
+    "v3": 0,
+    "v4": 0,
+    "vip": 0,
+    "vipnotice": null
+  },
+  "error": {
+    "err_code": 0,
+    "err_desc": null
+  },
+  "isCache": 0
+}
