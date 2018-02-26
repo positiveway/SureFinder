@@ -33,30 +33,6 @@
 
 <body>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container"><a href="https://positivebet.com/" class="brand"><img
-                src="../static/images/positivebet_brand.png" alt=""/></a>
-            <ul id="yw2" class="nav">
-                <li><a href="https://positivebet.com/en">Home</a></li>
-                <li class="active"><a href="index.html">Live bets</a></li>
-                <li><a href="https://positivebet.com/en/middle/index">Middles</a></li>
-                <li><a href="https://positivebet.com/en/subscription/index">Pricing</a></li>
-                <li><a href="https://positivebet.com/en/contact">Contact</a></li>
-                <li><a href="https://positivebet.com/en/user/login">Login</a></li>
-                <li><a href="https://positivebet.com/en/user/registration">Register</a></li>
-            </ul>
-            <div id="language-selector" style="margin:5px;">
-                <div id="language-select">
-                    <a href="https://positivebet.com/ru/bets/index"><img src="../static/images/ru.png" title="Русский"
-                                                                         style="padding: 1px;" width=24 height=24></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <div class="container" id="page">
 
 
@@ -444,37 +420,6 @@
                     </table>
 
                 </form>
-
-
-                <form style="margin: 0px;" class="form-inline" id="formPanel"
-                      action="https://positivebet.com/en/bets/index" method="post">
-                    <input type="hidden"
-                           value="QlEwVUJSTFR5WGpyaWRNeXE3cTNnM1k5WEJhUVJRYk3Mm_cIdit14sy9k15Wmyge3TI6XX39yg3UJnmZUB4OJg=="
-                           name="YII_CSRF_TOKEN"/>
-                    <button id="btnRefresh" class="btn" name="yt0" type="button">Refresh</button>
-                    <button id="btnAutoRefresh" style="margin-left: 10px;" class="btn" data-toggle="button" name="yt1"
-                            type="button">Auto refresh
-                    </button>
-                    <a id="btnPlaySound" style="margin-left: 10px;" class="btn"
-                       href="https://positivebet.com/en/user/login">Mark new</a><a id="btnSettings"
-                                                                                   style="margin-left: 10px; float: right;"
-                                                                                   class="btn"
-                                                                                   href="https://positivebet.com/en/settings/update">Filter</a>
-                    <button id="btnRowsShow" style="margin-left: 10px; float: right;" class="btn" name="yt2"
-                            type="button">Show hidden
-                    </button>
-                    <select id="ddlPerPage" class="span1" style="margin-left: 10px; float: right;"
-                            name="Bets[per_page]">
-                        <option value="10">10</option>
-                        <option value="20" selected="selected">20</option>
-                        <option value="30">30</option>
-                    </select></form>
-
-                <div class="alert alert-error" style="margin-top:20px;margin-bottom:0px">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    Only bets up to 1% are available. You can <a href=https://positivebet.com/en/subscription/index><b>subscribe</b></a>
-                    to see all bets.
-                </div>
 
 
                 <div id="gridBets" class="grid-view">
@@ -2348,78 +2293,8 @@ S = K1 * C1
 
     <br/>
     <br/>
-    <div id="footer" class="footer" style="margin-bottom: 20px;">
-        <br/>
-        <ul id="yw3" class="nav nav-pills">
-            <li><a href="https://positivebet.com/en/subscription/index">Pricing</a></li>
-            <li><a href="https://positivebet.com/en/affiliate/index">Affiliate program</a></li>
-            <li><a href="https://positivebet.com/en/contact">Contact</a></li>
-        </ul> &copy; 2013 - 2018 PositiveBet.com.
-        <a style="margin-left: 10px; font-size: 12px;  float: right;" href="https://positivebet.com/en/privacy/index">Privacy
-            Policy</a><a style="font-size: 12px;  float: right;" href="https://positivebet.com/en/agreement/index">User
-        Agreement</a>    <!--All Rights Reserved.<br/>-->
-
-    </div><!-- footer -->
 
 </div><!-- page -->
-
-
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function (d, w, c) {
-        (w[c] = w[c] || []).push(function () {
-            try {
-                w.yaCounter20811241 = new Ya.Metrika({
-                    id: 20811241,
-                    clickmap: true,
-                    trackLinks: true,
-                    accurateTrackBounce: true,
-                    trackHash: true
-                });
-            } catch (e) {
-            }
-        });
-
-        var n = d.getElementsByTagName("script")[0],
-            s = d.createElement("script"),
-            f = function () {
-                n.parentNode.insertBefore(s, n);
-            };
-        s.type = "text/javascript";
-        s.async = true;
-        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
-
-        if (w.opera == "[object Opera]") {
-            d.addEventListener("DOMContentLoaded", f, false);
-        } else {
-            f();
-        }
-    })(document, window, "yandex_metrika_callbacks");
-</script>
-<noscript>
-    <div><img src="http://mc.yandex.ru/watch/20811241" style="position:absolute; left:-9999px;" alt=""/></div>
-</noscript>
-<!-- /Yandex.Metrika counter -->
-
-<!-- Google Analytics counter -->
-<script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '../../../www.google-analytics.com/analytics.js', 'ga');
-
-    ga('create', 'UA-51362280-1', 'positivebet.com');
-    ga('send', 'pageview');
-
-</script>
-<!-- /Google Analytics counter -->
 
 
 <script type="text/javascript" src="../static/assets/c1c3c894/gridview/jquery.yiigridview.js"></script>
