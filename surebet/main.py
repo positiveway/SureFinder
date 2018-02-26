@@ -89,4 +89,4 @@ def main(iter_num=None):
 
 
 if __name__ == "__main__":
-    main()
+    main(10)
