@@ -30,6 +30,9 @@ class Wager:
     def __str__(self):
         return "{}: {}".format(self.name, self.factor)
 
+    def __repr__(self):
+        return "{}".format(self.name)
+
     def __eq__(self, other):
         return self.name == other.name
 
@@ -113,6 +116,9 @@ class CondWager(Wager):
     def __str__(self):
         return "{name}{suffix}({cond}): {factor}".format(name=self.name, suffix=self.suffix,
                                                          cond=self.cond, factor=self.factor)
+
+    def __repr__(self):
+        return "{name}{suffix}({cond})".format(name=self.name, suffix=self.suffix, cond=self.cond)
 
     def __eq__(self, other):
         return super().__eq__(other) and self.suffix == other.suffix and self.cond == other.cond

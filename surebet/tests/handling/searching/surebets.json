@@ -1,0 +1,2258 @@
+{
+  "books_surebets": [
+    {
+      "basket": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 1.17,
+                  "w1": {
+                    "cond": 46.5,
+                    "factor": 1.8,
+                    "fonbet_info": {
+                      "event_id": "9731233",
+                      "factor_id": 928,
+                      "score": "27:10"
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": -46.5,
+                    "factor": 2.31,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            },
+            {
+              "part": 2,
+              "surebets": [
+                {
+                  "profit": 3.81,
+                  "w1": {
+                    "cond": 31.5,
+                    "factor": 1.95,
+                    "fonbet_info": {
+                      "event_id": "9731235",
+                      "factor_id": 930,
+                      "score": "8:5"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 31.5,
+                    "factor": 2.22,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Kircicegi Bodrum (w)",
+            "Fenerbahce Gelisim (w)"
+          ],
+          "teams2": [
+            "Bodrum",
+            "Fenerbahce Gelisim"
+          ]
+        }
+      ],
+      "book1": "fonbet",
+      "book2": "marat",
+      "hockey": [
+        {
+          "parts": [
+            {
+              "part": 1,
+              "surebets": [
+                {
+                  "profit": 133.42,
+                  "w1": {
+                    "factor": 4.5,
+                    "fonbet_info": {
+                      "event_id": "9727119",
+                      "factor_id": 921,
+                      "score": "1:1"
+                    },
+                    "name": "o1"
+                  },
+                  "w2": {
+                    "factor": 4.85,
+                    "name": "o1x"
+                  }
+                },
+                {
+                  "profit": 11.82,
+                  "w1": {
+                    "factor": 1.16,
+                    "fonbet_info": {
+                      "event_id": "9727119",
+                      "factor_id": 924,
+                      "score": "1:1"
+                    },
+                    "name": "o1x"
+                  },
+                  "w2": {
+                    "factor": 31.0,
+                    "name": "o1"
+                  }
+                },
+                {
+                  "profit": 65.49,
+                  "w1": {
+                    "factor": 2.3,
+                    "fonbet_info": {
+                      "event_id": "9727119",
+                      "factor_id": 1571,
+                      "score": "1:1"
+                    },
+                    "name": "o12"
+                  },
+                  "w2": {
+                    "factor": 5.9,
+                    "name": "ox"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Canada",
+            "Czech Republic"
+          ],
+          "teams2": [
+            "Czech Republic",
+            "Canada"
+          ]
+        }
+      ],
+      "soccer": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 1.82,
+                  "w1": {
+                    "cond": 3.5,
+                    "factor": 2.25,
+                    "fonbet_info": {
+                      "event_id": "9702638",
+                      "factor_id": 931,
+                      "score": "1:1"
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 3.5,
+                    "factor": 1.86,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Msv Duisburg",
+            "Ingolstadt"
+          ],
+          "teams2": [
+            "Duisburg",
+            "Ingolstadt 04"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 1,
+              "surebets": [
+                {
+                  "profit": 47.28,
+                  "w1": {
+                    "factor": 4.3,
+                    "fonbet_info": {
+                      "event_id": "9728946",
+                      "factor_id": 1571,
+                      "score": "0:0"
+                    },
+                    "name": "o12"
+                  },
+                  "w2": {
+                    "factor": 2.24,
+                    "name": "ox"
+                  }
+                },
+                {
+                  "profit": 63.66,
+                  "w1": {
+                    "cond": 0.5,
+                    "factor": 4.0,
+                    "fonbet_info": {
+                      "event_id": "9728946",
+                      "factor_id": 930,
+                      "score": "0:0"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 0.5,
+                    "factor": 2.77,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 4.23,
+                  "w1": {
+                    "cond": 0.0,
+                    "factor": 1.6,
+                    "fonbet_info": {
+                      "event_id": "9728946",
+                      "factor_id": 927,
+                      "score": "0:0"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -0.0,
+                    "factor": 2.99,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Leicester City",
+            "Stoke City"
+          ],
+          "teams2": [
+            "Leicester City",
+            "Stoke City"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 0.84,
+                  "w1": {
+                    "cond": 2.5,
+                    "factor": 2.5,
+                    "fonbet_info": {
+                      "event_id": "9734787",
+                      "factor_id": 927,
+                      "score": "0:2"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -2.5,
+                    "factor": 1.69,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Sporting Huelva (w)",
+            "Atletico Madrid (w)"
+          ],
+          "teams2": [
+            "Sporting Huelva Women",
+            "Atletico Madrid Women"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 0.24,
+                  "w1": {
+                    "cond": 4.5,
+                    "factor": 2.02,
+                    "fonbet_info": {
+                      "event_id": "9734427",
+                      "factor_id": 931,
+                      "score": "1:0"
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 4.5,
+                    "factor": 1.99,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "FC Nordsjaelland U19",
+            "Lyngby U19"
+          ],
+          "teams2": [
+            "Nordsjaelland U-19",
+            "Lyngby U-19"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 0.3,
+                  "w1": {
+                    "factor": 2.35,
+                    "fonbet_info": {
+                      "event_id": "9719135",
+                      "factor_id": 921,
+                      "score": "0:0"
+                    },
+                    "name": "o1"
+                  },
+                  "w2": {
+                    "factor": 1.75,
+                    "name": "ox2"
+                  }
+                },
+                {
+                  "profit": 0.52,
+                  "w1": {
+                    "cond": 0.0,
+                    "factor": 1.23,
+                    "fonbet_info": {
+                      "event_id": "9719135",
+                      "factor_id": "910",
+                      "score": "0:0"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -0.0,
+                    "factor": 5.5,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Famalicao",
+            "Sporting Covilha"
+          ],
+          "teams2": [
+            "Famalicao",
+            "Covilha"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 1.31,
+                  "w1": {
+                    "cond": -1.5,
+                    "factor": 2.65,
+                    "fonbet_info": {
+                      "event_id": "9719029",
+                      "factor_id": 928,
+                      "score": "0:1"
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": 1.5,
+                    "factor": 1.64,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Frej Taby",
+            "Djurgardens"
+          ],
+          "teams2": [
+            "Frej",
+            "Djurgardens"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 1.25,
+                  "w1": {
+                    "cond": 4.5,
+                    "factor": 1.93,
+                    "fonbet_info": {
+                      "event_id": "9734451",
+                      "factor_id": 930,
+                      "score": "2:2"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 4.5,
+                    "factor": 2.13,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 0.69,
+                  "w1": {
+                    "cond": 5.5,
+                    "factor": 6.0,
+                    "fonbet_info": {
+                      "event_id": "9734451",
+                      "factor_id": "1696",
+                      "score": "2:2"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 5.5,
+                    "factor": 1.21,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 0.71,
+                  "w1": {
+                    "cond": 2.5,
+                    "factor": 3.35,
+                    "fonbet_info": {
+                      "event_id": "9734451",
+                      "factor_id": "1809",
+                      "score": "2:2"
+                    },
+                    "name": "ind_total1",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 2.5,
+                    "factor": 1.44,
+                    "name": "ind_total1",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Maharashtra Police",
+            "West. Railway"
+          ],
+          "teams2": [
+            "MS Police",
+            "Western Railway"
+          ]
+        }
+      ],
+      "tennis": [
+        {
+          "parts": [
+            {
+              "part": 2,
+              "surebets": [
+                {
+                  "profit": 0.44,
+                  "w1": {
+                    "cond": 7.5,
+                    "factor": 1.5,
+                    "fonbet_info": {
+                      "event_id": "9732460",
+                      "factor_id": "1696",
+                      "score": "0:3"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 7.5,
+                    "factor": 3.04,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Wuarin P",
+            "Monnet C"
+          ],
+          "teams2": [
+            "Wuarin, Paulin",
+            "Monnet, Carole"
+          ]
+        }
+      ],
+      "volley": [
+        {
+          "parts": [
+            {
+              "part": 4,
+              "surebets": [
+                {
+                  "profit": 2.25,
+                  "w1": {
+                    "cond": 4.5,
+                    "factor": 2.05,
+                    "fonbet_info": {
+                      "event_id": "9733158",
+                      "factor_id": 1845,
+                      "score": "5:7"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -4.5,
+                    "factor": 2.04,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                },
+                {
+                  "profit": 2.0,
+                  "w1": {
+                    "cond": 5.5,
+                    "factor": 1.7,
+                    "fonbet_info": {
+                      "event_id": "9733158",
+                      "factor_id": "910",
+                      "score": "5:7"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -5.5,
+                    "factor": 2.55,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Universitet Barnaul",
+            "Lokomotiv-Izumrud"
+          ],
+          "teams2": [
+            "Universitet Barnaul",
+            "Lokomotiv-Izumrud"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 3,
+              "surebets": [
+                {
+                  "profit": 2.49,
+                  "w1": {
+                    "cond": 36.5,
+                    "factor": 2.03,
+                    "fonbet_info": {
+                      "event_id": "9735813",
+                      "factor_id": 1848,
+                      "score": "16:5"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 36.5,
+                    "factor": 2.07,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 2.47,
+                  "w1": {
+                    "cond": 35.5,
+                    "factor": 1.57,
+                    "fonbet_info": {
+                      "event_id": "9735813",
+                      "factor_id": "1696",
+                      "score": "16:5"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 35.5,
+                    "factor": 2.95,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 2.72,
+                  "w1": {
+                    "cond": 13.5,
+                    "factor": 2.02,
+                    "fonbet_info": {
+                      "event_id": "9735813",
+                      "factor_id": 1846,
+                      "score": "16:5"
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": -13.5,
+                    "factor": 2.09,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                },
+                {
+                  "profit": 2.47,
+                  "w1": {
+                    "cond": 14.5,
+                    "factor": 1.57,
+                    "fonbet_info": {
+                      "event_id": "9735813",
+                      "factor_id": "912",
+                      "score": "16:5"
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": -14.5,
+                    "factor": 2.95,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Foivos",
+            "AO Athlopedion Kos"
+          ],
+          "teams2": [
+            "Foivos",
+            "Athlopedion"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 5,
+              "surebets": [
+                {
+                  "profit": 0.41,
+                  "w1": {
+                    "cond": 13.5,
+                    "factor": 1.95,
+                    "fonbet_info": {
+                      "event_id": "9726195",
+                      "factor_id": "1809",
+                      "score": "0:1"
+                    },
+                    "name": "ind_total1",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 13.5,
+                    "factor": 2.07,
+                    "name": "ind_total1",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 7.19,
+                  "w1": {
+                    "cond": 2.5,
+                    "factor": 1.8,
+                    "fonbet_info": {
+                      "event_id": "9726195",
+                      "factor_id": 1845,
+                      "score": "0:1"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -2.5,
+                    "factor": 2.65,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                },
+                {
+                  "profit": 2.87,
+                  "w1": {
+                    "cond": 3.5,
+                    "factor": 1.45,
+                    "fonbet_info": {
+                      "event_id": "9726195",
+                      "factor_id": "910",
+                      "score": "0:1"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -3.5,
+                    "factor": 3.54,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Zhaiyk",
+            "Zhetysu-Zhastar"
+          ],
+          "teams2": [
+            "Zhetysu-Zhastar",
+            "Zhaik"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 1.55,
+                  "w1": {
+                    "cond": 29.5,
+                    "factor": 1.8,
+                    "fonbet_info": {
+                      "event_id": "9735822",
+                      "factor_id": 1845,
+                      "score": "0:1"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -29.5,
+                    "factor": 2.33,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Teuta",
+            "Skenderbeu"
+          ],
+          "teams2": [
+            "Teuta Durres",
+            "Skenderbeu"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 2.8,
+                  "w1": {
+                    "cond": 122.5,
+                    "factor": 2.7,
+                    "fonbet_info": {
+                      "event_id": "9732890",
+                      "factor_id": "1734",
+                      "score": "1:0"
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 122.5,
+                    "factor": 1.66,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "profit": 1.34,
+                  "w1": {
+                    "cond": 49.5,
+                    "factor": 1.95,
+                    "fonbet_info": {
+                      "event_id": "9732890",
+                      "factor_id": "1871",
+                      "score": "1:0"
+                    },
+                    "name": "ind_total2",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 49.5,
+                    "factor": 2.11,
+                    "name": "ind_total2",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "profit": 3.44,
+                  "w1": {
+                    "cond": -26.5,
+                    "factor": 2.2,
+                    "fonbet_info": {
+                      "event_id": "9732890",
+                      "factor_id": 1845,
+                      "score": "1:0"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 26.5,
+                    "factor": 1.95238,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            },
+            {
+              "part": 2,
+              "surebets": [
+                {
+                  "profit": 1.47,
+                  "w1": {
+                    "cond": 40.5,
+                    "factor": 1.78,
+                    "fonbet_info": {
+                      "event_id": "9732892",
+                      "factor_id": 1849,
+                      "score": "16:9"
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 40.5,
+                    "factor": 2.36,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "profit": 1.6,
+                  "w1": {
+                    "cond": 39.5,
+                    "factor": 2.3,
+                    "fonbet_info": {
+                      "event_id": "9732892",
+                      "factor_id": "1728",
+                      "score": "16:9"
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 39.5,
+                    "factor": 1.82,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "profit": 0.74,
+                  "w1": {
+                    "cond": 38.5,
+                    "factor": 3.25,
+                    "fonbet_info": {
+                      "event_id": "9732892",
+                      "factor_id": "1731",
+                      "score": "16:9"
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 38.5,
+                    "factor": 1.46,
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "profit": 1.47,
+                  "w1": {
+                    "cond": 15.5,
+                    "factor": 1.78,
+                    "fonbet_info": {
+                      "event_id": "9732892",
+                      "factor_id": "1871",
+                      "score": "16:9"
+                    },
+                    "name": "ind_total2",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 15.5,
+                    "factor": 2.36,
+                    "name": "ind_total2",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "profit": 1.47,
+                  "w1": {
+                    "cond": -9.5,
+                    "factor": 1.78,
+                    "fonbet_info": {
+                      "event_id": "9732892",
+                      "factor_id": 1845,
+                      "score": "16:9"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 9.5,
+                    "factor": 2.36,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                },
+                {
+                  "profit": 1.6,
+                  "w1": {
+                    "cond": -10.5,
+                    "factor": 2.3,
+                    "fonbet_info": {
+                      "event_id": "9732892",
+                      "factor_id": "910",
+                      "score": "16:9"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 10.5,
+                    "factor": 1.82,
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Tirana (w)",
+            "Skenderbeu (w)"
+          ],
+          "teams2": [
+            "Tirana",
+            "Skenderbeu"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 4,
+              "surebets": [
+                {
+                  "profit": 0.2,
+                  "w1": {
+                    "factor": 1.8,
+                    "fonbet_info": {
+                      "event_id": "9726056",
+                      "factor_id": 923,
+                      "score": "0:0"
+                    },
+                    "name": "o2"
+                  },
+                  "w2": {
+                    "factor": 2.26,
+                    "name": "o1"
+                  }
+                },
+                {
+                  "profit": 0.63,
+                  "w1": {
+                    "cond": -2.5,
+                    "factor": 2.35,
+                    "fonbet_info": {
+                      "event_id": "9726056",
+                      "factor_id": 1846,
+                      "score": "0:0"
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": 2.5,
+                    "factor": 1.76,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "National Trainig Center",
+            "Mizuno"
+          ],
+          "teams2": [
+            "National Training Center",
+            "Mizuno"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 2,
+              "surebets": [
+                {
+                  "profit": 2.08,
+                  "w1": {
+                    "cond": 41.5,
+                    "factor": 1.6,
+                    "fonbet_info": {
+                      "event_id": "9732646",
+                      "factor_id": 1848,
+                      "score": "10:8"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 41.5,
+                    "factor": 2.82,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 2.44,
+                  "w1": {
+                    "cond": 42.5,
+                    "factor": 2.0,
+                    "fonbet_info": {
+                      "event_id": "9732646",
+                      "factor_id": "1696",
+                      "score": "10:8"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 42.5,
+                    "factor": 2.1,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 1.25,
+                  "w1": {
+                    "cond": 40.5,
+                    "factor": 1.35,
+                    "fonbet_info": {
+                      "event_id": "9732646",
+                      "factor_id": "1727",
+                      "score": "10:8"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 40.5,
+                    "factor": 4.05,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 1.56,
+                  "w1": {
+                    "cond": 43.5,
+                    "factor": 2.6,
+                    "fonbet_info": {
+                      "event_id": "9732646",
+                      "factor_id": "1730",
+                      "score": "10:8"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 43.5,
+                    "factor": 1.66667,
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 0.02,
+                  "w1": {
+                    "cond": 8.5,
+                    "factor": 1.55,
+                    "fonbet_info": {
+                      "event_id": "9732646",
+                      "factor_id": 1846,
+                      "score": "10:8"
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": -8.5,
+                    "factor": 2.82,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                },
+                {
+                  "profit": 0.3,
+                  "w1": {
+                    "cond": 7.5,
+                    "factor": 1.92,
+                    "fonbet_info": {
+                      "event_id": "9732646",
+                      "factor_id": "912",
+                      "score": "10:8"
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": -7.5,
+                    "factor": 2.1,
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "CSM Bucuresti (w)",
+            "Penicillina Iasi (w)"
+          ],
+          "teams2": [
+            "Bucuresti",
+            "Penicilina Iasi"
+          ]
+        }
+      ]
+    },
+    {
+      "basket": [],
+      "book1": "fonbet",
+      "book2": "olimp",
+      "hockey": [
+        {
+          "parts": [
+            {
+              "part": 1,
+              "surebets": [
+                {
+                  "profit": 9.93,
+                  "w1": {
+                    "factor": 1.16,
+                    "fonbet_info": {
+                      "event_id": "9727119",
+                      "factor_id": 924,
+                      "score": "1:1"
+                    },
+                    "name": "o1x"
+                  },
+                  "w2": {
+                    "factor": 21.0,
+                    "name": "o1",
+                    "olimp_info": {
+                      "factor_id": "909850663:38292227:1:10:-9999:1:0:0:2",
+                      "sport_id": 2
+                    }
+                  }
+                },
+                {
+                  "profit": 59.93,
+                  "w1": {
+                    "factor": 2.3,
+                    "fonbet_info": {
+                      "event_id": "9727119",
+                      "factor_id": 1571,
+                      "score": "1:1"
+                    },
+                    "name": "o12"
+                  },
+                  "w2": {
+                    "factor": 5.25,
+                    "name": "ox",
+                    "olimp_info": {
+                      "factor_id": "909850664:38292227:1:10:-9999:2:0:0:2",
+                      "sport_id": 2
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Canada",
+            "Czech Republic"
+          ],
+          "teams2": [
+            "Czech Republic",
+            "Canada"
+          ]
+        }
+      ],
+      "soccer": [
+        {
+          "parts": [
+            {
+              "part": 1,
+              "surebets": [
+                {
+                  "profit": 0.27,
+                  "w1": {
+                    "cond": 1.5,
+                    "factor": 1.45,
+                    "fonbet_info": {
+                      "event_id": "9734396",
+                      "factor_id": 931,
+                      "score": "1:0"
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 1.5,
+                    "factor": 3.25,
+                    "fonbet_info": {
+                      "factor_id": "909846354:38290674:3:12:1.5:1:0:0:1",
+                      "sport_id": 1
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Lichtenberg 47",
+            "Herta 03 Zelendorf"
+          ],
+          "teams2": [
+            "Lichtenberg 47",
+            "Hertha 03 Zehlendorf"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 1,
+              "surebets": [
+                {
+                  "profit": 43.33,
+                  "w1": {
+                    "factor": 4.3,
+                    "fonbet_info": {
+                      "event_id": "9728946",
+                      "factor_id": 1571,
+                      "score": "0:0"
+                    },
+                    "name": "o12"
+                  },
+                  "w2": {
+                    "factor": 2.15,
+                    "name": "ox",
+                    "olimp_info": {
+                      "factor_id": "895422533:37794704:1:10:-9999:2:0:0:1",
+                      "sport_id": 1
+                    }
+                  }
+                },
+                {
+                  "profit": 62.96,
+                  "w1": {
+                    "cond": 0.5,
+                    "factor": 4.0,
+                    "fonbet_info": {
+                      "event_id": "9728946",
+                      "factor_id": 930,
+                      "score": "0:0"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 0.5,
+                    "factor": 2.75,
+                    "fonbet_info": {
+                      "factor_id": "895422479:37794704:2:12:0.5:1:0:0:1",
+                      "sport_id": 1
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 6.67,
+                  "w1": {
+                    "cond": 0.0,
+                    "factor": 1.6,
+                    "fonbet_info": {
+                      "event_id": "9728946",
+                      "factor_id": 927,
+                      "score": "0:0"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -0.0,
+                    "factor": 3.2,
+                    "fonbet_info": {
+                      "factor_id": "909851620:37794704:2:11:0:2:0:0:1",
+                      "sport_id": 1
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Leicester City",
+            "Stoke City"
+          ],
+          "teams2": [
+            "Leicester City",
+            "Stoke City"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 1.25,
+                  "w1": {
+                    "cond": 0.5,
+                    "factor": 1.62,
+                    "fonbet_info": {
+                      "event_id": "9710992",
+                      "factor_id": 931,
+                      "score": "0:0"
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 0.5,
+                    "factor": 2.7,
+                    "fonbet_info": {
+                      "factor_id": "907256019:38225679:3:5:0.5:1:0:0:1",
+                      "sport_id": 1
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Siam Navy",
+            "Bangkok Glass"
+          ],
+          "teams2": [
+            "Siam Navy",
+            "Bangkok Glass"
+          ]
+        }
+      ],
+      "tennis": [
+        {
+          "parts": [
+            {
+              "part": 1,
+              "surebets": [
+                {
+                  "profit": 16.83,
+                  "w1": {
+                    "cond": 8.5,
+                    "factor": 1.98,
+                    "fonbet_info": {
+                      "event_id": "9732471",
+                      "factor_id": 940,
+                      "score": "4:2"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 8.5,
+                    "factor": 2.85,
+                    "fonbet_info": {
+                      "factor_id": "909859324:38306964:2:12:8.5:1:0:0:3",
+                      "sport_id": 3
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 11.86,
+                  "w1": {
+                    "cond": 9.5,
+                    "factor": 4.4,
+                    "fonbet_info": {
+                      "event_id": "9732471",
+                      "factor_id": "1696",
+                      "score": "4:2"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 9.5,
+                    "factor": 1.5,
+                    "fonbet_info": {
+                      "factor_id": "909859325:38306964:2:12:9.5:1:0:0:3",
+                      "sport_id": 3
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Vaidya K",
+            "Azziz R"
+          ],
+          "teams2": [
+            "Vaidya K.",
+            "Azziz R."
+          ]
+        }
+      ],
+      "volley": [
+        {
+          "parts": [
+            {
+              "part": 2,
+              "surebets": [
+                {
+                  "profit": 0.96,
+                  "w1": {
+                    "cond": 43.5,
+                    "factor": 1.77,
+                    "fonbet_info": {
+                      "event_id": "9717684",
+                      "factor_id": 1848,
+                      "score": "3:6"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 43.5,
+                    "factor": 2.35,
+                    "fonbet_info": {
+                      "factor_id": "909866262:38241347:2:15:43.5:1:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 0.42,
+                  "w1": {
+                    "cond": 44.5,
+                    "factor": 2.13,
+                    "fonbet_info": {
+                      "event_id": "9717684",
+                      "factor_id": "1696",
+                      "score": "3:6"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 44.5,
+                    "factor": 1.9,
+                    "fonbet_info": {
+                      "factor_id": "909866263:38241347:2:15:44.5:1:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 0.53,
+                  "w1": {
+                    "cond": 6.5,
+                    "factor": 1.73,
+                    "fonbet_info": {
+                      "event_id": "9717684",
+                      "factor_id": 1845,
+                      "score": "3:6"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -6.5,
+                    "factor": 2.4,
+                    "fonbet_info": {
+                      "factor_id": "909866271:38241347:2:14:-6.5:2:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                },
+                {
+                  "profit": 0.41,
+                  "w1": {
+                    "cond": 5.5,
+                    "factor": 2.07,
+                    "fonbet_info": {
+                      "event_id": "9717684",
+                      "factor_id": "910",
+                      "score": "3:6"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -5.5,
+                    "factor": 1.95,
+                    "fonbet_info": {
+                      "factor_id": "909866269:38241347:2:14:-5.5:2:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Ugra-Samotlor",
+            "Dynamo Moscow"
+          ],
+          "teams2": [
+            "Ugra Samotlor",
+            "Dynamo Moscow"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 5,
+              "surebets": [
+                {
+                  "profit": 2.86,
+                  "w1": {
+                    "cond": 2.5,
+                    "factor": 1.8,
+                    "fonbet_info": {
+                      "event_id": "9726195",
+                      "factor_id": 1845,
+                      "score": "0:1"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": -2.5,
+                    "factor": 2.4,
+                    "fonbet_info": {
+                      "factor_id": "909872199:38307480:2:95:-2.5:1:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Zhaiyk",
+            "Zhetysu-Zhastar"
+          ],
+          "teams2": [
+            "Zhetysu-Zhastar",
+            "Zhayik-Kondensat"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 3.51,
+                  "w1": {
+                    "cond": 182.5,
+                    "factor": 2.4,
+                    "fonbet_info": {
+                      "event_id": "9727834",
+                      "factor_id": "1734",
+                      "score": "2:1"
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 182.5,
+                    "factor": 1.82,
+                    "fonbet_info": {
+                      "factor_id": "909412973:38297278:3:5:182.5:1:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "profit": 3.01,
+                  "w1": {
+                    "cond": -13.5,
+                    "factor": 2.25,
+                    "fonbet_info": {
+                      "event_id": "9727834",
+                      "factor_id": "989",
+                      "score": "2:1"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 13.5,
+                    "factor": 1.9,
+                    "fonbet_info": {
+                      "factor_id": "909412972:38297278:2:4:13.5:2:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            },
+            {
+              "part": 4,
+              "surebets": [
+                {
+                  "profit": 1.61,
+                  "w1": {
+                    "factor": 1.55,
+                    "fonbet_info": {
+                      "event_id": "9727838",
+                      "factor_id": 921,
+                      "score": "0:0"
+                    },
+                    "name": "o1"
+                  },
+                  "w2": {
+                    "factor": 2.95,
+                    "name": "o2",
+                    "olimp_info": {
+                      "factor_id": "909872015:38297278:1:24:-9999:2:0:0:10",
+                      "sport_id": 10
+                    }
+                  }
+                },
+                {
+                  "profit": 0.96,
+                  "w1": {
+                    "cond": -3.5,
+                    "factor": 2.35,
+                    "fonbet_info": {
+                      "event_id": "9727838",
+                      "factor_id": "910",
+                      "score": "0:0"
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 3.5,
+                    "factor": 1.77,
+                    "fonbet_info": {
+                      "factor_id": "909872023:38297278:2:20:3.5:2:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Halkbank Ankara",
+            "Ziraat Bankasi"
+          ],
+          "teams2": [
+            "Halkbank Ankara",
+            "Ziraat Bankasi"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 2,
+              "surebets": [
+                {
+                  "profit": 0.5,
+                  "w1": {
+                    "cond": 42.5,
+                    "factor": 2.0,
+                    "fonbet_info": {
+                      "event_id": "9732646",
+                      "factor_id": "1696",
+                      "score": "10:8"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 42.5,
+                    "factor": 2.02,
+                    "fonbet_info": {
+                      "factor_id": "909869243:38293426:2:15:42.5:1:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 1.69,
+                  "w1": {
+                    "cond": 43.5,
+                    "factor": 2.6,
+                    "fonbet_info": {
+                      "event_id": "9732646",
+                      "factor_id": "1730",
+                      "score": "10:8"
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 43.5,
+                    "factor": 1.67,
+                    "fonbet_info": {
+                      "factor_id": "909869244:38293426:2:15:43.5:1:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "CSM Bucuresti (w)",
+            "Penicillina Iasi (w)"
+          ],
+          "teams2": [
+            "Bucharest",
+            "ACS Penicilina Iasi"
+          ]
+        }
+      ]
+    },
+    {
+      "basket": [],
+      "book1": "marat",
+      "book2": "olimp",
+      "hockey": [],
+      "soccer": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 0.02,
+                  "w1": {
+                    "cond": 2.0,
+                    "factor": 2.54,
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 2.0,
+                    "factor": 1.65,
+                    "fonbet_info": {
+                      "factor_id": "909819992:38307472:2:5:2:1:0:0:1",
+                      "sport_id": 1
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Forward",
+            "Rynninge"
+          ],
+          "teams2": [
+            "BK Forward",
+            "Rynninge IK"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 2.73,
+                  "w1": {
+                    "cond": 2.0,
+                    "factor": 1.64,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 2.0,
+                    "factor": 2.75,
+                    "fonbet_info": {
+                      "factor_id": "902680862:38062224:3:5:2:1:0:0:1",
+                      "sport_id": 1
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "profit": 0.64,
+                  "w1": {
+                    "cond": 1.0,
+                    "factor": 1.26,
+                    "name": "ind_total1",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 1.0,
+                    "factor": 5.0,
+                    "fonbet_info": {
+                      "factor_id": "902680872:38062224:3:7:1:1:0:0:1",
+                      "sport_id": 1
+                    },
+                    "name": "ind_total1",
+                    "suffix": "O"
+                  }
+                },
+                {
+                  "profit": 0.44,
+                  "w1": {
+                    "cond": -0.0,
+                    "factor": 1.18,
+                    "name": "hand",
+                    "suffix": "2"
+                  },
+                  "w2": {
+                    "cond": 0.0,
+                    "factor": 6.75,
+                    "fonbet_info": {
+                      "factor_id": "902680839:38062224:2:4:0:1:0:0:1",
+                      "sport_id": 1
+                    },
+                    "name": "hand",
+                    "suffix": "1"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Perth Glory",
+            "Melbourne City"
+          ],
+          "teams2": [
+            "Perth Glory",
+            "Melbourne City"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 2.41,
+                  "w1": {
+                    "cond": -3.0,
+                    "factor": 2.7,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 3.0,
+                    "factor": 1.65,
+                    "fonbet_info": {
+                      "factor_id": "907826670:38245240:2:4:3:2:0:0:1",
+                      "sport_id": 1
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Armadale",
+            "Joondalup United"
+          ],
+          "teams2": [
+            "Armadale",
+            "Joondalup United"
+          ]
+        }
+      ],
+      "tennis": [
+        {
+          "parts": [
+            {
+              "part": 1,
+              "surebets": [
+                {
+                  "profit": 26.05,
+                  "w1": {
+                    "cond": 8.5,
+                    "factor": 2.26,
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 8.5,
+                    "factor": 2.85,
+                    "fonbet_info": {
+                      "factor_id": "909859324:38306964:2:12:8.5:1:0:0:3",
+                      "sport_id": 3
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                },
+                {
+                  "profit": 13.41,
+                  "w1": {
+                    "cond": 9.5,
+                    "factor": 4.65,
+                    "name": "total",
+                    "suffix": "O"
+                  },
+                  "w2": {
+                    "cond": 9.5,
+                    "factor": 1.5,
+                    "fonbet_info": {
+                      "factor_id": "909859325:38306964:2:12:9.5:1:0:0:3",
+                      "sport_id": 3
+                    },
+                    "name": "total",
+                    "suffix": "U"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Vaidya, Kanika",
+            "Azziz, Rania"
+          ],
+          "teams2": [
+            "Vaidya K.",
+            "Azziz R."
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 0.98,
+                  "w1": {
+                    "cond": 18.5,
+                    "factor": 2.3,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 18.5,
+                    "factor": 1.8,
+                    "fonbet_info": {
+                      "factor_id": "909473601:38299729:3:5:18.5:1:0:0:3",
+                      "sport_id": 3
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Paquet, Chloe",
+            "Dart, Harriet"
+          ],
+          "teams2": [
+            "Paquet Ch.",
+            "Dart H."
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 2,
+              "surebets": [
+                {
+                  "profit": 0.19,
+                  "w1": {
+                    "factor": 2.44,
+                    "name": "o2"
+                  },
+                  "w2": {
+                    "factor": 1.7,
+                    "name": "o1",
+                    "olimp_info": {
+                      "factor_id": "909483535:38300147:1:22:-9999:1:0:0:3",
+                      "sport_id": 3
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Mendez, Seone",
+            "Ibbou, Ines"
+          ],
+          "teams2": [
+            "Mendez S.",
+            "Ibbou I."
+          ]
+        }
+      ],
+      "volley": [
+        {
+          "parts": [
+            {
+              "part": 0,
+              "surebets": [
+                {
+                  "profit": 4.86,
+                  "w1": {
+                    "cond": -13.5,
+                    "factor": 2.34,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 13.5,
+                    "factor": 1.9,
+                    "fonbet_info": {
+                      "factor_id": "909412972:38297278:2:4:13.5:2:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            },
+            {
+              "part": 4,
+              "surebets": [
+                {
+                  "profit": 3.31,
+                  "w1": {
+                    "factor": 1.59,
+                    "name": "o1"
+                  },
+                  "w2": {
+                    "factor": 2.95,
+                    "name": "o2",
+                    "olimp_info": {
+                      "factor_id": "909872015:38297278:1:24:-9999:2:0:0:10",
+                      "sport_id": 10
+                    }
+                  }
+                },
+                {
+                  "profit": 2.77,
+                  "w1": {
+                    "cond": -4.5,
+                    "factor": 3.05,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 4.5,
+                    "factor": 1.55,
+                    "fonbet_info": {
+                      "factor_id": "909872021:38297278:2:20:4.5:2:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                },
+                {
+                  "profit": 2.58,
+                  "w1": {
+                    "cond": -3.5,
+                    "factor": 2.44,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 3.5,
+                    "factor": 1.77,
+                    "fonbet_info": {
+                      "factor_id": "909872023:38297278:2:20:3.5:2:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                },
+                {
+                  "profit": 0.75,
+                  "w1": {
+                    "cond": -2.5,
+                    "factor": 2.01,
+                    "name": "hand",
+                    "suffix": "1"
+                  },
+                  "w2": {
+                    "cond": 2.5,
+                    "factor": 2.02,
+                    "fonbet_info": {
+                      "factor_id": "909872025:38297278:2:20:2.5:2:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "hand",
+                    "suffix": "2"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Halkbank",
+            "Ziraat Bankasi"
+          ],
+          "teams2": [
+            "Halkbank Ankara",
+            "Ziraat Bankasi"
+          ]
+        },
+        {
+          "parts": [
+            {
+              "part": 4,
+              "surebets": [
+                {
+                  "profit": 0.68,
+                  "w1": {
+                    "cond": 46.5,
+                    "factor": 3.46,
+                    "name": "total",
+                    "suffix": "U"
+                  },
+                  "w2": {
+                    "cond": 46.5,
+                    "factor": 1.42,
+                    "fonbet_info": {
+                      "factor_id": "909854554:38297738:3:21:46.5:1:0:0:10",
+                      "sport_id": 10
+                    },
+                    "name": "total",
+                    "suffix": "O"
+                  }
+                }
+              ]
+            }
+          ],
+          "teams1": [
+            "Kula Belediyesi",
+            "Maliye Milli Piyango"
+          ],
+          "teams2": [
+            "Jeopark Kula Bld.",
+            "Maliye Milli Piyango"
+          ]
+        }
+      ]
+    }
+  ]
+}
