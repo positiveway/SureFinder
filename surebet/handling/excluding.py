@@ -4,7 +4,7 @@ from surebet import find_in_iter, reverse_enum
 from surebet.handling.surebets import Surebets, Surebet
 
 women_patterns = ["\([Ww]\)"]
-other_patterns = ["\([Rr]\)", "U\d+", "\(U\d+\)", "U-\d+", "Reserves"]
+other_patterns = ["\([Rr]\)", "U\d+", "\(U\d+\)", "U-\d+", "Reserves", "\(res\)"]
 
 
 def _del_equal(found_obj, posit_obj) -> None:

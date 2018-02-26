@@ -7,10 +7,11 @@ from surebet.handling.searching import find_surebets
 from surebet.handling.surebets import Surebets
 from surebet.loading.selenium import SeleniumService
 from surebet.parsing.bets import Bookmakers
-from surebet.json_funcs import obj_dumps
 
 
-class JsonSurebets:
+class SafeSurebets:
+    """Thread safe class to store detailed_surebets"""
+
     def __init__(self):
         self._detailed_surebets = None
         self.lock = Lock()
@@ -18,7 +19,7 @@ class JsonSurebets:
     @property
     def detailed_surebets(self):
         with self.lock:
-            return obj_dumps(self._detailed_surebets)
+            return self._detailed_surebets
 
     @detailed_surebets.setter
     def detailed_surebets(self, detailed_surebets):
@@ -67,15 +68,15 @@ def start_scanning(iter_num=None):
 def main(iter_num=None):
     from surebet.ui.server import run_server
 
-    json_surebets = JsonSurebets()
+    safe_surebets = SafeSurebets()
 
-    server = Thread(target=run_server, args=(json_surebets,))
+    server = Thread(target=run_server, args=(safe_surebets,))
     server.start()
 
     print("Scanner is started")
 
     for idx, detailed_surebets in enumerate(start_scanning(iter_num)):
-        json_surebets.detailed_surebets = detailed_surebets
+        safe_surebets.detailed_surebets = detailed_surebets
 
         print("ITERATION #{}".format(idx))
 
