@@ -1,0 +1,20 @@
+{
+  "clientId": 4052045,
+  "coupon": {
+    "amount": 0,
+    "bets": [
+      {
+        "event": 9751130,
+        "factor": 922,
+        "num": 1,
+        "score": "0:0",
+        "value": 3.45
+      }
+    ],
+    "flexBet": "up",
+    "flexParam": false
+  },
+  "fsid": "wLLvocmsxZlZoaaj507m9hGp",
+  "requestId": 1439195959,
+  "sysId": 1
+}

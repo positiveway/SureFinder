@@ -16,6 +16,14 @@ DEFAULT_ACCOUNT = {
 }
 
 
+def save_json(filename: str, data):
+    from os import path
+    rsrc = path.join(path.dirname(__file__), '../', 'tests', 'betting', 'fonbet', 'placing{}.json'.format(filename))
+    from surebet.json_funcs import obj_dumps
+    with open(rsrc, 'w') as f:
+        f.write(obj_dumps(data))
+
+
 def get_dumped_payload(payload):
     dumped = dumps(payload)
     dumped = dumped.replace(": ", ":")  # remove spaces between items
@@ -94,7 +102,7 @@ class FonbetBot:
                 "bets": [{
                     "num": 1,
                     "event": fonbet_info.event_id,
-                    "factor": fonbet_info.factor_id,
+                    "factor": int(fonbet_info.factor_id),
                     "value": wager.factor,
                     "score": fonbet_info.score,
                 }]
@@ -107,18 +115,21 @@ class FonbetBot:
         self._check_in_bounds(payload, amount)
         payload["coupon"]["amount"] = amount
 
+        save_json('Payload', payload)
         resp = self.session.post(url, headers=browser_headers, json=payload)
         check_status(resp.status_code)
+        save_json('PyaloadResp', resp.json())
 
         self._check_result(payload)
 
     def _get_request_id(self) -> int:
         """request_id is generated every time we placing bet"""
         url = self.common_url.format("coupon/requestId")
-
+        save_json('GetReqId', self.base_payload)
         resp = self.session.post(url, headers=browser_headers, json=self.base_payload)
         check_status(resp.status_code)
         res = resp.json()
+        save_json('GetReqIdResp', res)
         if "requestId" not in res:
             logging.error(res)
             raise LoadException("key 'requestId' not found in response")
@@ -130,9 +141,11 @@ class FonbetBot:
         url = self.common_url.format("coupon/getMinMax")
         payload["coupon"]["amount"] = 0
 
+        save_json('CheckInBounds', payload)
         resp = self.session.post(url, headers=browser_headers, json=payload)
         check_status(resp.status_code)
         res = resp.json()
+        save_json('CheckInBoundsResp', res)
         if "min" not in res:
             logging.info(res)
             raise LoadException("key 'min' not found in response")
@@ -147,9 +160,11 @@ class FonbetBot:
         url = self.common_url.format("coupon/result")
         del payload["coupon"]
 
+        save_json('CheckResult', payload)
         resp = self.session.post(url, headers=browser_headers, json=payload)
         check_status(resp.status_code)
         res = resp.json()
+        save_json('CheckResultResp', res)
         # there's situations where "temporary unknown result" means successful response
         if "temporary unknown result" not in resp.text and ("coupon" not in res or res["coupon"]["resultCode"] != 0):
             logging.error(res)
