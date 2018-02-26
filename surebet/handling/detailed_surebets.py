@@ -23,7 +23,11 @@ class DetailedSurebet:
         """
         self.book1, self.book2 = books.book1, books.book2
         self.sport = sport
-        self.teams1, self.teams2 = events.teams1, events.teams2
+
+        teams_sep = " vs "
+        self.teams1 = teams_sep.join(events.teams1)
+        self.teams2 = teams_sep.join(events.teams2)
+
         self.part = part.part
         self.w1, self.w2 = surebet.w1, surebet.w2
         self.profit = surebet.profit
@@ -31,18 +35,14 @@ class DetailedSurebet:
         self.id = surebet.id
 
     def __str__(self):
-        teams_sep = " vs "
-        event_name1 = teams_sep.join(self.teams1)
-        event_name2 = teams_sep.join(self.teams2)
-
-        common_pattern = "{book:<6} | {ev_name:<60} | {wager}\n"
+        common_pattern = "{book:<6} | {teams:<60} | {wager}\n"
 
         str_form = "profit: {profit:<5} | lifetime: {time:<6} | {sport:<6} | part: {part}\n".format(
             profit=self.profit, time=self.lifetime, sport=self.sport, part=self.part)
 
-        second_line = common_pattern.format(book=self.book1, ev_name=event_name1, wager=self.w1)
+        second_line = common_pattern.format(book=self.book1, teams=self.teams1, wager=self.w1)
         str_form += second_line
-        str_form += common_pattern.format(book=self.book2, ev_name=event_name2, wager=self.w2)
+        str_form += common_pattern.format(book=self.book2, teams=self.teams2, wager=self.w2)
         str_form += "-" * len(second_line)
 
         return str_form
