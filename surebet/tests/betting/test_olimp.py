@@ -4,6 +4,8 @@ from unittest.mock import patch
 import surebet.betting.olimp
 from surebet.loading.olimp import name
 from surebet.tests.betting import *
+from surebet.handling.surebets import OlimpWager, OlimpInfo
+from surebet.parsing.bets import IdBet
 
 
 @patch('surebet.betting.olimp.get_session_with_proxy')
@@ -31,5 +33,25 @@ def test_signing():
     logging.info('PASS: signing')
 
 
+@patch('surebet.betting.olimp.OlimpBot')
+def mock_placing(wager, data, resp, mock_bot):
+    bot = surebet.betting.olimp.OlimpBot()
+    bot.session = MockSession(resp)
+
+    bet = IdBet(wager['bet']['factor'], wager['bet']['factor_id'])
+    info = OlimpInfo(wager['olimp_info']['sport_id'], wager['olimp_info']['factor_id'])
+    wager = OlimpWager(wager['name'], bet, info)
+
+    bot.place_bet.side_effect = surebet.betting.olimp.OlimpBot.place_bet
+    bot.place_bet(data['sum'], wager)
+
+
 def test_placing():
-    pass
+    wager = read_json(name, 'placingWager')
+    payload = read_json(name, 'placingPayload')
+    resp = read_json(name, 'placingPayloadResp')
+
+    mock_placing(wager, payload, resp)
+
+
+test_placing()

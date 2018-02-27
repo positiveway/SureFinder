@@ -13,7 +13,11 @@ def read_json(site_name, filename):
 
 def assert_dicts_equal(dict1, dict2):
     for key, value in dict1.items():
-        assert key in dict2 and value == dict2[key]
+        assert key in dict2
+        if not isinstance(value, dict):
+            assert value == dict2[key]
+        else:
+            assert_dicts_equal(value, dict2[key])
 
 
 class MockResponse(MagicMock):
