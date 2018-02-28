@@ -121,7 +121,7 @@ class HandicapInfo:
 
 
 def is_valid_team_names(first_team, second_team):
-    return not (CORNERS_STR in first_team and CORNERS_STR in second_team)
+    return first_team and second_team and not (CORNERS_STR in first_team and CORNERS_STR in second_team)
 
 
 def parse(source, bookmaker):
