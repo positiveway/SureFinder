@@ -11,6 +11,6 @@ def get_session_with_proxy(name):
     session_proxies = proxies[name]
 
     session = Session()
-    session.proxies = session_proxies
+    # session.proxies = session_proxies
 
     return session
