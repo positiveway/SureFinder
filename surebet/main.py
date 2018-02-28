@@ -13,7 +13,7 @@ class SafeSurebets:
     """Thread safe class to store detailed_surebets"""
 
     def __init__(self):
-        self._detailed_surebets = None
+        self._detailed_surebets = []
         self.lock = Lock()
 
     @property
