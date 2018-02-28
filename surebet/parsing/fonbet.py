@@ -90,7 +90,7 @@ def parse_event(rows_info):
 
     parts = []
     bets = None
-    if is_not_blocked:
+    if is_not_blocked and is_has_score(node):
         bets = handle_row(node)
         bets.part = 0
 
@@ -131,6 +131,11 @@ def get_event_info(row_node):
         is_not_blocked = title[0].get('class') != 'eventBlocked'
 
     return name, is_not_blocked
+
+
+def is_has_score(node):
+    score_node = xpath_with_check(node, SCORE)[0]
+    return "none" not in score_node.get("style")
 
 
 def parse_event_details(node):
