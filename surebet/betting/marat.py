@@ -4,7 +4,6 @@ from python3_anticaptcha import ImageToTextTask
 from surebet.betting.fonbet import get_dumped_payload
 from surebet.betting import get_session_with_proxy
 from surebet.loading import browser_headers, check_status, LoadException
-from surebet.loading.selenium import SeleniumService
 
 name = "marat"
 
@@ -17,90 +16,7 @@ DEFAULT_ACCOUNT = {
 
 COMMON_URL = "https://www.marathonbet.com/en/{}"
 
-
-def get_selenium_proxy():
-    host = "62.141.38.224"
-    port = "65233"
-    login = "korovkinandg"
-    passw = "L2f8SwJ"
-
-    from zipfile import ZipFile
-
-    from selenium import webdriver
-
-    manifest_json = """
-    {
-        "version": "1.0.0",
-        "manifest_version": 2,
-        "name": "Chrome Proxy",
-        "permissions": [
-            "proxy",
-            "tabs",
-            "unlimitedStorage",
-            "storage",
-            "<all_urls>",
-            "webRequest",
-            "webRequestBlocking"
-        ],
-        "background": {
-            "scripts": ["background.js"]
-        },
-        "minimum_chrome_version":"22.0.0"
-    }
-    """
-
-    background_js = """
-    var config = {
-            mode: "fixed_servers",
-            rules: {
-              singleProxy: {
-                scheme: "http",
-                host: "%s",
-                port: parseInt(%s)
-              },
-              bypassList: ["localhost"]
-            }
-          };
-
-    chrome.proxy.settings.set({value: config, scope: "regular"}, function() {});
-
-    function callbackFn(details) {
-        return {
-            authCredentials: {
-                username: "%s",
-                password: "%s"
-            }
-        };
-    }
-
-    chrome.webRequest.onAuthRequired.addListener(
-                callbackFn,
-                {urls: ["<all_urls>"]},
-                ['blocking']
-    );
-    """ % (host, port, login, passw)
-
-    chrome_options = webdriver.ChromeOptions()
-
-    plugin_file = 'proxy_auth_plugin.zip'
-
-    with ZipFile(plugin_file, 'w') as zp:
-        zp.writestr("manifest.json", manifest_json)
-        zp.writestr("background.js", background_js)
-    chrome_options.add_extension(plugin_file)
-
-    return webdriver.Chrome(chrome_options=chrome_options)
-
-
-def get_selenium_proxy_without_auth():
-    from selenium import webdriver
-
-    PROXY = "http://62.141.38.224:65233"
-
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--proxy-server=%s' % PROXY)
-
-    return webdriver.Chrome(chrome_options=chrome_options)
+LOCAL = True
 
 
 class MaratBot:
@@ -111,11 +27,36 @@ class MaratBot:
         headers["Content-Type"] = "application/x-www-form-urlencoded"
         self.session.headers.update(headers)
 
-        SeleniumService()
-        self.browser = get_selenium_proxy()  # SeleniumService().new_instance().browser
-        self.browser.implicitly_wait(60)
+        from pickle import load, dump
+        if not LOCAL:
+            self.sign_in(account)
 
-        self.sign_in(account)
+            mode = "wb"
+            with open("headers", mode) as out:
+                dump(self.session.headers, out)
+
+            with open("cookies", mode) as out:
+                new_cookies = {}
+                for k, v in self.session.cookies.items():
+                    k = k.upper()
+                    if k == "SESSION_KEY" or "PUNTER" in k:
+                        new_cookies[k] = v
+
+                self.session.cookies.clear()
+                self.session.cookies.update(new_cookies)
+
+                dump(self.session.cookies, out)
+
+            exit(0)
+        else:
+            mode = "rb"
+            with open("headers", mode) as out:
+                headers = load(out)
+                self.session.headers = headers
+
+            with open("cookies", mode) as out:
+                cookies = load(out)
+                self.session.cookies = cookies
 
     def sign_in(self, account: dict):
         url = COMMON_URL.format("login.htm")
@@ -133,19 +74,6 @@ class MaratBot:
         if "loginResult" not in res or res["loginResult"] != "SUCCESS":
             logging.error(res)
             raise LoadException("failed to sign in")
-
-        self._set_up_browser()
-
-    def _set_up_browser(self):
-        url = COMMON_URL.format("live")
-        self.browser.get(url)
-        self.browser.get_screenshot_as_file("first.png")
-
-        for key, val in self.session.cookies.get_dict().items():
-            self.browser.add_cookie({"name": key, "value": val})
-
-        self.browser.get(url)
-        self.browser.get_screenshot_as_file("second.png")
 
     def _get_captcha_code(self):
         url = COMMON_URL.format("captcha.htm")
@@ -179,14 +107,16 @@ class MaratBot:
             "b": get_dumped_payload(bet_info),
         }
 
-        self._update_cookies()
+        print(self.session.cookies.get_dict())
 
-        resp = self.session.post(url, data=form_data)
-        print(resp.text)
+        del self.session.cookies["SESSION_KEY"]
+
+        resp = self.session.post(url, data=form_data, verify=False)  # sending outdated request to set actual cookies
+        # print(resp.text)
+
+        print(self.session.cookies.get_dict())
+
+        resp = self.session.post(url, data=form_data, verify=False)
+        print(self.session.cookies.get_dict())
+        # print(resp.text)
         check_status(resp.status_code)
-
-    def _update_cookies(self):
-        cookies = {}
-        for cookie in self.browser.get_cookies():
-            cookies[cookie["name"]] = cookie["value"]
-        self.session.cookies.update(cookies)

@@ -11,6 +11,9 @@ def get_session_with_proxy(name):
     session_proxies = proxies[name]
 
     session = Session()
-    session.proxies = session_proxies
+
+    from surebet.betting.marat import LOCAL
+    if not LOCAL:
+        session.proxies = session_proxies
 
     return session
