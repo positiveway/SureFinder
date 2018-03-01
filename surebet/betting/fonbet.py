@@ -42,14 +42,13 @@ FONBET_HEADERS = {
 
 FONBET_LOGIN_URL = "https://23.111.18.92/session/login?lang=eng"
 
-APPSFLYER = {
+FONBET_STATS = {
     "User-Agent": {"User-Agent": "Dalvik/2.1.0 (Linux; U; Android 5.1; m3 Build/LMY47I)"},
     "url_stats": "https://stats.appsflyer.com/stats",
     "url_android": "https://t.appsflyer.com/api/v4/androidevent?buildnumber=3.2&app_id=com.bkfonbet",
+    "url_flurry": "https://data.flurry.com/aap.do",
     "data_stats": "platform=Android&gcd_conversion_data_timing=8&devkey=xKU2sDi5jALL7PNtqvbUZb&statType=user_closed_app&time_in_app=1468&deviceFingerPrintId=ffffffff-bde3-9677-ffff-ffffcaa88cda&app_id=com.bkfonbet&uid=1517994135280-1947177950217391747&launch_counter=25"
 }
-
-FLURRY_URL = "https://data.flurry.com/aap.do"
 
 
 def get_random_str():
@@ -94,7 +93,7 @@ class FonbetBot:
         self.common_url = get_common_url()
 
         self.base_payload = {
-            "sysId": 1,
+            "sysId": 4,
         }
 
         self.sign_in(account)
@@ -152,12 +151,18 @@ class FonbetBot:
                 }]
             }
         })
+        payload.update(DEVICE_ID)
+        payload.update(LANG)
 
         if isinstance(wager, FonbetCondWager):  # if wager has condition and it should be in payload
             payload["coupon"]["bets"][0]["param"] = int(wager.cond * 100)
 
         self._check_in_bounds(payload, amount)
         payload["coupon"]["amount"] = amount
+
+        payload.update(BET)
+        payload.update(DEVICE_ID)
+        payload.update(PLATFORM)
 
         resp = self.session.post(url, headers=browser_headers, json=payload)
         check_status(resp.status_code)
@@ -199,6 +204,11 @@ class FonbetBot:
         url = self.common_url.format("coupon/result")
         del payload["coupon"]
 
+        del payload["appVersion"]
+        del payload["deviceManufacturer"]
+        del payload["deviceModel"]
+        del payload["platform"]
+
         resp = self.session.post(url, headers=browser_headers, json=payload)
         check_status(resp.status_code)
         res = resp.json()
@@ -208,28 +218,28 @@ class FonbetBot:
             raise LoadException("response came with an error")
 
     def _sign_in_analytics(self):
-        headers = APPSFLYER["User-Agent"].update(CONTENT_TYPE["plain"])
-        resp = self.session.post(APPSFLYER["url_stats"], data=APPSFLYER["data_stats"], headers=headers)
+        headers = FONBET_STATS["User-Agent"].update(CONTENT_TYPE["plain"])
+        resp = self.session.post(FONBET_STATS["url_stats"], data=FONBET_STATS["data_stats"], headers=headers)
         check_status(resp.status_code)
 
         filename_flurry = path.join(betting_dir, 'aap.do')
         with open(filename_flurry, 'rb') as f_flurry:
             data = f_flurry.read()
 
-        headers = APPSFLYER["User-Agent"].update(CONTENT_TYPE["bin"])
-        resp = self.session.post(FLURRY_URL, data=data, headers=headers)
+        headers = FONBET_STATS["User-Agent"].update(CONTENT_TYPE["bin"])
+        resp = self.session.post(FONBET_STATS["url_flurry"], data=data, headers=headers)
         check_status(resp.status_code)
+
+        if "Public-Key-Pins-Report-Only" not in resp.headers:
+            raise LoadException("Stats didn't accepted")
 
         filename_flyer = path.join(betting_dir, 'appsflyer.json')
         with open(filename_flyer) as f_flyer:
             data = f_flyer.read()
 
-        headers = APPSFLYER["User-Agent"].update(CONTENT_TYPE["json"])
-        resp = self.session.post(APPSFLYER["url_android"], data=data, headers=headers)
+        headers = FONBET_STATS["User-Agent"].update(CONTENT_TYPE["json"])
+        resp = self.session.post(FONBET_STATS["url_android"], data=data, headers=headers)
         check_status(resp.status_code)
 
         if resp.text != '"ok"':
             raise LoadException("Stats didn't accepted")
-
-
-FonbetBot()
