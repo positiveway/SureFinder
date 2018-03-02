@@ -102,8 +102,6 @@ class FonbetBot:
         """Sign in to fonbet, remember session id and client id."""
         self._sign_in_analytics()
 
-        url = self.common_url.format("login")
-
         self.base_payload["clientId"] = account["login"]
 
         filename = path.join(betting_dir, 'payload.json')
@@ -119,7 +117,11 @@ class FonbetBot:
         payload["sign"] = sign
 
         data = get_dumped_payload(payload)
-        resp = self.session.post(FONBET_LOGIN_URL, headers=FONBET_HEADERS, data=data, verify=False)
+
+        headers = FONBET_HEADERS.copy()
+        headers.update(CONTENT_TYPE["json"])
+
+        resp = self.session.post(FONBET_LOGIN_URL, headers=headers, data=data, verify=False)
         check_status(resp.status_code)
         res = resp.json()
         if "fsid" not in res:
@@ -164,7 +166,10 @@ class FonbetBot:
         payload.update(DEVICE_ID)
         payload.update(PLATFORM)
 
-        resp = self.session.post(url, headers=browser_headers, json=payload)
+        headers = FONBET_HEADERS.copy()
+        headers.update(CONTENT_TYPE["json"])
+
+        resp = self.session.post(url, headers=headers, json=payload)
         check_status(resp.status_code)
 
         self._check_result(payload)
@@ -173,7 +178,10 @@ class FonbetBot:
         """request_id is generated every time we placing bet"""
         url = self.common_url.format("coupon/requestId")
 
-        resp = self.session.post(url, headers=browser_headers, json=self.base_payload)
+        headers = FONBET_HEADERS.copy()
+        headers.update(CONTENT_TYPE["json"])
+
+        resp = self.session.post(url, headers=headers, json=self.base_payload)
         check_status(resp.status_code)
         res = resp.json()
         if "requestId" not in res:
@@ -187,7 +195,10 @@ class FonbetBot:
         url = self.common_url.format("coupon/getMinMax")
         payload["coupon"]["amount"] = 0
 
-        resp = self.session.post(url, headers=browser_headers, json=payload)
+        headers = FONBET_HEADERS.copy()
+        headers.update(CONTENT_TYPE["json"])
+
+        resp = self.session.post(url, headers=headers, json=payload)
         check_status(resp.status_code)
         res = resp.json()
         if "min" not in res:
@@ -209,7 +220,10 @@ class FonbetBot:
         del payload["deviceModel"]
         del payload["platform"]
 
-        resp = self.session.post(url, headers=browser_headers, json=payload)
+        headers = FONBET_HEADERS.copy()
+        headers.update(CONTENT_TYPE["json"])
+
+        resp = self.session.post(url, headers=headers, json=payload)
         check_status(resp.status_code)
         res = resp.json()
         # there's situations where "temporary unknown result" means successful response
@@ -218,7 +232,9 @@ class FonbetBot:
             raise LoadException("response came with an error")
 
     def _sign_in_analytics(self):
-        headers = FONBET_STATS["User-Agent"].update(CONTENT_TYPE["plain"])
+        headers = FONBET_STATS["User-Agent"].copy()
+        headers.update(CONTENT_TYPE["plain"])
+
         resp = self.session.post(FONBET_STATS["url_stats"], data=FONBET_STATS["data_stats"], headers=headers)
         check_status(resp.status_code)
 
@@ -226,7 +242,9 @@ class FonbetBot:
         with open(filename_flurry, 'rb') as f_flurry:
             data = f_flurry.read()
 
-        headers = FONBET_STATS["User-Agent"].update(CONTENT_TYPE["bin"])
+        headers = FONBET_STATS["User-Agent"].copy()
+        headers.update(CONTENT_TYPE["bin"])
+
         resp = self.session.post(FONBET_STATS["url_flurry"], data=data, headers=headers)
         check_status(resp.status_code)
 
@@ -237,7 +255,9 @@ class FonbetBot:
         with open(filename_flyer) as f_flyer:
             data = f_flyer.read()
 
-        headers = FONBET_STATS["User-Agent"].update(CONTENT_TYPE["json"])
+        headers = FONBET_STATS["User-Agent"].copy()
+        headers.update(CONTENT_TYPE["json"])
+
         resp = self.session.post(FONBET_STATS["url_android"], data=data, headers=headers)
         check_status(resp.status_code)
 
