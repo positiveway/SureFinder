@@ -236,7 +236,11 @@ def cond_bet_handler(detail, cond_bet_type):
             continue
 
         for cur_col in range(2):
-            cond_node = xpath_with_check(row_node, xp_row_cond.format(cur_col + 1))[0]  # Xpath: numbering from 1
+            cond_node = row_node.xpath(xp_row_cond.format(cur_col + 1))  # Xpath: numbering from 1
+            if not len(cond_node):
+                continue
+
+            cond_node = cond_node[0]
             cond = get_cond(get_text(cond_node))
 
             factor_node = xpath_with_check(row_node, xp_row_factor.format(cur_col + 1))[0]
