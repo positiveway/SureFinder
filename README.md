@@ -6,7 +6,7 @@
 **Features:**
   * Stability & Relaibility - uses Selenium and mobile apps API for interacting with bookmakers
   * 24/7 - designed for non-stop usage, search for surebets at anytime
-  * Placing bot - automatically place bets on founded surebets
+  * Placing bot - automatically place bets on found surebets
   
 **Usage:**
   * [Latest release](https://github.com/korovkinand/SureFinder/releases)
