@@ -7,8 +7,8 @@ import logging
 name = "olimp"
 
 DEFAULT_ACCOUNT = {
-    "login": "3959858",
-    "passw": "O335673J",
+    "login": "LOGIN",
+    "passw": "PASSWORD",
 }
 
 

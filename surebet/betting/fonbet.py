@@ -11,8 +11,8 @@ from surebet.handling.surebets import FonbetCondWager
 name = "fonbet"
 
 DEFAULT_ACCOUNT = {
-    "login": 4052045,
-    "password": "VCqA1CkK",
+    "login": "LOGIN",
+    "password": "PASSWORD",
 }
 
 
