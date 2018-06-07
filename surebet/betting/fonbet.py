@@ -1,10 +1,11 @@
 import requests
-from random import random
+from random import random, choice
 import hmac
 from hashlib import sha512
-from json import dumps
+from json import dumps, load
+from os import path
 
-from surebet.betting import get_session_with_proxy
+from surebet.betting import get_session_with_proxy, package_dir as betting_dir
 from surebet.loading import *
 from surebet.handling.surebets import FonbetCondWager
 
@@ -14,6 +15,50 @@ DEFAULT_ACCOUNT = {
     "login": "LOGIN",
     "password": "PASSWORD",
 }
+
+DEVICE_ID = {"deviceid": "A5-f8fa8b79c4ca4938"}
+PLATFORM = {"platform": "mobile_android"}
+SYS_ID = {"sysId": 4}
+LANG = {"lang": "en"}
+TOKEN = {"token": "eM5aX9SaQFQ:APA91bH3MGDCqKEjGQBbjpXxf07x1T_OLpEp6xcw_0HOer0F1B5K5y-CD9hmKgmLY3oKELHFW6VukEeu34awuz1-r2A8VKq4hn0sQFJJ_okGrG8vYkFYvSIXWQst_UFG5yaOtHsVyf6N"}
+BET = {
+    "appVersion": "v. 4.6.7b (467)",
+    "deviceManufacturer": "Meizu",
+    "deviceModel": "m3",
+}
+
+CONTENT_TYPE = {
+    "json": {"Content-Type": "application/json; charset=UTF-8"},
+    "plain": {"Content-Type": "application/text"},
+    "bin": {"Content-Type": "application/octet-stream"}
+}
+
+FONBET_HEADERS = {
+    "User-Agent": "Fonbet/4.6.7b (Android; Phone; com.bkfonbet)",
+    "Content-Type": "application/json; charset=UTF-8",
+    "Accept-Encoding": "gzip",
+    "Connection": "Keep-Alive"
+}
+
+FONBET_LOGIN_URL = "https://23.111.18.92/session/login?lang=eng"
+
+FONBET_STATS = {
+    "User-Agent": {"User-Agent": "Dalvik/2.1.0 (Linux; U; Android 5.1; m3 Build/LMY47I)"},
+    "url_stats": "https://stats.appsflyer.com/stats",
+    "url_android": "https://t.appsflyer.com/api/v4/androidevent?buildnumber=3.2&app_id=com.bkfonbet",
+    "url_flurry": "https://data.flurry.com/aap.do",
+    "data_stats": "platform=Android&gcd_conversion_data_timing=8&devkey=xKU2sDi5jALL7PNtqvbUZb&statType=user_closed_app&time_in_app=1468&deviceFingerPrintId=ffffffff-bde3-9677-ffff-ffffcaa88cda&app_id=com.bkfonbet&uid=1517994135280-1947177950217391747&launch_counter=25"
+}
+
+
+def get_random_str():
+    result = ''
+    alph_num = '0123456789'
+    alph = 'abcdefghijklmnopqrstuvwxyz'
+    alph = alph + alph.upper() + alph_num
+    for _idx in range(48):
+        result += choice(alph)
+    return result
 
 
 def get_dumped_payload(payload):
@@ -48,19 +93,23 @@ class FonbetBot:
         self.common_url = get_common_url()
 
         self.base_payload = {
-            "sysId": 1,
+            "sysId": 4,
         }
 
         self.sign_in(account)
 
     def sign_in(self, account: dict) -> None:
         """Sign in to fonbet, remember session id and client id."""
-        url = self.common_url.format("login")
+        self._sign_in_analytics()
 
         self.base_payload["clientId"] = account["login"]
 
-        payload = self.base_payload.copy()
-        payload["random"] = str(random()) + " :))"
+        filename = path.join(betting_dir, 'payload.json')
+        with open(filename) as f_payload:
+            payload = load(f_payload)
+
+        payload.update(self.base_payload)
+        payload["random"] = get_random_str()
         payload["sign"] = "secret password"
 
         msg = get_dumped_payload(payload)
@@ -68,7 +117,11 @@ class FonbetBot:
         payload["sign"] = sign
 
         data = get_dumped_payload(payload)
-        resp = self.session.post(url, headers=browser_headers, data=data)
+
+        headers = FONBET_HEADERS.copy()
+        headers.update(CONTENT_TYPE["json"])
+
+        resp = self.session.post(FONBET_LOGIN_URL, headers=headers, data=data, verify=False)
         check_status(resp.status_code)
         res = resp.json()
         if "fsid" not in res:
@@ -100,6 +153,8 @@ class FonbetBot:
                 }]
             }
         })
+        payload.update(DEVICE_ID)
+        payload.update(LANG)
 
         if isinstance(wager, FonbetCondWager):  # if wager has condition and it should be in payload
             payload["coupon"]["bets"][0]["param"] = int(wager.cond * 100)
@@ -107,7 +162,14 @@ class FonbetBot:
         self._check_in_bounds(payload, amount)
         payload["coupon"]["amount"] = amount
 
-        resp = self.session.post(url, headers=browser_headers, json=payload)
+        payload.update(BET)
+        payload.update(DEVICE_ID)
+        payload.update(PLATFORM)
+
+        headers = FONBET_HEADERS.copy()
+        headers.update(CONTENT_TYPE["json"])
+
+        resp = self.session.post(url, headers=headers, json=payload)
         check_status(resp.status_code)
 
         self._check_result(payload)
@@ -116,7 +178,10 @@ class FonbetBot:
         """request_id is generated every time we placing bet"""
         url = self.common_url.format("coupon/requestId")
 
-        resp = self.session.post(url, headers=browser_headers, json=self.base_payload)
+        headers = FONBET_HEADERS.copy()
+        headers.update(CONTENT_TYPE["json"])
+
+        resp = self.session.post(url, headers=headers, json=self.base_payload)
         check_status(resp.status_code)
         res = resp.json()
         if "requestId" not in res:
@@ -130,7 +195,10 @@ class FonbetBot:
         url = self.common_url.format("coupon/getMinMax")
         payload["coupon"]["amount"] = 0
 
-        resp = self.session.post(url, headers=browser_headers, json=payload)
+        headers = FONBET_HEADERS.copy()
+        headers.update(CONTENT_TYPE["json"])
+
+        resp = self.session.post(url, headers=headers, json=payload)
         check_status(resp.status_code)
         res = resp.json()
         if "min" not in res:
@@ -147,10 +215,51 @@ class FonbetBot:
         url = self.common_url.format("coupon/result")
         del payload["coupon"]
 
-        resp = self.session.post(url, headers=browser_headers, json=payload)
+        del payload["appVersion"]
+        del payload["deviceManufacturer"]
+        del payload["deviceModel"]
+        del payload["platform"]
+
+        headers = FONBET_HEADERS.copy()
+        headers.update(CONTENT_TYPE["json"])
+
+        resp = self.session.post(url, headers=headers, json=payload)
         check_status(resp.status_code)
         res = resp.json()
         # there's situations where "temporary unknown result" means successful response
         if "temporary unknown result" not in resp.text and ("coupon" not in res or res["coupon"]["resultCode"] != 0):
             logging.error(res)
             raise LoadException("response came with an error")
+
+    def _sign_in_analytics(self):
+        headers = FONBET_STATS["User-Agent"].copy()
+        headers.update(CONTENT_TYPE["plain"])
+
+        resp = self.session.post(FONBET_STATS["url_stats"], data=FONBET_STATS["data_stats"], headers=headers)
+        check_status(resp.status_code)
+
+        filename_flurry = path.join(betting_dir, 'aap.do')
+        with open(filename_flurry, 'rb') as f_flurry:
+            data = f_flurry.read()
+
+        headers = FONBET_STATS["User-Agent"].copy()
+        headers.update(CONTENT_TYPE["bin"])
+
+        resp = self.session.post(FONBET_STATS["url_flurry"], data=data, headers=headers)
+        check_status(resp.status_code)
+
+        if "Public-Key-Pins-Report-Only" not in resp.headers:
+            raise LoadException("Stats didn't accepted")
+
+        filename_flyer = path.join(betting_dir, 'appsflyer.json')
+        with open(filename_flyer) as f_flyer:
+            data = f_flyer.read()
+
+        headers = FONBET_STATS["User-Agent"].copy()
+        headers.update(CONTENT_TYPE["json"])
+
+        resp = self.session.post(FONBET_STATS["url_android"], data=data, headers=headers)
+        check_status(resp.status_code)
+
+        if resp.text != '"ok"':
+            raise LoadException("Stats didn't accepted")
